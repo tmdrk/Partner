@@ -1,0 +1,32 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.hui.zhong.cf</groupId>
+        <artifactId>h5-parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <groupId>com.hui.zhong.cf.partner.h5</groupId>
+    <artifactId>partner-h5</artifactId>
+    <packaging>war</packaging>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>com.hui.zhong.cf</groupId>
+            <artifactId>financial-partner-util</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <!--okhttp-->
+        <dependency>
+            <groupId>com.squareup.okhttp</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>2.7.5</version>
+        </dependency>
+
+    </dependencies>
+    
+</project>

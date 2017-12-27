@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+	<!-- classPathEntry:数据库的JDBC驱动的jar包地址 -->
+	<classPathEntry location="E:\dev\jar\mysql-connector-java-5.1.8.jar" />
+	<context id="context">
+		<commentGenerator>
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://10.20.200.100:3306/financial_partner" userId="partner"
+			password="g4^9Vh#kFk5C" />
+
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+		
+		
+		<javaModelGenerator targetPackage="com.hui.zhong.cf.mobile.test"
+			targetProject="mobile-service-impl" />
+		
+		<sqlMapGenerator targetPackage="com.hui.zhong.cf.mobile.test" 
+			targetProject="mobile-service-impl" />
+		 
+		<javaClientGenerator targetPackage="com.hui.zhong.cf.mobile.test"
+			targetProject="mobile-service-impl" type="XMLMAPPER" />
+			
+		<!-- XXX相关表 start -->
+		<!-- <table tableName="deputy_user">
+		    <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+		</table>
+		<table tableName="deputy_user" domainObjectName="DeputyUserPo"></table>
+		 -->
+		
+	<!-- 	<table tableName="fund_clean_record">
+		    <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+		</table>
+		<table tableName="fund_clean_username">
+		    <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+		</table> -->
+		
+		<!-- <table tableName="fund_clean_record" domainObjectName="FundCleanRecordPo" />
+		<table tableName="fund_clean_username" domainObjectName="FundCleanUsernamePo" />
+		 -->
+		<!-- <table tableName="deputy_user_info" domainObjectName="DeputyUserInfoPo"></table>
+		<table tableName="deputy_user_competency" domainObjectName="DeputyUserCompetencyPo"></table>
+		 <table tableName="deputy_user_site" domainObjectName="DeputyUserSitePo"></table> 
+		 <table tableName="deputy_user_info" domainObjectName="DeputyUserInfoPo"></table>
+		 
+		 <table tableName="deputy_resource" domainObjectName="DeputyResourcePo"></table>
+		 <table tableName="deputy_examine" domainObjectName="DeputyExaminePo"></table> -->
+		<!-- XXX相关表 end -->
+		
+		 
+		<table tableName="t_login_user" domainObjectName="LoginUser">
+		</table>
+	</context>
+</generatorConfiguration>

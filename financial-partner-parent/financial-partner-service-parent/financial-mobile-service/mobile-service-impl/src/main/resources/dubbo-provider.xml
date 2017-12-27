@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans        
+    http://www.springframework.org/schema/beans/spring-beans.xsd        
+    http://code.alibabatech.com/schema/dubbo        
+    http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<dubbo:application name="mobile-service-impl" />
+	
+	<!-- 开发环境需要打开-->
+	<dubbo:registry address="${dubbo.zookeeper}"/>
+	<dubbo:protocol name="dubbo" port="-1" accesslog="true" />
+	<dubbo:provider timeout="60000" delay="-1" />
+	<!-- demo -->
+	<!-- <bean id="mobileServiceImpl" class="com.huizhongcf.dubbo.mobile.service.impl.MobileServiceImpl" />
+	<dubbo:service interface="com.huizhongcf.dubbo.mobile.service.MobileService" ref="mobileServiceImpl" />
+	 -->
+	<dubbo:consumer check="false" />
+	<bean id="loginUserService" class="com.hui.zhong.cf.mobile.service.impl.LoginUserServiceImpl" />
+	<dubbo:service interface="com.hui.zhong.cf.mobile.service.LoginUserService" ref="loginUserService" />
+	
+	<bean id="indexService" class="com.hui.zhong.cf.mobile.service.impl.IndexServiceImpl" />
+	<dubbo:service interface="com.hui.zhong.cf.mobile.service.IndexService" ref="indexService" />
+	
+	<bean id="commissionLiquidationService" class="com.hui.zhong.cf.mobile.service.impl.CommissionLiquidationServiceImpl" />
+	<dubbo:service interface="com.hui.zhong.cf.mobile.service.CommissionLiquidationService" ref="commissionLiquidationService" />
+	
+	<bean id="investService" class="com.hui.zhong.cf.mobile.service.impl.InvestServiceImpl" />
+	<dubbo:service interface="com.hui.zhong.cf.mobile.service.InvestService" ref="investService" />
+	
+	<bean id="investBonusService" class="com.hui.zhong.cf.mobile.service.impl.InvestBonusServiceImpl" />
+	<dubbo:service interface="com.hui.zhong.cf.mobile.service.InvestBonusService" ref="investBonusService" />
+
+	<dubbo:reference id="mobileService" interface="com.hui.zhong.cf.service.partner.service.MobileService" />
+	
+	
+</beans>

@@ -1,0 +1,52 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.hui.zhong.cf</groupId>
+    <artifactId>financial-partner-parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>financial-mobile-api</artifactId>
+  <packaging>war</packaging>
+  
+  
+  	<dependencies>
+		<dependency>
+			<groupId>com.hui.zhong.cf</groupId>
+			<artifactId>mobile-service</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.hui.zhong.cf</groupId>
+			<artifactId>financial-partner-util</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
+		<dependency>
+		    <groupId>redis.clients</groupId>
+		    <artifactId>jedis</artifactId>
+		    <version>2.9.0</version>
+		</dependency>
+		
+	</dependencies>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>9.4.5.v20170502</version>
+				<configuration>
+					<webAppSourceDirectory>src/main/webapp</webAppSourceDirectory>
+					<scanIntervalSeconds>5</scanIntervalSeconds>
+					<webApp>
+						<contextPath>/mobile-api</contextPath>
+						<descriptor>${basedir}/src/main/webapp/WEB-INF/web.xml</descriptor>
+					</webApp>
+					<httpConnector>
+						<port>8077</port>
+					</httpConnector>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

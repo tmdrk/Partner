@@ -1,0 +1,112 @@
+.ui-list-box{
+    height: 100%;
+    background: #F5F5F5;
+    /*width: 690px;*/
+    /*padding: 0 30px;*/
+}
+.ui-list-box ul{
+    padding-left: 30px;
+}
+.ui-list-box li{
+    position: relative;
+    padding-top: 30px;
+    margin-bottom: 20px;
+}
+.board-date{
+    color: #FFF5D8;
+    font-size: 24px;
+    width: 290px;
+    height: 40px;
+    background: linear-gradient(-90deg, #C59A56 0%, #D6AF78 53%, #EFD0AB 100%);
+    border-radius: 30px;
+    line-height: 40px;
+    text-align: center;
+}
+.board-date span:first-of-type{
+    margin-right: 15px;
+}
+.board-date:after{
+    content: "";
+    position: absolute;
+    width: 430px;
+    height: 4px;
+    background: #cfad76;
+    left: 290px;
+    top: 50px;
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.25);
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+}
+.board-title-box{
+    width: 690px;
+    height: 76px;
+    margin-top: 30px;
+    color: #444444;
+}
+.info{
+    display: inline-block;
+    width: 80px;
+    height: 76px;
+    border-radius: 100px 0 0 100px;
+    background-color: #ffffff;
+    background-image: url("../images/info.png");
+    background-position: center center;
+    background-repeat:no-repeat;
+}
+.info-read{
+    background-image: url("../images/infoR.png");
+}
+.board-title{
+    width: 610px;
+    height: 76px;
+    padding: 0;
+    text-align: left;
+    background: #FFFFFF;
+    font-size: 28px;
+    line-height: 76px;
+    border-radius: 0 100px 100px 0;
+    overflow: hidden; /*自动隐藏文字*/
+    text-overflow: ellipsis;/*文字隐藏后添加省略号*/
+    white-space: nowrap;/*强制不换行*/
+    cursor: pointer;
+}
+.next{
+    display: inline-block;
+    width: 15px;
+    height: 26px;
+    background: url("../images/arrowR.png") top center no-repeat;
+    margin-right: 29px;
+    margin-top: -52px;
+}
+
+/*公告详情*/
+.board-wrap{
+    font-size: 28px;
+    color: #444444;
+}
+.board-detail-title{
+    font-size: 36px;
+    margin-left: 30px;
+    border-bottom: 1px solid #ececec;
+}
+.board-detail-title h3{
+    padding: 30px 30px 30px 0;
+}
+.pubdate{
+    color: #b8b8b8;
+    font-size: 24px;
+    margin-bottom: 34px;
+}
+.pubdate span:first-of-type{
+    margin-right: 15px;
+}
+.board-content{
+    margin: 30px;
+}
+.board-content p{
+    text-indent: 2em;
+    font-size: 28px;
+    color: #74726d;
+    line-height: 60px;
+}

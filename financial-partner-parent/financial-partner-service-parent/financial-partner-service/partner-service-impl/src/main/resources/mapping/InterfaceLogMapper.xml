@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hui.zhong.cf.service.Impl.partner.dao.InterfaceLogMapper" >
+  <resultMap id="BaseResultMap" type="com.hui.zhong.cf.service.partner.model.InterfaceLog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="trade_type" property="tradeType" jdbcType="VARCHAR" />
+    <result column="req_data" property="reqData" jdbcType="VARCHAR" />
+    <result column="resp_result" property="respResult" jdbcType="VARCHAR" />
+    <result column="system_docking" property="systemDocking" jdbcType="CHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, trade_type,  req_data, resp_result, system_docking, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_interface_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_interface_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hui.zhong.cf.service.partner.model.InterfaceLog" >
+    insert into t_interface_log (id, trade_type, 
+      req_data, resp_result, system_docking, 
+      create_time)
+    values (#{id,jdbcType=INTEGER}, #{tradeType,jdbcType=VARCHAR},
+      #{reqData,jdbcType=VARCHAR}, #{respResult,jdbcType=VARCHAR}, #{systemDocking,jdbcType=CHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hui.zhong.cf.service.partner.model.InterfaceLog" >
+    insert into t_interface_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="tradeType != null" >
+        trade_type,
+      </if>
+      <if test="reqData != null" >
+        req_data,
+      </if>
+      <if test="respResult != null" >
+        resp_result,
+      </if>
+      <if test="systemDocking != null" >
+        system_docking,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="tradeType != null" >
+        #{tradeType,jdbcType=VARCHAR},
+      </if>
+      <if test="reqData != null" >
+        #{reqData,jdbcType=VARCHAR},
+      </if>
+      <if test="respResult != null" >
+        #{respResult,jdbcType=VARCHAR},
+      </if>
+      <if test="systemDocking != null" >
+        #{systemDocking,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hui.zhong.cf.service.partner.model.InterfaceLog" >
+    update t_interface_log
+    <set >
+      <if test="tradeType != null" >
+        trade_type = #{tradeType,jdbcType=VARCHAR},
+      </if>
+      <if test="reqData != null" >
+        req_data = #{reqData,jdbcType=VARCHAR},
+      </if>
+      <if test="respResult != null" >
+        resp_result = #{respResult,jdbcType=VARCHAR},
+      </if>
+      <if test="systemDocking != null" >
+        system_docking = #{systemDocking,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hui.zhong.cf.service.partner.model.InterfaceLog" >
+    update t_interface_log
+    set trade_type = #{tradeType,jdbcType=VARCHAR},
+      req_data = #{reqData,jdbcType=VARCHAR},
+      resp_result = #{respResult,jdbcType=VARCHAR},
+      system_docking = #{systemDocking,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+   <!-- 接口日志列表动态查询条件 -->
+   
+   <sql id="dynamicPageWhere">
+  	<if test="tradeType != null">
+  		and t.trade_type = #{tradeType}
+ 	</if>
+ 	<if test="reqData != null">
+  		and t.req_data like '%${reqData}%'
+ 	</if>
+ 	<if test="respResult != null">
+  		and t.resp_result like '%${respResult}%'
+ 	</if>
+ 	<if test="systemDocking != null">
+  		and t.system_docking = #{systemDocking}
+ 	</if>
+ 	<if test="minInterfaceLogTime != null">
+ 		<![CDATA[
+  			and DATE_FORMAT(t.create_time ,'%Y-%m-%d') >= #{minInterfaceLogTime}
+ 		]]>
+ 	</if>
+ 	<if test="maxInterfaceLogTime != null">
+ 		<![CDATA[
+	  		and DATE_FORMAT(t.create_time ,'%Y-%m-%d') <= #{maxInterfaceLogTime}
+ 		]]>
+ 	</if>
+  </sql>
+  
+   <!-- 查询接口日志分页列表 -->
+  <select id="findAllRetMapByPage" resultType="hashmap" parameterType="hashmap">
+  	SELECT 
+  		t.id,
+  		t.trade_type,
+  		ifnull(t.req_data,'') req_data,
+  		ifnull(t.resp_result,'') resp_result,
+  		t.system_docking,
+  		(select sd.dict_name from system_dict sd where sd.dict_type = 'SYSTEM_DOCKING' and sd.dict_code = t.system_docking) system_docking_name,
+  		t.create_time
+  	FROM  t_interface_log t
+  	WHERE 1=1 
+  	<include refid="dynamicPageWhere" />
+  	ORDER BY t.create_time DESC
+  	LIMIT #{startIndex},#{pageSize}  
+  </select>
+  
+  <!-- 接口日志记录条数 -->
+  
+   <select id="findAllByPageCount" resultType="long">
+  	SELECT COUNT(1) FROM t_interface_log t
+  	WHERE 1=1 
+  	<include refid="dynamicPageWhere" />
+  	ORDER BY t.id DESC
+  </select>
+</mapper>

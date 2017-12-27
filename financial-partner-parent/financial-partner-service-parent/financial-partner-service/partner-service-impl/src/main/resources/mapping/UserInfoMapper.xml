@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hui.zhong.cf.service.Impl.partner.dao.UserInfoMapper">
+  <resultMap id="BaseResultMap" type="com.hui.zhong.cf.service.partner.model.UserInfo">
+    <id column="info_id" jdbcType="INTEGER" property="infoId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="real_name" jdbcType="VARCHAR" property="realName" />
+    <result column="card_code" jdbcType="VARCHAR" property="cardCode" />
+    <result column="sex" jdbcType="CHAR" property="sex" />
+    <result column="creator" jdbcType="INTEGER" property="creator" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="operator" jdbcType="INTEGER" property="operator" />
+    <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    info_id, user_id, real_name, card_code, sex, creator, create_time, operator, operate_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_user_info
+    where info_id = #{infoId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_user_info
+    where info_id = #{infoId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hui.zhong.cf.service.partner.model.UserInfo">
+    insert into t_user_info (info_id, user_id, real_name, 
+      card_code, sex, creator, 
+      create_time, operator, operate_time
+      )
+    values (#{infoId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{realName,jdbcType=VARCHAR}, 
+      #{cardCode,jdbcType=VARCHAR}, #{sex,jdbcType=CHAR}, #{creator,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{operator,jdbcType=INTEGER}, #{operateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hui.zhong.cf.service.partner.model.UserInfo">
+    insert into t_user_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="infoId != null">
+        info_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="realName != null">
+        real_name,
+      </if>
+      <if test="cardCode != null">
+        card_code,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="operator != null">
+        operator,
+      </if>
+      <if test="operateTime != null">
+        operate_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="infoId != null">
+        #{infoId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="realName != null">
+        #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="cardCode != null">
+        #{cardCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=CHAR},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null">
+        #{operator,jdbcType=INTEGER},
+      </if>
+      <if test="operateTime != null">
+        #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hui.zhong.cf.service.partner.model.UserInfo">
+    update t_user_info
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="realName != null">
+        real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="cardCode != null">
+        card_code = #{cardCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=CHAR},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null">
+        operator = #{operator,jdbcType=INTEGER},
+      </if>
+      <if test="operateTime != null">
+        operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where info_id = #{infoId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hui.zhong.cf.service.partner.model.UserInfo">
+    update t_user_info
+    set user_id = #{userId,jdbcType=INTEGER},
+      real_name = #{realName,jdbcType=VARCHAR},
+      card_code = #{cardCode,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=CHAR},
+      creator = #{creator,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      operator = #{operator,jdbcType=INTEGER},
+      operate_time = #{operateTime,jdbcType=TIMESTAMP}
+    where info_id = #{infoId,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectUserByCardCode" parameterType="java.lang.String" resultType="java.util.Map">
+select tui.info_id,tui.user_id,tlu.user_role from t_user_info tui left join t_login_user tlu on tui.user_id=tlu.user_id
+where tui.card_code=#{cardCode,jdbcType=VARCHAR}
+  </select>
+  <!-- 保存用户信息  -->
+  <insert id="insertUserInfo" parameterType="java.util.Map">
+INSERT INTO t_user_info (user_id, real_name, card_code, sex,create_time)
+VALUES (#{userId,jdbcType=INTEGER}, #{realName,jdbcType=VARCHAR}, #{cardCode,jdbcType=VARCHAR},#{sex,jdbcType=CHAR},#{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <!-- 验证“是否已经实名认证”“身份证号是否已经使用” -->
+  <select id="selectCountByUserIdAndCardCode" parameterType="java.util.Map" resultType="java.util.Map">
+select
+(select count(1)  from t_user_info where user_id=#{userId,jdbcType=INTEGER}) countUserId,
+(select count(1)  from t_user_info where card_code=#{cardCode,jdbcType=VARCHAR}) countCardCode
+from dual
+  </select>
+
+
+</mapper>

@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hui.zhong.cf.job.dao.LoginUserMapper">
+  <resultMap id="BaseResultMap" type="com.hui.zhong.cf.job.model.LoginUser">
+    <id column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="user_role" jdbcType="VARCHAR" property="userRole" />
+    <result column="user_type" jdbcType="VARCHAR" property="userType" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="login_pwd" jdbcType="VARCHAR" property="loginPwd" />
+    <result column="partner_recommend_code" jdbcType="VARCHAR" property="partnerRecommendCode" />
+    <result column="customer_recommend_code" jdbcType="VARCHAR" property="customerRecommendCode" />
+    <result column="organization_channel_id" jdbcType="INTEGER" property="organizationChannelId" />
+    <result column="organization_area_id" jdbcType="INTEGER" property="organizationAreaId" />
+    <result column="user_status" jdbcType="CHAR" property="userStatus" />
+    <result column="partner_time" jdbcType="TIMESTAMP" property="partnerTime" />
+    <result column="input_invitation_code" jdbcType="VARCHAR" property="inputInvitationCode" />
+    <result column="parent_user_id" jdbcType="INTEGER" property="parentUserId" />
+    <result column="is_platform_invite" jdbcType="CHAR" property="isPlatformInvite" />
+    <result column="invite_share_type" jdbcType="CHAR" property="inviteShareType" />
+    <result column="superior_recommend_code_user_id" jdbcType="INTEGER" property="superiorRecommendCodeUserId" />
+    <result column="on_superior_recommend_code_user_id" jdbcType="INTEGER" property="onSuperiorRecommendCodeUserId" />
+    <result column="team_recommend_code_user_id" jdbcType="INTEGER" property="teamRecommendCodeUserId" />
+    <result column="regist_time" jdbcType="TIMESTAMP" property="registTime" />
+    <result column="regist_source" jdbcType="VARCHAR" property="registSource" />
+    <result column="creator" jdbcType="INTEGER" property="creator" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="operator" jdbcType="INTEGER" property="operator" />
+    <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    user_id, user_role, user_type, username, login_pwd, partner_recommend_code, customer_recommend_code, 
+    organization_channel_id, organization_area_id, user_status, partner_time, input_invitation_code, 
+    parent_user_id, is_platform_invite, invite_share_type, superior_recommend_code_user_id, 
+    on_superior_recommend_code_user_id, team_recommend_code_user_id, regist_time, regist_source, 
+    creator, create_time, operator, operate_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_login_user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_login_user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hui.zhong.cf.job.model.LoginUser">
+    insert into t_login_user (user_id, user_role, user_type, 
+      username, login_pwd, partner_recommend_code, 
+      customer_recommend_code, organization_channel_id, 
+      organization_area_id, user_status, partner_time, 
+      input_invitation_code, parent_user_id, is_platform_invite, 
+      invite_share_type, superior_recommend_code_user_id, 
+      on_superior_recommend_code_user_id, team_recommend_code_user_id, 
+      regist_time, regist_source, creator, 
+      create_time, operator, operate_time
+      )
+    values (#{userId,jdbcType=INTEGER}, #{userRole,jdbcType=VARCHAR}, #{userType,jdbcType=VARCHAR}, 
+      #{username,jdbcType=VARCHAR}, #{loginPwd,jdbcType=VARCHAR}, #{partnerRecommendCode,jdbcType=VARCHAR}, 
+      #{customerRecommendCode,jdbcType=VARCHAR}, #{organizationChannelId,jdbcType=INTEGER}, 
+      #{organizationAreaId,jdbcType=INTEGER}, #{userStatus,jdbcType=CHAR}, #{partnerTime,jdbcType=TIMESTAMP}, 
+      #{inputInvitationCode,jdbcType=VARCHAR}, #{parentUserId,jdbcType=INTEGER}, #{isPlatformInvite,jdbcType=CHAR}, 
+      #{inviteShareType,jdbcType=CHAR}, #{superiorRecommendCodeUserId,jdbcType=INTEGER}, 
+      #{onSuperiorRecommendCodeUserId,jdbcType=INTEGER}, #{teamRecommendCodeUserId,jdbcType=INTEGER}, 
+      #{registTime,jdbcType=TIMESTAMP}, #{registSource,jdbcType=VARCHAR}, #{creator,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{operator,jdbcType=INTEGER}, #{operateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hui.zhong.cf.job.model.LoginUser">
+    insert into t_login_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="userRole != null">
+        user_role,
+      </if>
+      <if test="userType != null">
+        user_type,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="loginPwd != null">
+        login_pwd,
+      </if>
+      <if test="partnerRecommendCode != null">
+        partner_recommend_code,
+      </if>
+      <if test="customerRecommendCode != null">
+        customer_recommend_code,
+      </if>
+      <if test="organizationChannelId != null">
+        organization_channel_id,
+      </if>
+      <if test="organizationAreaId != null">
+        organization_area_id,
+      </if>
+      <if test="userStatus != null">
+        user_status,
+      </if>
+      <if test="partnerTime != null">
+        partner_time,
+      </if>
+      <if test="inputInvitationCode != null">
+        input_invitation_code,
+      </if>
+      <if test="parentUserId != null">
+        parent_user_id,
+      </if>
+      <if test="isPlatformInvite != null">
+        is_platform_invite,
+      </if>
+      <if test="inviteShareType != null">
+        invite_share_type,
+      </if>
+      <if test="superiorRecommendCodeUserId != null">
+        superior_recommend_code_user_id,
+      </if>
+      <if test="onSuperiorRecommendCodeUserId != null">
+        on_superior_recommend_code_user_id,
+      </if>
+      <if test="teamRecommendCodeUserId != null">
+        team_recommend_code_user_id,
+      </if>
+      <if test="registTime != null">
+        regist_time,
+      </if>
+      <if test="registSource != null">
+        regist_source,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="operator != null">
+        operator,
+      </if>
+      <if test="operateTime != null">
+        operate_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userRole != null">
+        #{userRole,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null">
+        #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPwd != null">
+        #{loginPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerRecommendCode != null">
+        #{partnerRecommendCode,jdbcType=VARCHAR},
+      </if>
+      <if test="customerRecommendCode != null">
+        #{customerRecommendCode,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationChannelId != null">
+        #{organizationChannelId,jdbcType=INTEGER},
+      </if>
+      <if test="organizationAreaId != null">
+        #{organizationAreaId,jdbcType=INTEGER},
+      </if>
+      <if test="userStatus != null">
+        #{userStatus,jdbcType=CHAR},
+      </if>
+      <if test="partnerTime != null">
+        #{partnerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="inputInvitationCode != null">
+        #{inputInvitationCode,jdbcType=VARCHAR},
+      </if>
+      <if test="parentUserId != null">
+        #{parentUserId,jdbcType=INTEGER},
+      </if>
+      <if test="isPlatformInvite != null">
+        #{isPlatformInvite,jdbcType=CHAR},
+      </if>
+      <if test="inviteShareType != null">
+        #{inviteShareType,jdbcType=CHAR},
+      </if>
+      <if test="superiorRecommendCodeUserId != null">
+        #{superiorRecommendCodeUserId,jdbcType=INTEGER},
+      </if>
+      <if test="onSuperiorRecommendCodeUserId != null">
+        #{onSuperiorRecommendCodeUserId,jdbcType=INTEGER},
+      </if>
+      <if test="teamRecommendCodeUserId != null">
+        #{teamRecommendCodeUserId,jdbcType=INTEGER},
+      </if>
+      <if test="registTime != null">
+        #{registTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="registSource != null">
+        #{registSource,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null">
+        #{operator,jdbcType=INTEGER},
+      </if>
+      <if test="operateTime != null">
+        #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hui.zhong.cf.job.model.LoginUser">
+    update t_login_user
+    <set>
+      <if test="userRole != null">
+        user_role = #{userRole,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null">
+        user_type = #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPwd != null">
+        login_pwd = #{loginPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerRecommendCode != null">
+        partner_recommend_code = #{partnerRecommendCode,jdbcType=VARCHAR},
+      </if>
+      <if test="customerRecommendCode != null">
+        customer_recommend_code = #{customerRecommendCode,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationChannelId != null">
+        organization_channel_id = #{organizationChannelId,jdbcType=INTEGER},
+      </if>
+      <if test="organizationAreaId != null">
+        organization_area_id = #{organizationAreaId,jdbcType=INTEGER},
+      </if>
+      <if test="userStatus != null">
+        user_status = #{userStatus,jdbcType=CHAR},
+      </if>
+      <if test="partnerTime != null">
+        partner_time = #{partnerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="inputInvitationCode != null">
+        input_invitation_code = #{inputInvitationCode,jdbcType=VARCHAR},
+      </if>
+      <if test="parentUserId != null">
+        parent_user_id = #{parentUserId,jdbcType=INTEGER},
+      </if>
+      <if test="isPlatformInvite != null">
+        is_platform_invite = #{isPlatformInvite,jdbcType=CHAR},
+      </if>
+      <if test="inviteShareType != null">
+        invite_share_type = #{inviteShareType,jdbcType=CHAR},
+      </if>
+      <if test="superiorRecommendCodeUserId != null">
+        superior_recommend_code_user_id = #{superiorRecommendCodeUserId,jdbcType=INTEGER},
+      </if>
+      <if test="onSuperiorRecommendCodeUserId != null">
+        on_superior_recommend_code_user_id = #{onSuperiorRecommendCodeUserId,jdbcType=INTEGER},
+      </if>
+      <if test="teamRecommendCodeUserId != null">
+        team_recommend_code_user_id = #{teamRecommendCodeUserId,jdbcType=INTEGER},
+      </if>
+      <if test="registTime != null">
+        regist_time = #{registTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="registSource != null">
+        regist_source = #{registSource,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null">
+        operator = #{operator,jdbcType=INTEGER},
+      </if>
+      <if test="operateTime != null">
+        operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hui.zhong.cf.job.model.LoginUser">
+    update t_login_user
+    set user_role = #{userRole,jdbcType=VARCHAR},
+      user_type = #{userType,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      login_pwd = #{loginPwd,jdbcType=VARCHAR},
+      partner_recommend_code = #{partnerRecommendCode,jdbcType=VARCHAR},
+      customer_recommend_code = #{customerRecommendCode,jdbcType=VARCHAR},
+      organization_channel_id = #{organizationChannelId,jdbcType=INTEGER},
+      organization_area_id = #{organizationAreaId,jdbcType=INTEGER},
+      user_status = #{userStatus,jdbcType=CHAR},
+      partner_time = #{partnerTime,jdbcType=TIMESTAMP},
+      input_invitation_code = #{inputInvitationCode,jdbcType=VARCHAR},
+      parent_user_id = #{parentUserId,jdbcType=INTEGER},
+      is_platform_invite = #{isPlatformInvite,jdbcType=CHAR},
+      invite_share_type = #{inviteShareType,jdbcType=CHAR},
+      superior_recommend_code_user_id = #{superiorRecommendCodeUserId,jdbcType=INTEGER},
+      on_superior_recommend_code_user_id = #{onSuperiorRecommendCodeUserId,jdbcType=INTEGER},
+      team_recommend_code_user_id = #{teamRecommendCodeUserId,jdbcType=INTEGER},
+      regist_time = #{registTime,jdbcType=TIMESTAMP},
+      regist_source = #{registSource,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      operator = #{operator,jdbcType=INTEGER},
+      operate_time = #{operateTime,jdbcType=TIMESTAMP}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <!--每月跑批，获取身份为合伙人的用户 -->
+  <select id="selectEveryMonthUser" parameterType="hashmap" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />  from t_login_user where user_role=#{userRole,jdbcType=VARCHAR}
+  </select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>

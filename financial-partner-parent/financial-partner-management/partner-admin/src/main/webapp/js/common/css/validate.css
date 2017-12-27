@@ -1,0 +1,24 @@
+
+/* form中显示文字的label */
+.slabel {
+	width: 100px;
+	display: -moz-inline-box;
+	line-height: 1.8;
+	display: inline-block;
+	text-align: right;
+}
+
+/* 出错样式 */
+input.error,textarea.error {
+	border: solid 1px #CD0A0A;
+}
+
+label.error {
+	color: #CD0A0A;
+	margin-left: 5px;
+}
+
+/* 深红色文字 */
+.textred {
+	color: #CD0A0A;
+}

@@ -1,0 +1,11 @@
+.metadata/
+RemoteSystemsTempFiles/
+
+# 忽略子目录下的文件夹
+**/.settings
+**/target
+
+# 忽略子目录下的文件
+**.classpath
+**.project
+**/bin

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans        
+    http://www.springframework.org/schema/beans/spring-beans.xsd        
+    http://code.alibabatech.com/schema/dubbo        
+    http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<dubbo:application name="financial-mobile-api"/>
+
+	<dubbo:registry address="${dubbo.zookeeper}"/>
+	<dubbo:consumer timeout="60000" check="false" />
+
+	<!-- demo 实例 -->
+	<!-- <dubbo:reference id="mobileService" interface="com.huizhongcf.dubbo.mobile.service.MobileService" />
+ -->
+    <dubbo:reference id="loginUserService" interface="com.hui.zhong.cf.mobile.service.LoginUserService" />
+ 	
+ 	<dubbo:reference id="investService" interface="com.hui.zhong.cf.mobile.service.InvestService" />
+ 	
+ 	<dubbo:reference id="investBonusService" interface="com.hui.zhong.cf.mobile.service.InvestBonusService" />
+ 
+ 	<dubbo:reference id="indexService" interface="com.hui.zhong.cf.mobile.service.IndexService" />
+ 	
+ 	<dubbo:reference id="commissionLiquidationService" interface="com.hui.zhong.cf.mobile.service.CommissionLiquidationService" />
+	
+
+</beans>

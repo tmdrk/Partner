@@ -1,0 +1,103 @@
+@charset "utf-8";
+.dialog_ui{
+	list-style-type: none;
+	padding: 0px;
+	margin: 0px;
+	background: #ffffff;
+}
+.dialog_ui li{
+	line-height: 40px;
+	font-size: 14px;
+}
+.dialog_ui li label{
+	display: inline-block;
+	width: 105px;
+	text-align: right;
+	color: #8b8b8b;
+	font-size: 14px;
+	margin-right: 10px;
+}
+.dialog_ui li span{
+	color: #333333;
+	font-size: 14px;
+}
+.dialog_ui li div{
+	float: left;
+	width: 45%;
+}
+.dialog_ui li span.blueC{
+	color: #429afd;
+}
+.dialog_ui li span.font22{
+	font-size: 22px;
+}
+.datagrid-view .datagrid-view2 .datagrid-header .datagrid-header-inner,.datagrid-view .datagrid-view2 .datagrid-header .datagrid-header-inner table,.datagrid-view .datagrid-view2 .datagrid-body table{
+	width: 100%;
+}
+.datagrid-view .datagrid-view2 .datagrid-header table tr:nth-child(1),.datagrid-view .datagrid-view2 .datagrid-body table tr{
+	height: 40px;
+	line-height: 40px;
+}
+.datagrid-view .datagrid-view2 .datagrid-header table tr:nth-child(1){
+	background: #eaf2ff;
+}
+.window .datagrid-view .datagrid-view2 .datagrid-header table tr:nth-child(1){
+	background: #ebf4ff;
+}
+.datagrid-toolbar,.panel-body,.datagrid-view .datagrid-view2 .datagrid-header,.datagrid-view .datagrid-view2 .datagrid-header table tr td,.window .datagrid-view .datagrid-view2 .datagrid-body table tr td{
+	border: none;
+}
+
+/*设置个人月度咨询费"*/
+.txtTop{
+	font-size: 16px;
+	color: #8b8b8b;
+	line-height: 50px;
+	padding-left: 20px;
+}
+.txtTop table tr td{
+	font-size: 16px;
+	color: #8b8b8b;
+}
+.personPercentFormTable{
+	margin: 0 auto;
+	font-size: 16px;
+	color: #555555;
+}
+.personPercentFormTable tr td input,.personPercentFormTable2 tr td input{
+	background: #f8feff;
+	border: 1px solid #d5e9ff;
+	margin: 0 10px 0 10px;
+	height: 28px;
+	line-height: 28px;
+	padding: 0 10px;
+	width: 100px;
+	border-radius: 5px;
+	text-align: center;
+}
+.personPercentFormTable2{
+	border: 1px solid #dbdbdb;
+	border-collapse:collapse;
+}
+.personPercentFormTable2 tr td,.personPercentFormTable2 tr th{
+	text-align: center;
+	border-bottom: 1px solid #dbdbdb;
+}
+.personPercentFormTable2 tr th{
+	height:40px;
+	line-height: 40px;
+}
+.personPercentFormTable2 tr:nth-child(1){
+	background:#eaf2ff;
+}
+.personPercentFormTable2 tr td div{
+	margin: 5px 0;
+}
+/*设置弹框按钮样式*/
+.dialog-button{
+	background: #ffffff;
+	border: none;
+	text-align: center;
+}
+.txtTop .l-btn{ line-height:100%}
+

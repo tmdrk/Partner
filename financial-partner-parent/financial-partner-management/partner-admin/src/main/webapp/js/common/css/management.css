@@ -1,0 +1,97 @@
+@charset "utf-8";
+  
+ .datagrid-pager .l-btn-left .l-btn-text {
+	margin: 0 4px;
+}
+
+.datagrid-pager .l-btn-left .l-btn-icon {
+	display: block;
+}
+
+.datagrid-view .datagrid-view2 .datagrid-header table tr td {
+	border-bottom: 1px solid #d7d7d8;
+}
+/*2017-06-23*/
+.datagrid-view .datagrid-view2 .datagrid-body {
+	height: 315px;
+}
+
+/*20170531添加*/
+.tableStyle {
+	border: 1px solid #d7d7d8;
+}
+
+.tableStyle table tr, .datagrid-header table tr:nth-child(1) {
+	background: #ffffff;
+}
+
+.tableStyle table tr:nth-child(odd) {
+	background: #f8f9fa;
+}
+
+.window .datagrid-view table tr.datagrid-row-selected, .tableStyle table tr.datagrid-row-selected
+	{
+	background: #fff5dd;
+	color: #000000;
+}
+
+.tableStyle table tr td {
+	/* border-left: none;
+	border-right: none; */ /* 表格添加border */
+	text-align: center;
+	border-bottom: 1px solid #d7d7d8;
+}
+
+.datagrid-header table tr:nth-child(1) {
+	background: #eaf2ff;
+}
+
+.datagrid-view table tr td {
+	height: 40px;
+	line-height: 40px;
+}
+
+#dialog  .datagrid-view .datagrid-view2 .datagrid-body {
+	height: 275px !important;
+}
+/* 20170630 */
+.datagrid-view .datagrid-view2 .datagrid-header table tr td, .window .datagrid-view .datagrid-view2 .datagrid-body table tr td
+	{
+	border-color: #ccc;
+	border-width: 0 1px 1px 0;
+	border-style: dotted;
+}
+
+.window .datagrid-view .datagrid-view2 .datagrid-header table tr td {
+	border: none;
+}
+  
+        .datagrid-header table tr:nth-child(1){
+            background:#eaf2ff;
+        }
+        .datagrid-view table tr td{
+            height:40px;
+            line-height:40px;
+        }
+
+#dialog .datagrid-view .datagrid-view2 .datagrid-body{
+            height: 245px !important;
+        }
+        
+         
+        .datagrid-header table tr:nth-child(1){
+            background:#eaf2ff;
+        }
+        .datagrid-view table tr td{
+            height:40px;
+            line-height:40px;
+        }
+
+#dialog .datagrid-view .datagrid-view2 .datagrid-body{
+            height: 245px !important;
+        }
+    /* 20170602 达成率颜色 0~49 红色  50~79 橘色 80以上绿色*/
+    span.fRed {  color: #ff1515;}
+    span.fGreen { color: #19c038;}
+    span.fOrange { color: #ff9008; }
+ 

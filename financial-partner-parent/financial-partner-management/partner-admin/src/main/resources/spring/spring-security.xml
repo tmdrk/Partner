@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+    xmlns:beans="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+            http://www.springframework.org/schema/security 
+            http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+           
+    <!-- 配置不走过滤器的路径 -->             
+    <http pattern="/css/**" security="none" />
+	<http pattern="/editor/**" security="none" />
+	<http pattern="/fla/**" security="none" />
+	<http pattern="/images/**" security="none" />
+	<http pattern="/img/**" security="none" />
+	<http pattern="/js/**" security="none" />
+	<http pattern="/cxfservice/**" security="none" />
+    <http pattern="/fileUpload/upload/**" security="none" />
+    <http pattern="/fileUpload/uploadLocal/**" security="none" />
+    
+    <!-- auto-config走默认的过滤器 -->
+    <http auto-config="true" entry-point-ref="myAuthenticationEntryPoint">
+    
+    	<!-- IS_AUTHENTICATED_ANONYMOUSLY 匿名用户可以访问的路径 -->
+    	<intercept-url pattern="/login.jsp" access="IS_AUTHENTICATED_ANONYMOUSLY"/> 
+    	<intercept-url pattern="/checkimg.jsp" access="IS_AUTHENTICATED_ANONYMOUSLY"/> 
+    	<intercept-url pattern="/favicon.ico" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+    	
+    	<!-- IS_AUTHENTICATED_FULLY 允许登录用户进入  -->
+	    <intercept-url pattern="/**" access="IS_AUTHENTICATED_FULLY"/>
+	   
+	    <!-- invalidate-session 销毁session  退出logout-url成功后到logout-success-url这个页面-->
+	    <logout invalidate-session="true" logout-url="/admin/j_spring_security_logout" logout-success-url="/login.jsp"/>
+	    
+        <session-management invalid-session-url="/login.jsp">
+            <concurrency-control max-sessions="1" error-if-maximum-exceeded="true" />
+        </session-management>
+        
+       	<custom-filter ref="loginFilter" before="FORM_LOGIN_FILTER"  />
+		<custom-filter ref="securityFilter" before="FILTER_SECURITY_INTERCEPTOR"/>
+		<custom-filter ref="ctrlFilter" after="SWITCH_USER_FILTER" />
+    </http>
+    
+    <!-- 未登录的切入点 -->
+    <beans:bean id="myAuthenticationEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+        <beans:property name="loginFormUrl" value="/login.jsp"></beans:property>
+    </beans:bean>
+    
+    <beans:bean id="ctrlFilter" class="com.huizhongcf.partner.admin.security.ControlFilter"></beans:bean>
+    
+    
+    <!-- 登录验证器   -->
+    <beans:bean id="loginFilter" class="com.huizhongcf.partner.admin.security.MyUsernamePasswordAuthenticationFilter">
+		<!-- 处理登录-->
+		<beans:property name="filterProcessesUrl" value="/admin/j_spring_security_check"/>
+		<!-- 验证成功后的处理-->
+		<beans:property name="authenticationSuccessHandler" ref="loginLogAuthenticationSuccessHandler"/>
+		<!-- 验证失败后的处理-->
+		<beans:property name="authenticationFailureHandler" ref="simpleUrlAuthenticationFailureHandler"/>
+		<beans:property name="authenticationManager" ref="myAuthenticationManager"/>
+	</beans:bean>
+	
+	<beans:bean id="loginLogAuthenticationSuccessHandler" class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
+		<beans:property name="defaultTargetUrl" value="/index.jsp"/>
+	</beans:bean>
+	
+	<beans:bean id="simpleUrlAuthenticationFailureHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+		<beans:property name="defaultFailureUrl" value="/login.jsp"></beans:property>
+	</beans:bean>
+	
+    <!-- 认证过滤器 -->
+    <beans:bean id="securityFilter" class="com.huizhongcf.partner.admin.security.MySecurityFilter">
+    	<!-- 用户拥有的权限 -->
+    	<beans:property name="authenticationManager" ref="myAuthenticationManager" />
+    	<!-- 用户是否拥有所请求资源的权限-->
+    	<beans:property name="accessDecisionManager" ref="myAccessDecisionManager" /> 
+    	<!-- 资源与权限对应关系 -->
+    	<beans:property name="securityMetadataSource" ref="mySecurityMetadataSource" />
+    </beans:bean>
+    
+    <!-- 实现了UserDetailsService的Bean -->
+    <authentication-manager alias="myAuthenticationManager">
+        <authentication-provider user-service-ref="myUserDetailServiceImpl" />
+    </authentication-manager>
+    
+    <beans:bean id="myAccessDecisionManager" class="com.huizhongcf.partner.admin.security.MyAccessDecisionManager"></beans:bean>
+	<beans:bean id="mySecurityMetadataSource" class="com.huizhongcf.partner.admin.security.MySecurityMetadataSource"></beans:bean>
+	<beans:bean id="myUserDetailServiceImpl" class="com.huizhongcf.partner.admin.security.MyUserDetailServiceImpl"></beans:bean>
+	
+</beans:beans>

@@ -1,0 +1,100 @@
+@charset "utf-8";
+/* CSS Document */
+/*20170527*/
+*{ font-size:14px}
+.mrg-out{margin:12px 12px 0 12px}
+.panel-fit,
+.panel-fit body,panel-noscroll {
+	background: #f3f5f6;
+}
+.layout-panel{background: #f3f5f6;}
+.datagrid-toolbar, .datagrid-pager{ background:#fff; border:0}
+.nav-position{ background:#fff; margin:12px 12px 0 12px; padding:12px 30px; text-align:left; font-size:14; color:#333333; line-height:24px;}
+.container{ background:#fff;  margin:12px 12px 0 12px; padding:12px 30px; }
+.container2{ margin:12px 12px 0 12px; padding:12px 0}
+.slice-area{ padding:5px 0; color:#8b8b8b}
+.slice-area  .colname{ display:inline-block; width:100px; text-align:right}
+.normal-input{ height:28px; width:172px; border:1px solid #a0a0a0; line-height:27px; padding:0 5px; margin-left: 10px; margin-right: 30px; }
+.textbox{ -moz-border-radius:0; -webkit-border-radius:0; border-radius: 0; height:28px; border:1px solid #a0a0a0; line-height:27px; margin:0 30px 0 10px}
+.textbox .textbox-text {
+  height: 28px;
+  line-height:27px;
+  font-size: 14px;
+  padding: 0 5px;
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+}
+.textbox .textbox-prompt {
+  font-size: 14px;
+  color: #8b8b8b;
+}
+.datebox{ margin:0 10px 0 10px}
+.l-btn{ background:none; border:1px solid #3f86d4; margin:0 10px}
+.l-btn:hover{ background:none; border:1px solid #3f86d4; }
+.icon-search{ background:#3f86d4; color:#fff; font-size:14px }
+.icon-save{ background:#ffffff; color:#3f86d4; font-size:14px }
+.icon-clear{ background:#ffffff; color:#3f86d4; font-size:14px }
+.icon-search:hover{ background:#3f86d4; color:#fff; border:1px solid #3f86d4;}
+.icon-save:hover{ background:#ffffff; color:#3f86d4; border:1px solid #3f86d4;}
+.icon-clear:hover{ background:#ffffff; color:#3f86d4; border:1px solid #3f86d4;}
+.l-btn-left .l-btn-text{ margin:0 20px 0 20px; font-size:14px}
+.l-btn-left .l-btn-icon{ display:none}
+.l-btn-plain{padding:0}
+.combo-arrow,.combo-arrow:hover {
+    background-color: transparent;
+}
+.combobox-item, .combobox-group{ font-size:14px}
+.hr{ height:1px; line-height:1px; font-size:1px; background:#f3f5f6; margin:20px 20px 10px 0;}
+.btn-showpanel{ background:#3f86d4; color:#fff; font-size:14px}
+.btn-showpanel:hover{ background:#3f86d4; color:#fff; border:1px solid #3f86d4;}
+.layout-panel{ left:0; right:0;}
+.searchForm .tdR{ width:132px;}
+.searchForm .tdR2{ width:88px; text-align:right}
+.datagrid-header-inner{ width:100%;}
+/*.datagrid-htable, .datagrid-btable{ width:100%}*/
+.tableStyle{ /*margin-top:10px*/}
+.mrgT10{ margin-top:10px}
+.padT10{ padding-top:10px}
+.mrgB10{ margin-bottom:10px}
+.mlL20{margin-left:20px;}
+.pad12{ padding:12px 20px !important;}
+.padL20{ padding-left:20px}
+.bdrB10{ border-bottom:10px solid #f3f5f6;}
+.nomrg{ margin:0;}
+.nobdr{ border:0}
+.recordtotal{ font-size:14px; color:#3b3b3b; margin:10px 0; padding:0;}
+.totalnumber cite{ font-style:normal; margin-left:30px;}
+.totalnumber cite:first-child{ margin:0;}
+.totalnumber span{ color:#ff9008;}
+.totalnumber span:nth-child(2){ color:#4b99f2;}
+.totalnumber span:nth-child(3){ color:#4b99f2;}
+/**/
+.clear{ clear:both}
+.search-form{ padding:0 20px; background:#fff; margin:0;}
+.targettop{ padding:10px; font-size:14px}
+/*.search-form{  background:#fff; margin:12px 12px 0 12px; padding:12 30px; }
+.totalnumber{ width:100%; height:76px; background:#fff; margin:0 12px 12px 12px; padding:12 30px;}*/
+
+/* ����ť */
+.dialog-button .l-btn,
+.messager-button .l-btn {
+    background: #429afd;
+    font-size: 18px;
+    color: #ffffff;
+    border-radius: 5px;
+}
+.select-spec{
+    border: 1px solid #a0a0a0;
+    line-height: 27px;
+    margin: 0 30px 0 10px; 
+	padding-left:8px; 
+	background: url(../../jquery-easyui-1.4.1/themes/default/images/combo_arrow.png) no-repeat right 5px; 
+	appearance:none;
+	-moz-appearance:none;
+	-webkit-appearance:none;	
+}
+
+.datagrid-wrap .datagrid-view .datagrid-view2 .datagrid-header-inner,.datagrid-view .datagrid-view2 .datagrid-header-inner table,.datagrid-view .datagrid-view2 .datagrid-body table,.window .datagrid-view .datagrid-view2{
+    width:100%;
+}

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hui.zhong.cf.job.dao.SystemDictMapper" >
+  <resultMap id="BaseResultMap" type="com.hui.zhong.cf.job.model.SystemDict" >
+    <id column="dict_id" property="dictId" jdbcType="INTEGER" />
+    <result column="dict_type" property="dictType" jdbcType="VARCHAR" />
+    <result column="dict_type_name" property="dictTypeName" jdbcType="VARCHAR" />
+    <result column="dict_name" property="dictName" jdbcType="VARCHAR" />
+    <result column="dict_code" property="dictCode" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="CHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    dict_id, dict_type, dict_type_name, dict_name, dict_code, status, remark, parent_id, 
+    order_id, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from system_dict
+    where dict_id = #{dictId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from system_dict
+    where dict_id = #{dictId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hui.zhong.cf.job.model.SystemDict" >
+    insert into system_dict (dict_id, dict_type, dict_type_name, 
+      dict_name, dict_code, status, 
+      remark, parent_id, order_id, 
+      create_time)
+    values (#{dictId,jdbcType=INTEGER}, #{dictType,jdbcType=VARCHAR}, #{dictTypeName,jdbcType=VARCHAR}, 
+      #{dictName,jdbcType=VARCHAR}, #{dictCode,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hui.zhong.cf.job.model.SystemDict" >
+    insert into system_dict
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dictId != null" >
+        dict_id,
+      </if>
+      <if test="dictType != null" >
+        dict_type,
+      </if>
+      <if test="dictTypeName != null" >
+        dict_type_name,
+      </if>
+      <if test="dictName != null" >
+        dict_name,
+      </if>
+      <if test="dictCode != null" >
+        dict_code,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dictId != null" >
+        #{dictId,jdbcType=INTEGER},
+      </if>
+      <if test="dictType != null" >
+        #{dictType,jdbcType=VARCHAR},
+      </if>
+      <if test="dictTypeName != null" >
+        #{dictTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="dictName != null" >
+        #{dictName,jdbcType=VARCHAR},
+      </if>
+      <if test="dictCode != null" >
+        #{dictCode,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hui.zhong.cf.job.model.SystemDict" >
+    update system_dict
+    <set >
+      <if test="dictType != null" >
+        dict_type = #{dictType,jdbcType=VARCHAR},
+      </if>
+      <if test="dictTypeName != null" >
+        dict_type_name = #{dictTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="dictName != null" >
+        dict_name = #{dictName,jdbcType=VARCHAR},
+      </if>
+      <if test="dictCode != null" >
+        dict_code = #{dictCode,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=CHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where dict_id = #{dictId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hui.zhong.cf.job.model.SystemDict" >
+    update system_dict
+    set dict_type = #{dictType,jdbcType=VARCHAR},
+      dict_type_name = #{dictTypeName,jdbcType=VARCHAR},
+      dict_name = #{dictName,jdbcType=VARCHAR},
+      dict_code = #{dictCode,jdbcType=VARCHAR},
+      status = #{status,jdbcType=CHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=INTEGER},
+      order_id = #{orderId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where dict_id = #{dictId,jdbcType=INTEGER}
+  </update>
+  
+  <!-- 查询所有字典 -->
+  <select id="findAllRetEntityNoPage" resultType="SystemDict" parameterType="hashmap">
+	select 
+		dict_id dictId,
+		dict_type dictType,
+		dict_code dictCode,
+		status,
+		dict_name dictName,
+		remark,
+		create_time createTime,
+		parent_id parentId,
+		(select dict_name from system_dict s2 where s2.dict_id = s1.parent_id) parentName,
+		order_id orderId
+	from system_dict s1 where status = '1' 
+	order by dict_type,order_id
+  </select>
+</mapper>

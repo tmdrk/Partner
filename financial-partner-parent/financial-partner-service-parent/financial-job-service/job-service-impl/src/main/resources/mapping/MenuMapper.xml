@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hui.zhong.cf.job.dao.MenuMapper" >
+  <resultMap id="BaseResultMap" type="com.hui.zhong.cf.job.model.Menu" >
+    <id column="menu_id" property="menuId" jdbcType="INTEGER" />
+    <result column="name_en" property="nameEn" jdbcType="VARCHAR" />
+    <result column="name_zh" property="nameZh" jdbcType="VARCHAR" />
+    <result column="menu_url" property="menuUrl" jdbcType="VARCHAR" />
+    <result column="menu_type" property="menuType" jdbcType="CHAR" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <result column="menu_sort" property="menuSort" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    menu_id, name_en, name_zh, menu_url, menu_type, parent_id, menu_sort, create_time, 
+    creator, remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ssm_menu
+    where menu_id = #{menuId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ssm_menu
+    where menu_id = #{menuId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hui.zhong.cf.job.model.Menu" >
+    insert into ssm_menu (menu_id, name_en, name_zh, 
+      menu_url, menu_type, parent_id, 
+      menu_sort, create_time, creator, 
+      remark)
+    values (#{menuId,jdbcType=INTEGER}, #{nameEn,jdbcType=VARCHAR}, #{nameZh,jdbcType=VARCHAR}, 
+      #{menuUrl,jdbcType=VARCHAR}, #{menuType,jdbcType=CHAR}, #{parentId,jdbcType=INTEGER}, 
+      #{menuSort,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{creator,jdbcType=INTEGER}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hui.zhong.cf.job.model.Menu" >
+    insert into ssm_menu
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="menuId != null" >
+        menu_id,
+      </if>
+      <if test="nameEn != null" >
+        name_en,
+      </if>
+      <if test="nameZh != null" >
+        name_zh,
+      </if>
+      <if test="menuUrl != null" >
+        menu_url,
+      </if>
+      <if test="menuType != null" >
+        menu_type,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="menuSort != null" >
+        menu_sort,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="menuId != null" >
+        #{menuId,jdbcType=INTEGER},
+      </if>
+      <if test="nameEn != null" >
+        #{nameEn,jdbcType=VARCHAR},
+      </if>
+      <if test="nameZh != null" >
+        #{nameZh,jdbcType=VARCHAR},
+      </if>
+      <if test="menuUrl != null" >
+        #{menuUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="menuType != null" >
+        #{menuType,jdbcType=CHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="menuSort != null" >
+        #{menuSort,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hui.zhong.cf.job.model.Menu" >
+    update ssm_menu
+    <set >
+      <if test="nameEn != null" >
+        name_en = #{nameEn,jdbcType=VARCHAR},
+      </if>
+      <if test="nameZh != null" >
+        name_zh = #{nameZh,jdbcType=VARCHAR},
+      </if>
+      <if test="menuUrl != null" >
+        menu_url = #{menuUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="menuType != null" >
+        menu_type = #{menuType,jdbcType=CHAR},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="menuSort != null" >
+        menu_sort = #{menuSort,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where menu_id = #{menuId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hui.zhong.cf.job.model.Menu" >
+    update ssm_menu
+    set name_en = #{nameEn,jdbcType=VARCHAR},
+      name_zh = #{nameZh,jdbcType=VARCHAR},
+      menu_url = #{menuUrl,jdbcType=VARCHAR},
+      menu_type = #{menuType,jdbcType=CHAR},
+      parent_id = #{parentId,jdbcType=INTEGER},
+      menu_sort = #{menuSort,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR}
+    where menu_id = #{menuId,jdbcType=INTEGER}
+  </update>
+  
+  <!-- 查找所有实体菜单  -->
+  <select id="findAllRetEntityNoPage" resultMap="BaseResultMap">
+  	SELECT 
+	  m.`menu_id`,
+	  m.`menu_url`,
+	  m.`name_en`,
+	  m.`name_zh`,
+	  m.`menu_type`,
+	  m.`parent_id`,
+	  m.`remark`,
+	  m.`create_time`,
+	  m.`creator` 
+	FROM ssm_menu m
+  </select>
+  
+  <!-- 查询该用户拥有的菜单权限 -->
+  <select id="findMenuByUserId" parameterType="int" resultType="hashmap">
+  	<![CDATA[
+		SELECT
+			DISTINCT
+			m.menu_id,
+			m.name_en,
+			m.name_zh,
+			m.menu_url,
+			m.parent_id
+		FROM ssm_employee_role_relation err
+		JOIN ssm_role_menu_relation rmr ON err.role_id = rmr.role_id
+		JOIN ssm_menu m ON rmr.menu_id = m.menu_id
+		where err.employee_id = #{userId}
+		order by m.menu_sort asc
+	]]>
+  </select>
+  
+  <!-- 查询菜单的父节点  -->
+  <select id="findRootMenuByPid" resultType="hashmap">
+	  	SELECT
+	  		DISTINCT
+			m.menu_id,
+			m.name_en,
+			m.name_zh,
+			m.menu_url,
+			m.parent_id
+		FROM ssm_menu m
+		WHERE m.menu_id IN
+		<foreach collection="list" item="menuId" index="index" open="(" close=")" separator=",">
+			#{menuId}
+		</foreach>
+		order by m.menu_sort asc
+  </select>
+  
+  <!-- 查询这个角色下的所有菜单 -->
+  <select id="findMenuByRoleId" parameterType="int" resultMap="BaseResultMap">
+	SELECT m.* FROM ssm_role_menu_relation rmr 
+	    JOIN ssm_role r ON rmr.`role_id` = r.`role_id` 
+		JOIN ssm_menu m ON m.`menu_id` = rmr.`menu_id` 
+	WHERE r.`role_id` = #{roleId}
+  </select>
+  
+  <!--查询菜单-->
+  <select id="findAllRetMapNoPage" resultType="hashmap">
+  	SELECT 
+	  m.`menu_id`,
+	  m.`name_en`,
+	  m.`name_zh`,
+	  m.`menu_type`,
+	  m.`menu_url`,
+	  m.`parent_id`,
+	  m.`remark`
+	FROM ssm_menu m 
+	order by m.menu_sort asc
+  </select>
+  
+  <!-- 查询所用root节点 -->
+  <select id="selectMenuRoot" resultType="hashmap">
+  	SELECT m.`menu_id`, m.`name_zh` FROM ssm_menu m WHERE m.`parent_id` = '0' order by m.menu_sort asc
+  </select>
+  
+  <!-- 检查菜单中文名称、英文名称是否重复 -->
+  <select id="checkMenuIsRepeat" parameterType="hashmap" resultType="integer">
+  	SELECT COUNT(1) FROM ssm_menu m
+  	where 1=1
+  	<if test="nameZh != null">
+  		and  m.name_zh = #{nameZh}
+  	</if>
+  	<if test="nameEn != null">
+  		and m.name_en = #{nameEn}
+  	</if>
+  	<if test="menuId != null">
+  		and m.menu_id != #{menuId}
+  	</if>
+   </select>
+   
+   <!-- 更新菜单排序 -->
+  <update id="updateNodesSort" parameterType="hashmap">
+  	UPDATE ssm_menu m SET m.`menu_sort` = #{menuSort} WHERE m.`menu_id` = #{menuId}
+  </update>
+</mapper>

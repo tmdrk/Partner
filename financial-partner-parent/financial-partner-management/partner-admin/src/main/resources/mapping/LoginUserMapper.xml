@@ -1,0 +1,1292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huizhongcf.partner.dao.LoginUserMapper">
+  <resultMap id="BaseResultMap" type="com.huizhongcf.partner.model.LoginUser">
+    <id column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="user_role" jdbcType="VARCHAR" property="userRole" />
+    <result column="user_type" jdbcType="VARCHAR" property="userType" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="login_pwd" jdbcType="VARCHAR" property="loginPwd" />
+    <result column="partner_recommend_code" jdbcType="VARCHAR" property="partnerRecommendCode" />
+    <result column="customer_recommend_code" jdbcType="VARCHAR" property="customerRecommendCode" />
+    <result column="organization_channel_id" jdbcType="INTEGER" property="organizationChannelId" />
+    <result column="organization_area_id" jdbcType="INTEGER" property="organizationAreaId" />
+    <result column="user_status" jdbcType="CHAR" property="userStatus" />
+    <result column="partner_time" jdbcType="TIMESTAMP" property="partnerTime" />
+    <result column="input_invitation_code" jdbcType="VARCHAR" property="inputInvitationCode" />
+    <result column="parent_user_id" jdbcType="INTEGER" property="parentUserId" />
+    <result column="is_platform_invite" jdbcType="CHAR" property="isPlatformInvite" />
+    <result column="invite_share_type" jdbcType="CHAR" property="inviteShareType" />
+    <result column="superior_recommend_code_user_id" jdbcType="INTEGER" property="superiorRecommendCodeUserId" />
+    <result column="on_superior_recommend_code_user_id" jdbcType="INTEGER" property="onSuperiorRecommendCodeUserId" />
+    <result column="team_recommend_code_user_id" jdbcType="INTEGER" property="teamRecommendCodeUserId" />
+    <result column="regist_time" jdbcType="TIMESTAMP" property="registTime" />
+    <result column="regist_source" jdbcType="VARCHAR" property="registSource" />
+    <result column="creator" jdbcType="INTEGER" property="creator" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="operator" jdbcType="INTEGER" property="operator" />
+    <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    user_id, user_role, user_type, username, login_pwd, partner_recommend_code, customer_recommend_code, 
+    organization_channel_id, organization_area_id, user_status, partner_time, input_invitation_code, 
+    parent_user_id, is_platform_invite, invite_share_type, superior_recommend_code_user_id, 
+    on_superior_recommend_code_user_id, team_recommend_code_user_id, regist_time, regist_source, 
+    creator, create_time, operator, operate_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_login_user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_login_user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.huizhongcf.partner.model.LoginUser">
+    insert into t_login_user (user_id, user_role, user_type, 
+      username, login_pwd, partner_recommend_code, 
+      customer_recommend_code, organization_channel_id, 
+      organization_area_id, user_status, partner_time, 
+      input_invitation_code, parent_user_id, is_platform_invite, 
+      invite_share_type, superior_recommend_code_user_id, 
+      on_superior_recommend_code_user_id, team_recommend_code_user_id, 
+      regist_time, regist_source, creator, 
+      create_time, operator, operate_time
+      )
+    values (#{userId,jdbcType=INTEGER}, #{userRole,jdbcType=VARCHAR}, #{userType,jdbcType=VARCHAR}, 
+      #{username,jdbcType=VARCHAR}, #{loginPwd,jdbcType=VARCHAR}, #{partnerRecommendCode,jdbcType=VARCHAR}, 
+      #{customerRecommendCode,jdbcType=VARCHAR}, #{organizationChannelId,jdbcType=INTEGER}, 
+      #{organizationAreaId,jdbcType=INTEGER}, #{userStatus,jdbcType=CHAR}, #{partnerTime,jdbcType=TIMESTAMP}, 
+      #{inputInvitationCode,jdbcType=VARCHAR}, #{parentUserId,jdbcType=INTEGER}, #{isPlatformInvite,jdbcType=CHAR}, 
+      #{inviteShareType,jdbcType=CHAR}, #{superiorRecommendCodeUserId,jdbcType=INTEGER}, 
+      #{onSuperiorRecommendCodeUserId,jdbcType=INTEGER}, #{teamRecommendCodeUserId,jdbcType=INTEGER}, 
+      #{registTime,jdbcType=TIMESTAMP}, #{registSource,jdbcType=VARCHAR}, #{creator,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{operator,jdbcType=INTEGER}, #{operateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.huizhongcf.partner.model.LoginUser">
+    insert into t_login_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="userRole != null">
+        user_role,
+      </if>
+      <if test="userType != null">
+        user_type,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="loginPwd != null">
+        login_pwd,
+      </if>
+      <if test="partnerRecommendCode != null">
+        partner_recommend_code,
+      </if>
+      <if test="customerRecommendCode != null">
+        customer_recommend_code,
+      </if>
+      <if test="organizationChannelId != null">
+        organization_channel_id,
+      </if>
+      <if test="organizationAreaId != null">
+        organization_area_id,
+      </if>
+      <if test="userStatus != null">
+        user_status,
+      </if>
+      <if test="partnerTime != null">
+        partner_time,
+      </if>
+      <if test="inputInvitationCode != null">
+        input_invitation_code,
+      </if>
+      <if test="parentUserId != null">
+        parent_user_id,
+      </if>
+      <if test="isPlatformInvite != null">
+        is_platform_invite,
+      </if>
+      <if test="inviteShareType != null">
+        invite_share_type,
+      </if>
+      <if test="superiorRecommendCodeUserId != null">
+        superior_recommend_code_user_id,
+      </if>
+      <if test="onSuperiorRecommendCodeUserId != null">
+        on_superior_recommend_code_user_id,
+      </if>
+      <if test="teamRecommendCodeUserId != null">
+        team_recommend_code_user_id,
+      </if>
+      <if test="registTime != null">
+        regist_time,
+      </if>
+      <if test="registSource != null">
+        regist_source,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="operator != null">
+        operator,
+      </if>
+      <if test="operateTime != null">
+        operate_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userRole != null">
+        #{userRole,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null">
+        #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPwd != null">
+        #{loginPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerRecommendCode != null">
+        #{partnerRecommendCode,jdbcType=VARCHAR},
+      </if>
+      <if test="customerRecommendCode != null">
+        #{customerRecommendCode,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationChannelId != null">
+        #{organizationChannelId,jdbcType=INTEGER},
+      </if>
+      <if test="organizationAreaId != null">
+        #{organizationAreaId,jdbcType=INTEGER},
+      </if>
+      <if test="userStatus != null">
+        #{userStatus,jdbcType=CHAR},
+      </if>
+      <if test="partnerTime != null">
+        #{partnerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="inputInvitationCode != null">
+        #{inputInvitationCode,jdbcType=VARCHAR},
+      </if>
+      <if test="parentUserId != null">
+        #{parentUserId,jdbcType=INTEGER},
+      </if>
+      <if test="isPlatformInvite != null">
+        #{isPlatformInvite,jdbcType=CHAR},
+      </if>
+      <if test="inviteShareType != null">
+        #{inviteShareType,jdbcType=CHAR},
+      </if>
+      <if test="superiorRecommendCodeUserId != null">
+        #{superiorRecommendCodeUserId,jdbcType=INTEGER},
+      </if>
+      <if test="onSuperiorRecommendCodeUserId != null">
+        #{onSuperiorRecommendCodeUserId,jdbcType=INTEGER},
+      </if>
+      <if test="teamRecommendCodeUserId != null">
+        #{teamRecommendCodeUserId,jdbcType=INTEGER},
+      </if>
+      <if test="registTime != null">
+        #{registTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="registSource != null">
+        #{registSource,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null">
+        #{operator,jdbcType=INTEGER},
+      </if>
+      <if test="operateTime != null">
+        #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.huizhongcf.partner.model.LoginUser">
+    update t_login_user
+    <set>
+      <if test="userRole != null">
+        user_role = #{userRole,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null">
+        user_type = #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPwd != null">
+        login_pwd = #{loginPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerRecommendCode != null">
+        partner_recommend_code = #{partnerRecommendCode,jdbcType=VARCHAR},
+      </if>
+      <if test="customerRecommendCode != null">
+        customer_recommend_code = #{customerRecommendCode,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationChannelId != null">
+        organization_channel_id = #{organizationChannelId,jdbcType=INTEGER},
+      </if>
+      <if test="organizationAreaId != null">
+        organization_area_id = #{organizationAreaId,jdbcType=INTEGER},
+      </if>
+      <if test="userStatus != null">
+        user_status = #{userStatus,jdbcType=CHAR},
+      </if>
+      <if test="partnerTime != null">
+        partner_time = #{partnerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="inputInvitationCode != null">
+        input_invitation_code = #{inputInvitationCode,jdbcType=VARCHAR},
+      </if>
+      <if test="parentUserId != null">
+        parent_user_id = #{parentUserId,jdbcType=INTEGER},
+      </if>
+      <if test="isPlatformInvite != null">
+        is_platform_invite = #{isPlatformInvite,jdbcType=CHAR},
+      </if>
+      <if test="inviteShareType != null">
+        invite_share_type = #{inviteShareType,jdbcType=CHAR},
+      </if>
+      <if test="superiorRecommendCodeUserId != null">
+        superior_recommend_code_user_id = #{superiorRecommendCodeUserId,jdbcType=INTEGER},
+      </if>
+      <if test="onSuperiorRecommendCodeUserId != null">
+        on_superior_recommend_code_user_id = #{onSuperiorRecommendCodeUserId,jdbcType=INTEGER},
+      </if>
+      <if test="teamRecommendCodeUserId != null">
+        team_recommend_code_user_id = #{teamRecommendCodeUserId,jdbcType=INTEGER},
+      </if>
+      <if test="registTime != null">
+        regist_time = #{registTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="registSource != null">
+        regist_source = #{registSource,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null">
+        operator = #{operator,jdbcType=INTEGER},
+      </if>
+      <if test="operateTime != null">
+        operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.huizhongcf.partner.model.LoginUser">
+    update t_login_user
+    set user_role = #{userRole,jdbcType=VARCHAR},
+      user_type = #{userType,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      login_pwd = #{loginPwd,jdbcType=VARCHAR},
+      partner_recommend_code = #{partnerRecommendCode,jdbcType=VARCHAR},
+      customer_recommend_code = #{customerRecommendCode,jdbcType=VARCHAR},
+      organization_channel_id = #{organizationChannelId,jdbcType=INTEGER},
+      organization_area_id = #{organizationAreaId,jdbcType=INTEGER},
+      user_status = #{userStatus,jdbcType=CHAR},
+      partner_time = #{partnerTime,jdbcType=TIMESTAMP},
+      input_invitation_code = #{inputInvitationCode,jdbcType=VARCHAR},
+      parent_user_id = #{parentUserId,jdbcType=INTEGER},
+      is_platform_invite = #{isPlatformInvite,jdbcType=CHAR},
+      invite_share_type = #{inviteShareType,jdbcType=CHAR},
+      superior_recommend_code_user_id = #{superiorRecommendCodeUserId,jdbcType=INTEGER},
+      on_superior_recommend_code_user_id = #{onSuperiorRecommendCodeUserId,jdbcType=INTEGER},
+      team_recommend_code_user_id = #{teamRecommendCodeUserId,jdbcType=INTEGER},
+      regist_time = #{registTime,jdbcType=TIMESTAMP},
+      regist_source = #{registSource,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      operator = #{operator,jdbcType=INTEGER},
+      operate_time = #{operateTime,jdbcType=TIMESTAMP}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  
+  <!-- 员工列表动态查询条件 -->
+  <sql id="dynamicPageWhere">
+  	<if test="realName != null">
+  		and ui.real_name like '${realName}%'
+ 	</if>
+ 	<if test="username != null">
+  		and lu.username = #{username}
+ 	</if>
+ 	<if test="userRole != null">
+  		and lu.user_role =#{userRole}
+ 	</if>
+ 	<if test="userType != null">
+  		and lu.user_type= #{userType}
+ 	</if>
+ 	<if test="organizationChannelId != null">
+  		and lu.organization_channel_id= #{organizationChannelId}
+ 	</if>
+ 	<if test="organizationAreaId != null">
+  		and lu.organization_area_id= #{organizationAreaId}
+ 	</if>
+ 	<if test="parentName != null">
+  		and plu.real_name like '${parentName}'
+ 	</if>
+ 	<if test="parentUsername != null">
+  		and plu.username like '${parentUsername}'
+ 	</if>
+ 	<if test="parentRealName != null">
+  		and t.real_name like '${parentRealName}'
+ 	</if>
+ 	<if test="parentUserRole != null">
+  		and t.user_role = #{parentUserRole}
+ 	</if>
+ 	<if test="userStatus != null">
+  		and lu.user_status = #{userStatus}
+ 	</if>
+ 	<if test="customerRecommendCode != null">
+  		and plu.customer_recommend_code = #{customerRecommendCode}
+  		and lu.user_role ='20'
+ 	</if>
+ 	<if test="partnerRecommendCode != null">
+  		and plu.partner_recommend_code = #{partnerRecommendCode}
+  		and lu.user_role ='10'
+ 	</if>
+ 	<if test="min_change_partner_time != null">
+ 		<![CDATA[
+  			and DATE_FORMAT(lu.partner_time ,'%Y-%m-%d') >= #{min_change_partner_time}
+ 		]]>
+ 	</if>
+ 	<if test="max_change_partner_time != null">
+ 		<![CDATA[
+	  		and DATE_FORMAT(lu.partner_time ,'%Y-%m-%d') <= #{max_change_partner_time}
+ 		]]>
+ 	</if>
+ 	<if test="min_regist_time != null">
+ 		<![CDATA[
+  			and DATE_FORMAT(lu.regist_time ,'%Y-%m-%d') >= #{min_regist_time}
+ 		]]>
+ 	</if>
+ 	<if test="max_regist_time != null">
+ 		<![CDATA[
+	  		and DATE_FORMAT(lu.regist_time ,'%Y-%m-%d') <= #{max_regist_time}
+ 		]]>
+ 	</if>
+  </sql>
+  
+  <!-- 员工列表分页 -->
+  <select id="findAllRetMapByPage" resultType="hashmap" parameterType="hashmap">
+  	SELECT
+  		lu.user_id,
+		lu.parent_user_id,
+		ui.real_name,
+		lu.username,
+		lu.user_role,
+		lu.user_type,
+		(SELECT	sd.dict_name FROM	system_dict sd	WHERE	sd.dict_type = 'USER_ROLE' AND sd.dict_code = lu.user_role) user_role_name,
+		(SELECT	sd.dict_name FROM	system_dict sd	WHERE	sd.dict_type = 'USER_TYPE' AND sd.dict_code = lu.user_type) user_type_name,
+		lu.organization_channel_id,
+		lu.organization_area_id,
+		(SELECT p.organization_name FROM	t_partner_organization p WHERE p.organization_id = lu.organization_channel_id) organization_channel_id_name,
+		(SELECT	p.organization_name	FROM	t_partner_organization p WHERE p.organization_id = lu.organization_area_id) organization_area_id_name,
+		t.real_name parent_real_name,
+		plu.username parent_username,
+		t.user_role parent_user_role,
+		(SELECT	sd.dict_name FROM	system_dict sd	WHERE	sd.dict_type = 'USER_ROLE' AND sd.dict_code = t.user_role) parent_user_role_name,
+		CASE when lu.user_role = '20' then plu.customer_recommend_code ELSE plu.partner_recommend_code end as invitation_code,
+		plu.customer_recommend_code,
+		plu.partner_recommend_code,
+		plu.real_name parent_name,
+		lu.input_invitation_code,
+		lu.superior_recommend_code_user_id,
+		lu.partner_time,
+		lu.regist_time,
+		lu.user_status,
+		(
+			SELECT
+				sd.dict_name
+			FROM
+				system_dict sd
+			WHERE
+				sd.dict_type = 'USER_STATUS'
+			AND sd.dict_code = lu.user_status
+		) user_status_name
+	FROM
+		t_login_user lu
+	LEFT JOIN t_user_info ui ON lu.user_id = ui.user_id
+	LEFT JOIN (
+		SELECT
+			u.real_name,
+			l.username,
+			l.user_role,
+			l.user_type,
+			l.user_id
+		
+		FROM
+			t_login_user l
+		LEFT JOIN t_user_info u ON l.user_id = u.user_id
+	) t ON t.user_id = lu.parent_user_id
+	LEFT JOIN (
+		SELECT
+			u.real_name,
+			l.username,
+			l.user_role,
+			l.user_type,
+			l.user_id,
+			l.customer_recommend_code,
+			l.partner_recommend_code
+		FROM
+			t_login_user l
+		LEFT JOIN t_user_info u ON l.user_id = u.user_id
+	) plu ON lu.superior_recommend_code_user_id = plu.user_id
+	WHERE 1 = 1 
+	<include refid="dynamicPageWhere"/>
+	order by lu.user_id,lu.partner_time
+	limit #{startIndex},#{pageSize}
+  </select>
+  
+   <!-- 员工列表分页总数 -->
+  <select id="findAllByPageCount" resultType="long" parameterType="hashmap">
+  	SELECT
+		count(lu.user_id)
+	FROM
+		t_login_user lu
+	LEFT JOIN t_user_info ui ON lu.user_id = ui.user_id
+	LEFT JOIN (
+		SELECT
+			u.real_name,
+			l.username,
+			l.user_role,
+			l.user_type,
+			l.user_id
+		FROM
+			t_login_user l
+		LEFT JOIN t_user_info u ON l.user_id = u.user_id
+	) t ON t.user_id = lu.parent_user_id
+	LEFT JOIN (
+		SELECT
+			u.real_name,
+			l.username,
+			l.user_role,
+			l.user_type,
+			l.user_id,
+			l.customer_recommend_code,
+			l.partner_recommend_code
+		FROM
+			t_login_user l
+		LEFT JOIN t_user_info u ON l.user_id = u.user_id
+	) plu ON lu.superior_recommend_code_user_id = plu.user_id
+	WHERE 1 = 1
+	<include refid="dynamicPageWhere"/>
+  </select>
+  
+  <!-- 根据用户主键查询信息 -->
+  <select id="selectByUserId" parameterType="java.lang.Integer" resultType="hashmap">
+  	SELECT
+		lu.user_id,
+		lu.partner_time,
+		ui.real_name,
+		lu.username,
+		lu.user_role,
+		lu.user_type,
+		lu.user_status,
+		lu.customer_recommend_code,
+		lu.partner_recommend_code,
+		lu.superior_recommend_code_user_id,
+		lu.team_recommend_code_user_id,
+		(SELECT	sd.dict_name FROM	system_dict sd	WHERE	sd.dict_type = 'USER_ROLE' AND sd.dict_code = lu.user_role) user_role_name,
+		(SELECT	sd.dict_name FROM	system_dict sd	WHERE	sd.dict_type = 'USER_TYPE' AND sd.dict_code = lu.user_type) user_type_name,
+		<!-- lu.superior_recommend_code_user_id as invitation_code, -->
+		CASE when lu.user_role = '20' then plu.customer_recommend_code ELSE plu.partner_recommend_code end as invitation_code,
+		lu.organization_channel_id,
+		lu.organization_area_id,
+		(SELECT p.organization_name FROM	t_partner_organization p WHERE p.organization_id = lu.organization_channel_id) organization_channel_id_name,
+		(SELECT	p.organization_name	FROM	t_partner_organization p WHERE p.organization_id = lu.organization_area_id) organization_area_id_name,
+		(SELECT	sd.dict_name FROM	system_dict sd	WHERE	sd.dict_type = 'USER_STATUS' AND sd.dict_code = lu.user_status) user_status_name
+	FROM
+		t_login_user lu
+	LEFT JOIN t_user_info ui ON lu.user_id = ui.user_id
+	left JOIN t_login_user plu ON lu.superior_recommend_code_user_id = plu.user_id
+	where 1=1 and lu.user_id = #{userId}
+	
+  </select>
+  
+  
+  <!-- 异常用户列表动态查询条件 -->
+  <sql id="dynamicExceptionPageWhere">
+  	<if test="realName != null">
+  		and ui.real_name like '${realName}%'
+ 	</if>
+ 	<if test="username != null">
+  		and lu.username =#{username}
+ 	</if>
+ 	<if test="userStatus != null">
+  		and lu.user_status = #{userStatus}
+ 	</if>
+ 	<if test="inputInvitationCode != null">
+  		and lu.input_invitation_code like '${inputInvitationCode}'
+ 	</if>
+ 	<if test="min_change_partner_time != null">
+ 		<![CDATA[
+  			and DATE_FORMAT(lu.partner_time ,'%Y-%m-%d') >= #{min_change_partner_time}
+ 		]]>
+ 	</if>
+ 	<if test="max_change_partner_time != null">
+ 		<![CDATA[
+	  		and DATE_FORMAT(lu.partner_time ,'%Y-%m-%d') <= #{max_change_partner_time}
+ 		]]>
+ 	</if>
+ 	<if test="min_regist_time != null">
+ 		<![CDATA[
+  			and DATE_FORMAT(lu.regist_time ,'%Y-%m-%d') >= #{min_regist_time}
+ 		]]>
+ 	</if>
+ 	<if test="max_regist_time != null">
+ 		<![CDATA[
+	  		and DATE_FORMAT(lu.regist_time ,'%Y-%m-%d') <= #{max_regist_time}
+ 		]]>
+ 	</if>
+  </sql>
+  
+  <!-- 异常用户数据分页 -->
+  <select id="findAllExceptionLoginUser" resultType="hashmap" parameterType="hashmap">
+  	SELECT
+		ui.real_name,
+		lu.user_role,
+		(SELECT	sd.dict_name FROM	system_dict sd	WHERE	sd.dict_type = 'USER_ROLE' AND sd.dict_code = lu.user_role) user_role_name,
+		lu.username,
+		lu.input_invitation_code,
+		lu.partner_time,
+		lu.regist_time,
+		lu.user_id
+	FROM
+		t_login_user lu
+	LEFT JOIN t_user_info ui ON lu.user_id = ui.user_id
+	where lu.parent_user_id is NULL and lu.is_platform_invite='0'
+	<include refid="dynamicExceptionPageWhere"/>
+	order by lu.partner_time
+	limit #{startIndex},#{pageSize}
+  </select>
+  
+  <!-- 异常用户数据条数 -->
+  <select id="findAllExceptionLoginUserCount" resultType="long" parameterType="hashmap">
+  	SELECT
+		count(lu.user_id)
+	FROM
+		t_login_user lu
+	LEFT JOIN t_user_info ui ON lu.user_id = ui.user_id
+	where lu.parent_user_id is NULL and lu.is_platform_invite='0'
+	<include refid="dynamicExceptionPageWhere"/>
+  </select>
+  
+  <!-- 查看邀请用户分页列表-->
+  <select id="findAllLoginUserList" resultType="hashmap" parameterType="hashmap">
+  	SELECT
+		ui.real_name,
+		lu.username,
+		lu.input_invitation_code,
+		lu.partner_time,
+		lu.regist_time,
+		(SELECT	sd.dict_name FROM	system_dict sd	WHERE	sd.dict_type = 'USER_STATUS' AND sd.dict_code = lu.user_status) user_status_name
+	FROM
+		t_login_user lu
+	LEFT JOIN t_user_info ui ON lu.user_id = ui.user_id
+	where lu.parent_user_id = #{userId}
+	<include refid="dynamicExceptionPageWhere"/>
+	order by lu.partner_time
+	limit #{startIndex},#{pageSize}
+  </select>
+  
+  <!-- 查看邀请用户条数 -->
+  <select id="findAllLoginUserListCount" resultType="long" parameterType="hashmap">
+  	SELECT
+		count(lu.user_id)
+	FROM
+		t_login_user lu
+	LEFT JOIN t_user_info ui ON lu.user_id = ui.user_id
+	where lu.parent_user_id = #{userId}
+	<include refid="dynamicExceptionPageWhere"/>
+  </select>
+  
+  <!-- 导出用户数据列表 -->
+  <select id="exportLoginUsers" resultType="hashmap" parameterType="hashmap">
+  	SELECT
+  		lu.user_id,
+		lu.parent_user_id,
+		ui.real_name,
+		lu.username,
+		lu.user_role,
+		lu.user_type,
+		(SELECT	sd.dict_name FROM	system_dict sd	WHERE	sd.dict_type = 'USER_ROLE' AND sd.dict_code = lu.user_role) user_role_name,
+		(SELECT	sd.dict_name FROM	system_dict sd	WHERE	sd.dict_type = 'USER_TYPE' AND sd.dict_code = lu.user_type) user_type_name,
+		lu.organization_channel_id,
+		lu.organization_area_id,
+		(SELECT p.organization_name FROM	t_partner_organization p WHERE p.organization_id = lu.organization_channel_id) organization_channel_id_name,
+		(SELECT	p.organization_name	FROM	t_partner_organization p WHERE p.organization_id = lu.organization_area_id) organization_area_id_name,
+		t.real_name parent_real_name,
+		plu.username parent_username,
+		t.user_role parent_user_role,
+		(SELECT	sd.dict_name FROM	system_dict sd	WHERE	sd.dict_type = 'USER_ROLE' AND sd.dict_code = t.user_role) parent_user_role_name,
+		CASE when lu.user_id = '20' then plu.customer_recommend_code ELSE plu.partner_recommend_code end as invitation_code,
+		plu.customer_recommend_code,
+		plu.partner_recommend_code,
+		plu.real_name parent_name,
+		lu.input_invitation_code,
+		lu.superior_recommend_code_user_id,
+		lu.partner_time,
+		lu.regist_time,
+		lu.user_status,
+		(
+			SELECT
+				sd.dict_name
+			FROM
+				system_dict sd
+			WHERE
+				sd.dict_type = 'USER_STATUS'
+			AND sd.dict_code = lu.user_status
+		) user_status_name
+	FROM
+		t_login_user lu
+	LEFT JOIN t_user_info ui ON lu.user_id = ui.user_id
+	LEFT JOIN (
+		SELECT
+			u.real_name,
+			l.username,
+			l.user_role,
+			l.user_type,
+			l.user_id
+		
+		FROM
+			t_login_user l
+		LEFT JOIN t_user_info u ON l.user_id = u.user_id
+	) t ON t.user_id = lu.parent_user_id
+	LEFT JOIN (
+		SELECT
+			u.real_name,
+			l.username,
+			l.user_role,
+			l.user_type,
+			l.user_id,
+			l.customer_recommend_code,
+			l.partner_recommend_code
+		FROM
+			t_login_user l
+		LEFT JOIN t_user_info u ON l.user_id = u.user_id
+	) plu ON lu.superior_recommend_code_user_id = plu.user_id
+	WHERE 1 = 1 
+	<include refid="dynamicPageWhere"/>
+	order by lu.partner_time
+  </select>
+  
+   <!-- 导出查看邀请用户列表-->
+  <select id="exportInviteLoginUser" resultType="hashmap" parameterType="hashmap">
+  	SELECT
+		ui.real_name,
+		lu.username,
+		lu.input_invitation_code,
+		lu.partner_time,
+		lu.regist_time,
+		(SELECT	sd.dict_name FROM	system_dict sd	WHERE	sd.dict_type = 'USER_STATUS' AND sd.dict_code = lu.user_status) user_status_name
+	FROM
+		t_login_user lu
+	LEFT JOIN t_user_info ui ON lu.user_id = ui.user_id
+	where lu.parent_user_id = #{userId}
+	<include refid="dynamicExceptionPageWhere"/>
+	order by lu.partner_time
+  </select>
+  
+  <!-- 查看下级用户数据动态查询条件 -->
+  <sql id="dynamicPartnerUserPageWhere">
+  	<if test="userId != null">
+  		and user_id = #{userId}
+ 	</if>
+  	<if test="realName != null">
+  		and real_name like '${realName}%'
+ 	</if>
+ 	<if test="username != null">
+  		and username = #{username}
+ 	</if>
+ 	<if test="userStatus != null">
+  		and user_status = #{userStatus}
+ 	</if>
+ 	<if test="userRole != null">
+  		and user_role = #{userRole}
+ 	</if>
+ 	<if test="inviteType != null">
+  		and invite_type = #{inviteType}
+ 	</if>
+ 	<if test="min_change_partner_time != null">
+ 		<![CDATA[
+  			and DATE_FORMAT(partner_time ,'%Y-%m-%d') >= #{min_change_partner_time}
+ 		]]>
+ 	</if>
+ 	<if test="max_change_partner_time != null">
+ 		<![CDATA[
+	  		and DATE_FORMAT(partner_time ,'%Y-%m-%d') <= #{max_change_partner_time}
+ 		]]>
+ 	</if>
+  </sql>
+  
+  <!-- 查看下级用户数据分页列表 -->
+  <select id="getLoginPartnerUserList" resultType="hashmap" parameterType="hashmap">
+  	select user_id,real_name,username,user_role,user_role_name,user_type,parent_user_id,
+  		partner_time,invite_type,parent_real_name,parent_username,invitation_code,
+  		user_status,user_status_name
+  	 from (
+	(SELECT
+		pl.user_id,
+		ui.real_name,
+		lu.username,
+		lu.user_role,
+		(SELECT	sd.dict_name FROM	system_dict sd	WHERE	sd.dict_type = 'USER_ROLE' AND sd.dict_code = lu.user_role) user_role_name,
+		lu.user_type,
+		lu.parent_user_id,
+		lu.partner_time,
+		CASE when 1=1 then '1' end as invite_type,
+		pl.real_name parent_real_name,
+		pl.username parent_username,
+		CASE when lu.user_role = '20' then pl.customer_recommend_code ELSE pl.partner_recommend_code end as invitation_code,
+		lu.user_status,
+		(SELECT	sd.dict_name FROM	system_dict sd	WHERE	sd.dict_type = 'USER_STATUS' AND sd.dict_code = lu.user_status) user_status_name
+	FROM
+		t_login_user lu
+	LEFT JOIN t_user_info ui ON lu.user_id = ui.user_id
+	JOIN (
+		SELECT
+				u.real_name,
+				l.username,
+				l.user_role,
+				l.user_type,
+				l.user_id,
+				l.customer_recommend_code,
+				l.partner_recommend_code
+			FROM
+				t_login_user l
+			LEFT JOIN t_user_info u ON l.user_id = u.user_id
+	)pl ON lu.superior_recommend_code_user_id = pl.user_id )
+	
+	UNION
+	
+	(SELECT
+		pl.user_id,
+		ui.real_name,
+		lu.username,
+		lu.user_role,
+		(SELECT	sd.dict_name FROM	system_dict sd	WHERE	sd.dict_type = 'USER_ROLE' AND sd.dict_code = lu.user_role) user_role_name,
+		lu.user_type,
+		lu.parent_user_id,
+		lu.partner_time,
+		CASE when 1=1 then '2' end as invite_type,
+		(select u.username from t_login_user u where u.user_id = lu.superior_recommend_code_user_id) parent_username,
+		(select ui.real_name from t_login_user u left join t_user_info ui on u.user_id = ui.user_id where u.user_id = lu.superior_recommend_code_user_id) parent_real_name,
+		
+ 		<!-- pl.real_name parent_real_name,	  	pl.username parent_username, -->
+ 		<!-- CASE when lu.user_role = '20' then pl.customer_recommend_code ELSE pl.partner_recommend_code end as invitation_code,-->
+		CASE when lu.user_role = '20' then 
+			(select u.customer_recommend_code from t_login_user u where u.user_id = lu.superior_recommend_code_user_id)
+		ELSE (select u.partner_recommend_code from t_login_user u where u.user_id = lu.superior_recommend_code_user_id) end as invitation_code,
+
+		lu.user_status,
+		(SELECT	sd.dict_name FROM	system_dict sd	WHERE	sd.dict_type = 'USER_STATUS' AND sd.dict_code = lu.user_status) user_status_name
+	FROM
+		t_login_user lu
+	LEFT JOIN t_user_info ui ON lu.user_id = ui.user_id
+	JOIN (
+		SELECT
+				u.real_name,
+				l.username,
+				l.user_role,
+				l.user_type,
+				l.user_id,
+				l.customer_recommend_code,
+				l.partner_recommend_code
+			FROM
+				t_login_user l
+			LEFT JOIN t_user_info u ON l.user_id = u.user_id
+	)pl ON lu.on_superior_recommend_code_user_id = pl.user_id)) ss 
+	WHERE 1=1
+	<include refid="dynamicPartnerUserPageWhere"/>
+	GROUP BY username
+	order by partner_time
+	limit #{startIndex},#{pageSize}
+  </select>
+  
+  <select id="getLoginPartnerUserCount" resultType="long" parameterType="hashmap">
+	  	select count(1) from(
+		select user_id,real_name,username,user_role,user_role_name,user_type,parent_user_id,
+	  		partner_time,invite_type,parent_real_name,parent_username,invitation_code,
+	  		user_status,user_status_name
+	  	 from (
+		(SELECT
+			pl.user_id,
+			ui.real_name,
+			lu.username,
+			lu.user_role,
+			(SELECT	sd.dict_name FROM	system_dict sd	WHERE	sd.dict_type = 'USER_ROLE' AND sd.dict_code = lu.user_role) user_role_name,
+			lu.user_type,
+			lu.parent_user_id,
+			lu.partner_time,
+			CASE when 1=1 then '1' end as invite_type,
+			pl.real_name parent_real_name,
+			pl.username parent_username,
+			CASE when lu.user_role = '20' then pl.customer_recommend_code ELSE pl.partner_recommend_code end as invitation_code,
+			lu.user_status,
+			(SELECT	sd.dict_name FROM	system_dict sd	WHERE	sd.dict_type = 'USER_STATUS' AND sd.dict_code = lu.user_status) user_status_name
+		FROM
+			t_login_user lu
+		LEFT JOIN t_user_info ui ON lu.user_id = ui.user_id
+		JOIN (
+			SELECT
+					u.real_name,
+					l.username,
+					l.user_role,
+					l.user_type,
+					l.user_id,
+					l.customer_recommend_code,
+					l.partner_recommend_code
+				FROM
+					t_login_user l
+				LEFT JOIN t_user_info u ON l.user_id = u.user_id
+		)pl ON lu.superior_recommend_code_user_id = pl.user_id )
+		
+		UNION
+		
+		(SELECT
+		pl.user_id,
+		ui.real_name,
+		lu.username,
+		lu.user_role,
+		(SELECT	sd.dict_name FROM	system_dict sd	WHERE	sd.dict_type = 'USER_ROLE' AND sd.dict_code = lu.user_role) user_role_name,
+		lu.user_type,
+		lu.parent_user_id,
+		lu.partner_time,
+		CASE when 1=1 then '2' end as invite_type,
+		(select u.username from t_login_user u where u.user_id = lu.superior_recommend_code_user_id) parent_username,
+		(select ui.real_name from t_login_user u left join t_user_info ui on u.user_id = ui.user_id where u.user_id = lu.superior_recommend_code_user_id) parent_real_name,
+		
+		<!-- pl.real_name parent_real_name,	  	pl.username parent_username, -->
+		<!-- CASE when lu.user_role = '20' then pl.customer_recommend_code ELSE pl.partner_recommend_code end as invitation_code,-->
+		CASE when lu.user_role = '20' then 
+			(select u.customer_recommend_code from t_login_user u where u.user_id = lu.superior_recommend_code_user_id)
+		ELSE (select u.partner_recommend_code from t_login_user u where u.user_id = lu.superior_recommend_code_user_id) end as invitation_code,
+
+		lu.user_status,
+		(SELECT	sd.dict_name FROM	system_dict sd	WHERE	sd.dict_type = 'USER_STATUS' AND sd.dict_code = lu.user_status) user_status_name
+	FROM
+		t_login_user lu
+	LEFT JOIN t_user_info ui ON lu.user_id = ui.user_id
+	JOIN (
+		SELECT
+				u.real_name,
+				l.username,
+				l.user_role,
+				l.user_type,
+				l.user_id,
+				l.customer_recommend_code,
+				l.partner_recommend_code
+			FROM
+				t_login_user l
+			LEFT JOIN t_user_info u ON l.user_id = u.user_id
+		)pl ON lu.on_superior_recommend_code_user_id = pl.user_id)) ss 
+	)t
+	where 1=1
+	<include refid="dynamicPartnerUserPageWhere"/>
+  </select>
+  <!-- 团队管理者的 -->
+  <select id="getTeamLoginPartnerUserList" resultType="hashmap" parameterType="hashmap">
+  	select user_id,real_name,username,user_role,user_role_name,user_type,parent_user_id,
+  		partner_time,invite_type,parent_real_name,parent_username,invitation_code,
+  		user_status,user_status_name
+  	 from (
+	(SELECT
+		pl.user_id,
+		ui.real_name,
+		lu.username,
+		lu.user_role,
+		(SELECT	sd.dict_name FROM	system_dict sd	WHERE	sd.dict_type = 'USER_ROLE' AND sd.dict_code = lu.user_role) user_role_name,
+		lu.user_type,
+		lu.parent_user_id,
+		lu.partner_time,
+		(select u.username from t_login_user u where u.user_id = lu.superior_recommend_code_user_id) parent_username,
+		(select ui.real_name from t_login_user u left join t_user_info ui on u.user_id = ui.user_id where u.user_id = lu.superior_recommend_code_user_id) parent_real_name,
+		
+		CASE when lu.superior_recommend_code_user_id = pl.user_id then '1' ELSE '2' end as invite_type,
+		
+		CASE when lu.user_role = '20' then 
+			(select u.customer_recommend_code from t_login_user u where u.user_id = lu.superior_recommend_code_user_id)
+		ELSE (select u.partner_recommend_code from t_login_user u where u.user_id = lu.superior_recommend_code_user_id) end as invitation_code,
+		lu.user_status,
+		(SELECT	sd.dict_name FROM	system_dict sd	WHERE	sd.dict_type = 'USER_STATUS' AND sd.dict_code = lu.user_status) user_status_name
+	FROM
+		t_login_user lu
+	LEFT JOIN t_user_info ui ON lu.user_id = ui.user_id
+	JOIN (
+		SELECT
+				u.real_name,
+				l.username,
+				l.user_role,
+				l.user_type,
+				l.user_id,
+				l.customer_recommend_code,
+				l.partner_recommend_code
+			FROM
+				t_login_user l
+			LEFT JOIN t_user_info u ON l.user_id = u.user_id
+	)pl ON lu.team_recommend_code_user_id = pl.user_id) )tt
+	where parent_user_id is not NULL
+	<include refid="dynamicPartnerUserPageWhere"/>
+	order by partner_time
+	limit #{startIndex},#{pageSize}
+  </select>
+  <!-- 团队管理者 -->
+  <select id="getTeamLoginPartnerUserCount" resultType="long" parameterType="hashmap">
+  	select count(1)
+  	 from (
+	(SELECT
+		pl.user_id,
+		ui.real_name,
+		lu.username,
+		lu.user_role,
+		(SELECT	sd.dict_name FROM	system_dict sd	WHERE	sd.dict_type = 'USER_ROLE' AND sd.dict_code = lu.user_role) user_role_name,
+		lu.user_type,
+		lu.parent_user_id,
+		lu.partner_time,
+		(select u.username from t_login_user u where u.user_id = lu.superior_recommend_code_user_id) parent_username,
+		(select ui.real_name from t_login_user u left join t_user_info ui on u.user_id = ui.user_id where u.user_id = lu.superior_recommend_code_user_id) parent_real_name,
+		
+		CASE when lu.superior_recommend_code_user_id = pl.user_id then '1' ELSE '2' end as invite_type,
+		
+		CASE when lu.user_role = '20' then 
+			(select u.customer_recommend_code from t_login_user u where u.user_id = lu.superior_recommend_code_user_id)
+		ELSE (select u.partner_recommend_code from t_login_user u where u.user_id = lu.superior_recommend_code_user_id) end as invitation_code,
+		lu.user_status,
+		(SELECT	sd.dict_name FROM	system_dict sd	WHERE	sd.dict_type = 'USER_STATUS' AND sd.dict_code = lu.user_status) user_status_name
+	FROM
+		t_login_user lu
+	LEFT JOIN t_user_info ui ON lu.user_id = ui.user_id
+	JOIN (
+		SELECT
+				u.real_name,
+				l.username,
+				l.user_role,
+				l.user_type,
+				l.user_id,
+				l.customer_recommend_code,
+				l.partner_recommend_code
+			FROM
+				t_login_user l
+			LEFT JOIN t_user_info u ON l.user_id = u.user_id
+	)pl ON lu.team_recommend_code_user_id = pl.user_id ))tt
+	where parent_user_id is not NULL
+	<include refid="dynamicPartnerUserPageWhere"/>
+  </select>
+  
+   <!-- 导出查看下级用户数据列表 -->
+  <select id="exportLoginPartnerUserList" resultType="hashmap" parameterType="hashmap">
+  	select user_id,real_name,username,user_role,user_role_name,user_type,parent_user_id,
+  		partner_time,invite_type,parent_real_name,parent_username,invitation_code,
+  		user_status,user_status_name
+  	 from (
+	(SELECT
+		pl.user_id,
+		ui.real_name,
+		lu.username,
+		lu.user_role,
+		(SELECT	sd.dict_name FROM	system_dict sd	WHERE	sd.dict_type = 'USER_ROLE' AND sd.dict_code = lu.user_role) user_role_name,
+		lu.user_type,
+		lu.parent_user_id,
+		lu.partner_time,
+		CASE when 1=1 then '1' end as invite_type,
+		pl.real_name parent_real_name,
+		pl.username parent_username,
+		CASE when lu.user_role = '20' then pl.customer_recommend_code ELSE pl.partner_recommend_code end as invitation_code,
+		lu.user_status,
+		(SELECT	sd.dict_name FROM	system_dict sd	WHERE	sd.dict_type = 'USER_STATUS' AND sd.dict_code = lu.user_status) user_status_name
+	FROM
+		t_login_user lu
+	LEFT JOIN t_user_info ui ON lu.user_id = ui.user_id
+	JOIN (
+		SELECT
+				u.real_name,
+				l.username,
+				l.user_role,
+				l.user_type,
+				l.user_id,
+				l.customer_recommend_code,
+				l.partner_recommend_code
+			FROM
+				t_login_user l
+			LEFT JOIN t_user_info u ON l.user_id = u.user_id
+	)pl ON lu.superior_recommend_code_user_id = pl.user_id )
+	
+	UNION
+	
+	(SELECT
+		pl.user_id,
+		ui.real_name,
+		lu.username,
+		lu.user_role,
+		(SELECT	sd.dict_name FROM	system_dict sd	WHERE	sd.dict_type = 'USER_ROLE' AND sd.dict_code = lu.user_role) user_role_name,
+		lu.user_type,
+		lu.parent_user_id,
+		lu.partner_time,
+		CASE when 1=1 then '2' end as invite_type,
+		(select u.username from t_login_user u where u.user_id = lu.superior_recommend_code_user_id) parent_username,
+		(select ui.real_name from t_login_user u left join t_user_info ui on u.user_id = ui.user_id where u.user_id = lu.superior_recommend_code_user_id) parent_real_name,
+		<!-- pl.real_name parent_real_name,	  	pl.username parent_username, -->
+		<!-- CASE when lu.user_role = '20' then pl.customer_recommend_code ELSE pl.partner_recommend_code end as invitation_code,-->
+		CASE when lu.user_role = '20' then 
+			(select u.customer_recommend_code from t_login_user u where u.user_id = lu.superior_recommend_code_user_id)
+		ELSE (select u.partner_recommend_code from t_login_user u where u.user_id = lu.superior_recommend_code_user_id) end as invitation_code,
+
+		lu.user_status,
+		(SELECT	sd.dict_name FROM	system_dict sd	WHERE	sd.dict_type = 'USER_STATUS' AND sd.dict_code = lu.user_status) user_status_name
+	FROM
+		t_login_user lu
+	LEFT JOIN t_user_info ui ON lu.user_id = ui.user_id
+	JOIN (
+		SELECT
+				u.real_name,
+				l.username,
+				l.user_role,
+				l.user_type,
+				l.user_id,
+				l.customer_recommend_code,
+				l.partner_recommend_code
+			FROM
+				t_login_user l
+			LEFT JOIN t_user_info u ON l.user_id = u.user_id
+	)pl ON lu.on_superior_recommend_code_user_id = pl.user_id)) ss 
+	WHERE 1=1
+	<include refid="dynamicPartnerUserPageWhere"/>
+	GROUP BY username
+	order by partner_time
+  </select>
+  <!-- 导出团队管理者的 -->
+  <select id="exportTeamLoginPartnerUserList" resultType="hashmap" parameterType="hashmap">
+  	select user_id,real_name,username,user_role,user_role_name,user_type,parent_user_id,
+  		partner_time,invite_type,parent_real_name,parent_username,invitation_code,
+  		user_status,user_status_name
+  	 from (
+	(SELECT
+		pl.user_id,
+		ui.real_name,
+		lu.username,
+		lu.user_role,
+		(SELECT	sd.dict_name FROM	system_dict sd	WHERE	sd.dict_type = 'USER_ROLE' AND sd.dict_code = lu.user_role) user_role_name,
+		lu.user_type,
+		lu.parent_user_id,
+		lu.partner_time,
+		(select u.username from t_login_user u where u.user_id = lu.superior_recommend_code_user_id) parent_username,
+		(select ui.real_name from t_login_user u left join t_user_info ui on u.user_id = ui.user_id where u.user_id = lu.superior_recommend_code_user_id) parent_real_name,
+		
+		CASE when lu.superior_recommend_code_user_id = pl.user_id then '1' ELSE '2' end as invite_type,
+		
+		CASE when lu.user_role = '20' then 
+			(select u.customer_recommend_code from t_login_user u where u.user_id = lu.superior_recommend_code_user_id)
+		ELSE (select u.partner_recommend_code from t_login_user u where u.user_id = lu.superior_recommend_code_user_id) end as invitation_code,
+		lu.user_status,
+		(SELECT	sd.dict_name FROM	system_dict sd	WHERE	sd.dict_type = 'USER_STATUS' AND sd.dict_code = lu.user_status) user_status_name
+	FROM
+		t_login_user lu
+	LEFT JOIN t_user_info ui ON lu.user_id = ui.user_id
+	JOIN (
+		SELECT
+				u.real_name,
+				l.username,
+				l.user_role,
+				l.user_type,
+				l.user_id,
+				l.customer_recommend_code,
+				l.partner_recommend_code
+			FROM
+				t_login_user l
+			LEFT JOIN t_user_info u ON l.user_id = u.user_id
+	)pl ON lu.team_recommend_code_user_id = pl.user_id) )tt
+	where parent_user_id is not NULL
+	<include refid="dynamicPartnerUserPageWhere"/>
+	order by partner_time
+  </select>
+  
+  <!-- 根据用户手机号或者用户邀请码查询用户信息 -->
+  <select id="getUserByPartnerRecommendCodeOrUsername" resultType="hashmap" parameterType="hashmap">
+  	SELECT
+		ui.real_name,
+		lu.username,
+		lu.user_role,
+		lu.user_type,
+		(SELECT	sd.dict_name FROM	system_dict sd	WHERE	sd.dict_type = 'USER_ROLE' AND sd.dict_code = lu.user_role) user_role_name,
+		(SELECT	sd.dict_name FROM	system_dict sd	WHERE	sd.dict_type = 'USER_TYPE' AND sd.dict_code = lu.user_type) user_type_name,
+		lu.user_id,
+		lu.partner_recommend_code
+	FROM
+		t_login_user lu
+	LEFT JOIN t_user_info ui ON lu.user_id = ui.user_id
+	WHERE 1=1
+	<if test="username != null">
+  		and lu.username = #{username}
+ 	</if>
+ 	<if test="partnerRecommendCode != null">
+  		and lu.partner_recommend_code = #{partnerRecommendCode}
+ 	</if>
+ 	<if test="customerRecommendCode != null">
+  		and lu.customer_recommend_code = #{customerRecommendCode}
+ 	</if>
+  </select>
+  
+  <!-- 根据用户业绩上级合伙人id查询用户信息 -->
+  <select id="getUserIdBySuperiorRecommendCodeUserId" resultMap="BaseResultMap" parameterType="com.huizhongcf.partner.model.LoginUser">
+  	SELECT
+		user_id
+	FROM
+		t_login_user
+	WHERE
+		superior_recommend_code_user_id = #{userId} and user_role='20'
+  </select>
+  
+  <!-- 根据角色是客户的user_id查询下级所有客户user_id -->
+  <select id="getChilUserIdByUserId" resultMap="BaseResultMap" parameterType="com.huizhongcf.partner.model.LoginUser">
+  	SELECT
+		user_id
+	FROM
+		t_login_user
+	WHERE
+		FIND_IN_SET(
+			user_id,
+			f_getChil_user_id (#{userId})
+		);
+  </select>
+  
+  
+ <!-- 推荐码动态查询条件 GDJ -->
+ <sql id="dynamicRecommendCodeSearch">
+ 	<if test="realName != null">
+	 	AND lu.real_name LIKE CONCAT(CONCAT('%', #{realName}), '%')
+	</if>
+	<if test="mobile != null">
+	 	AND lu.username LIKE CONCAT(CONCAT('%', #{mobile}), '%')
+	</if>
+	<if test="partnerRecommendCode != null">
+	 	AND lu.partner_recommend_code LIKE CONCAT(CONCAT('%',#{partnerRecommendCode}), '%')
+	</if>
+	<if test="customerRecommendCode != null">
+	 	AND lu.customer_recommend_code LIKE CONCAT(CONCAT('%',#{customerRecommendCode}), '%')
+	</if>
+	<if test="minCreateRecommendTime != null">
+ 		<![CDATA[
+  			and DATE_FORMAT(lu.create_time ,'%Y-%m-%d') >= #{minCreateRecommendTime}
+ 		]]>
+ 	</if>
+ 	<if test="maxCreateRecommendTime != null">
+ 		<![CDATA[
+	  		and DATE_FORMAT(lu.create_time,'%Y-%m-%d') <= #{maxCreateRecommendTime}
+ 		]]>
+ 	</if>
+ </sql> 
+ 
+ 
+  <!-- 合伙人推荐码管理页面分页 GDJ-->
+ <select id="findAllRecommendCodeInfo" resultType="hashmap" parameterType="hashmap">
+ 	SELECT lu.user_id,lu.real_name,lu.user_role_name,lu.username,lu.partner_recommend_code,lu.customer_recommend_code,lu.create_time FROM
+	(SELECT
+	 	u.user_id,ui.real_name,
+	 	(SELECT	sd.dict_name FROM system_dict sd WHERE sd.dict_type = 'user_role' AND sd.dict_code = u.user_role) user_role_name,
+	 	u.username,u.partner_recommend_code,
+	 	<![CDATA[
+		case when  u.partner_recommend_code is null
+		then (select tu.customer_recommend_code from t_login_user tu where tu.user_id = u.superior_recommend_code_user_id)
+		else u.customer_recommend_code end as customer_recommend_code
+		]]>
+		,u.create_time
+	FROM
+	 	t_login_user u
+	LEFT JOIN 
+		t_user_info ui ON u.user_id = ui.user_id) lu
+	WHERE
+	 		1=1
+	<include refid="dynamicRecommendCodeSearch"/>
+	 	ORDER BY lu.create_time DESC
+	LIMIT #{startIndex},#{pageSize}
+ </select>
+  <!-- 合伙人推荐码管理页面分页数量 GDJ-->
+ <select id="findAllRecommendCodeCount" resultType="long" parameterType="hashmap">
+ 	SELECT count(1) FROM 
+	(SELECT
+	 	u.user_id,ui.real_name,
+	 	(SELECT	sd.dict_name FROM system_dict sd WHERE sd.dict_type = 'user_role' AND sd.dict_code = u.user_role) user_role_name,
+	 	u.username,u.partner_recommend_code,
+	 	<![CDATA[
+		case when u.partner_recommend_code is null
+		then (select tu.customer_recommend_code from t_login_user tu where tu.user_id = u.superior_recommend_code_user_id)
+		else u.customer_recommend_code end as customer_recommend_code
+		]]>
+		,u.create_time
+	FROM
+	 	t_login_user u
+	LEFT JOIN 
+		t_user_info ui ON u.user_id = ui.user_id) lu
+	WHERE
+	 		1=1
+	<include refid="dynamicRecommendCodeSearch"/>
+ </select>
+ <!-- 推荐码导出全部使用 GDJ-->
+  <select id="exportAllRecommendCodeInfo" resultType="hashmap" parameterType="hashmap">
+ 	SELECT lu.user_id,lu.real_name,lu.user_role_name,lu.username,lu.partner_recommend_code,lu.customer_recommend_code,lu.create_time FROM
+	(SELECT
+	 	u.user_id,ui.real_name,
+	 	(SELECT	sd.dict_name FROM system_dict sd WHERE sd.dict_type = 'user_role' AND sd.dict_code = u.user_role) user_role_name,
+	 	u.username,u.partner_recommend_code,
+	 	<![CDATA[
+		case when  u.partner_recommend_code is null
+		then (select tu.customer_recommend_code from t_login_user tu where tu.user_id = u.superior_recommend_code_user_id)
+		else u.customer_recommend_code end as customer_recommend_code
+		]]>
+		,u.create_time
+	FROM
+	 	t_login_user u
+	LEFT JOIN 
+		t_user_info ui ON u.user_id = ui.user_id) lu
+	WHERE
+	 		1=1
+	<include refid="dynamicRecommendCodeSearch"/>
+	 	ORDER BY lu.create_time DESC
+ </select>
+ <!-- 推荐码导出选中使用 GDJ-->
+  <select id="exportSelectRecommendCodeInfo" resultType="hashmap" parameterType="hashmap">
+ 	SELECT lu.user_id,lu.real_name,lu.user_role_name,lu.username,lu.partner_recommend_code,lu.customer_recommend_code,lu.create_time FROM
+	(SELECT
+	 	u.user_id,ui.real_name,
+	 	(SELECT	sd.dict_name FROM system_dict sd WHERE sd.dict_type = 'user_role' AND sd.dict_code = u.user_role) user_role_name,
+	 	u.username,u.partner_recommend_code,
+	 	<![CDATA[
+		case when  u.partner_recommend_code is null
+		then (select tu.customer_recommend_code from t_login_user tu where tu.user_id = u.superior_recommend_code_user_id)
+		else u.customer_recommend_code end as customer_recommend_code
+		]]>
+		,u.create_time
+	FROM
+	 	t_login_user u
+	LEFT JOIN 
+		t_user_info ui ON u.user_id = ui.user_id) lu
+	WHERE
+	 		1=1
+	<if test = "selectIds != null and selectIds.length > 0">
+		 AND lu.user_id IN 
+		 <foreach collection="selectIds" open="(" close=")" item="userId" separator=",">
+		 	#{userId}
+		 </foreach> 
+	</if>
+	 	ORDER BY lu.create_time DESC
+ </select>
+</mapper>

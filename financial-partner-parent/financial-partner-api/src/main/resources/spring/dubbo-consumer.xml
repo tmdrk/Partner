@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans        
+    http://www.springframework.org/schema/beans/spring-beans.xsd        
+    http://code.alibabatech.com/schema/dubbo        
+    http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<dubbo:application name="financial-partner-api" />
+
+	<dubbo:registry address="${dubbo.zookeeper}"/>
+	<dubbo:consumer timeout="60000" check="false" />
+
+	<!-- demo 实例 -->
+	<dubbo:reference id="partnerService" interface="com.hui.zhong.cf.service.partner.service.PartnerService"/>
+	<!-- 保存订单集合，订单状态集合，用户实名认证信息 -->
+	<dubbo:reference id="partnerOrderService" interface="com.hui.zhong.cf.service.partner.service.PartnerOrderService"/>
+	<!-- 日志表  服务 -->
+	<dubbo:reference id="interfaceLogService" interface="com.hui.zhong.cf.service.partner.service.InterfaceLogService"/>
+</beans>

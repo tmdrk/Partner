@@ -1,0 +1,124 @@
+		 *{
+		      padding:0;
+		      margin:0;
+		  }
+		  a{
+		      text-decoration:none;
+		  }
+		  ul,li{
+		      list-style:none;
+		  } 
+		  .pic_storage{
+		      width:100%;
+		      padding:30px;
+		      box-sizing:border-box;
+		      margin:10px auto;
+		  }
+		  .pic_storage ul{
+		      overflow:hidden;
+		      padding-left:none;
+		  }
+		  .pic_storage ul li{
+		      width:100px;
+		      height:130px;
+		      float:left;
+		      padding:15px 4px 4px;
+		      margin:0 10px 10px 0 ;
+		  }
+		  .pic_storage ul li>div{
+		      position:relative;
+		  }
+		  .pic_storage ul li a.preview_btn{
+		      display:block;
+		      width:100px;
+		      height:100px;
+		      background-image:url(timg.jpg);
+		      background-repeat:no-repeat;
+		      background-position:center;
+		      background-size:cover;
+		      color:#fff;
+		      display:table;
+		  }
+		 .pic_storage ul li a.preview_btn div{
+		      width:100%;
+		      height:100%;
+		      text-align:center;
+		      display:table-cell;
+		      vertical-align:middle;
+		      background:rgba(0,0,0,0.6);
+		 }
+		
+		.pic_storage ul li a.preview_btn div.layer_show{
+		      display:none;
+		} 
+		
+		.pic_storage ul li span.pic_srcname{
+		      text-align:center;
+		      color:#666;
+		      padding-top:4px;
+		      width:100%;
+		      display:block;
+		      overflow:hidden;
+		      text-overflow:ellipsis;
+		      white-space:nowrap;
+		}
+		.pic_storage ul li a.pic_download{
+			  	width: 60px;
+			    display: block;
+			    height: 24px;
+			    line-height: 24px;
+			    background-color: #3f82b7;
+			    margin: 5px auto 0;
+			    border-radius: 10px;
+			    color: #fff;
+			    text-align: center;
+			    cursor:pointer;
+			  
+		}
+		.pic_storage .pic_display h3{
+			font-size:14px;
+		}
+		.pic_storage ul li b.upload_cancel{
+		      position:absolute;
+		      width:15px;
+		      height:15px;
+		      top:-9px;
+		      right:-6px;
+		      background:url("${app}/js/upload/upload-cancel.png") no-repeat center center;
+		      background-size:cover;
+		      cursor:pointer;
+		      z-index:100;
+		}
+		/*preview_image*/
+		.lagre_image_wrap{
+		      display:none;
+		}
+		.lagre_image_layer{
+		      width:100%;
+		      height:100%;
+		      position:fixed;
+		      background:rgba(0,0,0,0.6);
+		      display:table;
+		      z-index:1000;
+		}
+		.lagre_image_layer>span{
+		      position:absolute;
+		      width:30px;
+		      height:30px;
+		      right:100px;
+		      top:30px;
+		      background-size:cover;
+		      cursor:pointer;
+		}
+		.lagre_image_layer .preview_lagreimage{
+		      display:table-cell;
+		      vertical-align:middle;
+		}
+		.lagre_image_layer .preview_lagreimage img{
+		      width:500px;
+		      margin:0 auto;
+		      display:block;
+		}
+		.uploadify-button{
+		  background-image:none!important;
+		}

@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hui.zhong.cf.service.Impl.partner.dao.CommissionLiquidationMapper">
+  <resultMap id="BaseResultMap" type="com.hui.zhong.cf.service.partner.model.CommissionLiquidation">
+    <id column="commission_liquidation_id" jdbcType="INTEGER" property="commissionLiquidationId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="user_type" jdbcType="VARCHAR" property="userType" />
+    <result column="info_id" jdbcType="INTEGER" property="infoId" />
+    <result column="liquidation_num" jdbcType="VARCHAR" property="liquidationNum" />
+    <result column="liquidation_month" jdbcType="VARCHAR" property="liquidationMonth" />
+    <result column="invest_total_amount" jdbcType="DECIMAL" property="investTotalAmount" />
+    <result column="discount_total_amount" jdbcType="DECIMAL" property="discountTotalAmount" />
+    <result column="lend_bonus" jdbcType="DECIMAL" property="lendBonus" />
+    <result column="diff_bonus" jdbcType="DECIMAL" property="diffBonus" />
+    <result column="service_bonus" jdbcType="DECIMAL" property="serviceBonus" />
+    <result column="total_reward" jdbcType="DECIMAL" property="totalReward" />
+    <result column="liquidation_status" jdbcType="VARCHAR" property="liquidationStatus" />
+    <result column="liquidation_time" jdbcType="TIMESTAMP" property="liquidationTime" />
+    <result column="creator" jdbcType="INTEGER" property="creator" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="operator" jdbcType="INTEGER" property="operator" />
+    <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    commission_liquidation_id, user_id, user_type, info_id, liquidation_num, liquidation_month, 
+    invest_total_amount, discount_total_amount, lend_bonus, diff_bonus, service_bonus, 
+    total_reward, liquidation_status, liquidation_time, creator, create_time, operator, 
+    operate_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_commission_liquidation
+    where commission_liquidation_id = #{commissionLiquidationId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_commission_liquidation
+    where commission_liquidation_id = #{commissionLiquidationId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hui.zhong.cf.service.partner.model.CommissionLiquidation">
+    insert into t_commission_liquidation (commission_liquidation_id, user_id, 
+      user_type, info_id, liquidation_num, 
+      liquidation_month, invest_total_amount, discount_total_amount, 
+      lend_bonus, diff_bonus, service_bonus, 
+      total_reward, liquidation_status, liquidation_time, 
+      creator, create_time, operator, 
+      operate_time)
+    values (#{commissionLiquidationId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
+      #{userType,jdbcType=VARCHAR}, #{infoId,jdbcType=INTEGER}, #{liquidationNum,jdbcType=VARCHAR}, 
+      #{liquidationMonth,jdbcType=VARCHAR}, #{investTotalAmount,jdbcType=DECIMAL}, #{discountTotalAmount,jdbcType=DECIMAL}, 
+      #{lendBonus,jdbcType=DECIMAL}, #{diffBonus,jdbcType=DECIMAL}, #{serviceBonus,jdbcType=DECIMAL}, 
+      #{totalReward,jdbcType=DECIMAL}, #{liquidationStatus,jdbcType=VARCHAR}, #{liquidationTime,jdbcType=TIMESTAMP}, 
+      #{creator,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{operator,jdbcType=INTEGER}, 
+      #{operateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hui.zhong.cf.service.partner.model.CommissionLiquidation">
+    insert into t_commission_liquidation
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="commissionLiquidationId != null">
+        commission_liquidation_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="userType != null">
+        user_type,
+      </if>
+      <if test="infoId != null">
+        info_id,
+      </if>
+      <if test="liquidationNum != null">
+        liquidation_num,
+      </if>
+      <if test="liquidationMonth != null">
+        liquidation_month,
+      </if>
+      <if test="investTotalAmount != null">
+        invest_total_amount,
+      </if>
+      <if test="discountTotalAmount != null">
+        discount_total_amount,
+      </if>
+      <if test="lendBonus != null">
+        lend_bonus,
+      </if>
+      <if test="diffBonus != null">
+        diff_bonus,
+      </if>
+      <if test="serviceBonus != null">
+        service_bonus,
+      </if>
+      <if test="totalReward != null">
+        total_reward,
+      </if>
+      <if test="liquidationStatus != null">
+        liquidation_status,
+      </if>
+      <if test="liquidationTime != null">
+        liquidation_time,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="operator != null">
+        operator,
+      </if>
+      <if test="operateTime != null">
+        operate_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="commissionLiquidationId != null">
+        #{commissionLiquidationId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userType != null">
+        #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="infoId != null">
+        #{infoId,jdbcType=INTEGER},
+      </if>
+      <if test="liquidationNum != null">
+        #{liquidationNum,jdbcType=VARCHAR},
+      </if>
+      <if test="liquidationMonth != null">
+        #{liquidationMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="investTotalAmount != null">
+        #{investTotalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="discountTotalAmount != null">
+        #{discountTotalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="lendBonus != null">
+        #{lendBonus,jdbcType=DECIMAL},
+      </if>
+      <if test="diffBonus != null">
+        #{diffBonus,jdbcType=DECIMAL},
+      </if>
+      <if test="serviceBonus != null">
+        #{serviceBonus,jdbcType=DECIMAL},
+      </if>
+      <if test="totalReward != null">
+        #{totalReward,jdbcType=DECIMAL},
+      </if>
+      <if test="liquidationStatus != null">
+        #{liquidationStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="liquidationTime != null">
+        #{liquidationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null">
+        #{operator,jdbcType=INTEGER},
+      </if>
+      <if test="operateTime != null">
+        #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hui.zhong.cf.service.partner.model.CommissionLiquidation">
+    update t_commission_liquidation
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userType != null">
+        user_type = #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="infoId != null">
+        info_id = #{infoId,jdbcType=INTEGER},
+      </if>
+      <if test="liquidationNum != null">
+        liquidation_num = #{liquidationNum,jdbcType=VARCHAR},
+      </if>
+      <if test="liquidationMonth != null">
+        liquidation_month = #{liquidationMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="investTotalAmount != null">
+        invest_total_amount = #{investTotalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="discountTotalAmount != null">
+        discount_total_amount = #{discountTotalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="lendBonus != null">
+        lend_bonus = #{lendBonus,jdbcType=DECIMAL},
+      </if>
+      <if test="diffBonus != null">
+        diff_bonus = #{diffBonus,jdbcType=DECIMAL},
+      </if>
+      <if test="serviceBonus != null">
+        service_bonus = #{serviceBonus,jdbcType=DECIMAL},
+      </if>
+      <if test="totalReward != null">
+        total_reward = #{totalReward,jdbcType=DECIMAL},
+      </if>
+      <if test="liquidationStatus != null">
+        liquidation_status = #{liquidationStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="liquidationTime != null">
+        liquidation_time = #{liquidationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null">
+        operator = #{operator,jdbcType=INTEGER},
+      </if>
+      <if test="operateTime != null">
+        operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where commission_liquidation_id = #{commissionLiquidationId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hui.zhong.cf.service.partner.model.CommissionLiquidation">
+    update t_commission_liquidation
+    set user_id = #{userId,jdbcType=INTEGER},
+      user_type = #{userType,jdbcType=VARCHAR},
+      info_id = #{infoId,jdbcType=INTEGER},
+      liquidation_num = #{liquidationNum,jdbcType=VARCHAR},
+      liquidation_month = #{liquidationMonth,jdbcType=VARCHAR},
+      invest_total_amount = #{investTotalAmount,jdbcType=DECIMAL},
+      discount_total_amount = #{discountTotalAmount,jdbcType=DECIMAL},
+      lend_bonus = #{lendBonus,jdbcType=DECIMAL},
+      diff_bonus = #{diffBonus,jdbcType=DECIMAL},
+      service_bonus = #{serviceBonus,jdbcType=DECIMAL},
+      total_reward = #{totalReward,jdbcType=DECIMAL},
+      liquidation_status = #{liquidationStatus,jdbcType=VARCHAR},
+      liquidation_time = #{liquidationTime,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      operator = #{operator,jdbcType=INTEGER},
+      operate_time = #{operateTime,jdbcType=TIMESTAMP}
+    where commission_liquidation_id = #{commissionLiquidationId,jdbcType=INTEGER}
+  </update>
+</mapper>

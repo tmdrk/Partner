@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans        
+    http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<!-- 配置单机版的连接 -->
+	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">  
+        <property name="maxTotal" value="300" />  
+        <property name="maxIdle" value="100" />  
+        <property name="maxWaitMillis" value="1000" />  
+        <property name="testOnBorrow" value="true" />
+        <property name="testOnReturn" value="true" />
+    </bean> 
+
+	<bean id="jedisPool" class="redis.clients.jedis.JedisPool">
+		<constructor-arg name="poolConfig" ref="jedisPoolConfig"></constructor-arg>
+		<constructor-arg name="host" value="10.20.204.20"></constructor-arg>
+		<constructor-arg name="port" value="6379"></constructor-arg>
+		<constructor-arg name="timeout" value="2000"></constructor-arg>
+		<constructor-arg name="password" value="hehuoren@2017"></constructor-arg>
+	</bean>
+	<bean id="jedisClientUtil" class="com.huizhongcf.mobile.api.utils.JedisClientUtil">
+		  <property name="jedisPool" ref="jedisPool" />  
+	</bean>
+
+</beans>

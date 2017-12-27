@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans        
+    http://www.springframework.org/schema/beans/spring-beans.xsd        
+    http://code.alibabatech.com/schema/dubbo        
+    http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<dubbo:application name="financial-partner-api-consumer" />
+
+	<dubbo:registry address="${dubbo.zookeeper}"/>
+	<dubbo:consumer timeout="60000" check="false" />
+
+	<!-- demo 实例 -->
+	<dubbo:reference id="jobService" interface="com.hui.zhong.cf.job.service.JobService"/>
+
+	<!-- 每天跑批，每月跑批，结算订单,服务 -->
+	<dubbo:reference id="everyDayMonthLiquidationService" interface="com.hui.zhong.cf.job.service.EveryDayMonthLiquidationService"/>
+
+
+</beans>

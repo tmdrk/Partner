@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hui.zhong.cf.job.dao.ProductConfigMapper">
+  <resultMap id="BaseResultMap" type="com.hui.zhong.cf.job.model.ProductConfig">
+    <id column="product_id" jdbcType="INTEGER" property="productId" />
+    <result column="product_term" jdbcType="INTEGER" property="productTerm" />
+    <result column="product_type" jdbcType="VARCHAR" property="productType" />
+    <result column="discount_molecular" jdbcType="INTEGER" property="discountMolecular" />
+    <result column="discount_denominator" jdbcType="INTEGER" property="discountDenominator" />
+    <result column="creator" jdbcType="INTEGER" property="creator" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="operator" jdbcType="INTEGER" property="operator" />
+    <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    product_id, product_term, product_type, discount_molecular, discount_denominator, 
+    creator, create_time, operator, operate_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_product_config
+    where product_id = #{productId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_product_config
+    where product_id = #{productId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hui.zhong.cf.job.model.ProductConfig">
+    insert into t_product_config (product_id, product_term, product_type, 
+      discount_molecular, discount_denominator, 
+      creator, create_time, operator, 
+      operate_time)
+    values (#{productId,jdbcType=INTEGER}, #{productTerm,jdbcType=INTEGER}, #{productType,jdbcType=VARCHAR}, 
+      #{discountMolecular,jdbcType=INTEGER}, #{discountDenominator,jdbcType=INTEGER}, 
+      #{creator,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{operator,jdbcType=INTEGER}, 
+      #{operateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hui.zhong.cf.job.model.ProductConfig">
+    insert into t_product_config
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="productTerm != null">
+        product_term,
+      </if>
+      <if test="productType != null">
+        product_type,
+      </if>
+      <if test="discountMolecular != null">
+        discount_molecular,
+      </if>
+      <if test="discountDenominator != null">
+        discount_denominator,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="operator != null">
+        operator,
+      </if>
+      <if test="operateTime != null">
+        operate_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="productId != null">
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="productTerm != null">
+        #{productTerm,jdbcType=INTEGER},
+      </if>
+      <if test="productType != null">
+        #{productType,jdbcType=VARCHAR},
+      </if>
+      <if test="discountMolecular != null">
+        #{discountMolecular,jdbcType=INTEGER},
+      </if>
+      <if test="discountDenominator != null">
+        #{discountDenominator,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null">
+        #{operator,jdbcType=INTEGER},
+      </if>
+      <if test="operateTime != null">
+        #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hui.zhong.cf.job.model.ProductConfig">
+    update t_product_config
+    <set>
+      <if test="productTerm != null">
+        product_term = #{productTerm,jdbcType=INTEGER},
+      </if>
+      <if test="productType != null">
+        product_type = #{productType,jdbcType=VARCHAR},
+      </if>
+      <if test="discountMolecular != null">
+        discount_molecular = #{discountMolecular,jdbcType=INTEGER},
+      </if>
+      <if test="discountDenominator != null">
+        discount_denominator = #{discountDenominator,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null">
+        operator = #{operator,jdbcType=INTEGER},
+      </if>
+      <if test="operateTime != null">
+        operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where product_id = #{productId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hui.zhong.cf.job.model.ProductConfig">
+    update t_product_config
+    set product_term = #{productTerm,jdbcType=INTEGER},
+      product_type = #{productType,jdbcType=VARCHAR},
+      discount_molecular = #{discountMolecular,jdbcType=INTEGER},
+      discount_denominator = #{discountDenominator,jdbcType=INTEGER},
+      creator = #{creator,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      operator = #{operator,jdbcType=INTEGER},
+      operate_time = #{operateTime,jdbcType=TIMESTAMP}
+    where product_id = #{productId,jdbcType=INTEGER}
+  </update>
+</mapper>

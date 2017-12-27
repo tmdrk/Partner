@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hui.zhong.cf.service.Impl.partner.dao.PartnerOrganizationMapper">
+  <resultMap id="BaseResultMap" type="com.hui.zhong.cf.service.partner.model.PartnerOrganization">
+    <id column="organization_id" jdbcType="INTEGER" property="organizationId" />
+    <result column="organization_no" jdbcType="VARCHAR" property="organizationNo" />
+    <result column="organization_name" jdbcType="VARCHAR" property="organizationName" />
+    <result column="short_name" jdbcType="VARCHAR" property="shortName" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="principal" jdbcType="VARCHAR" property="principal" />
+    <result column="creator" jdbcType="INTEGER" property="creator" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="operator" jdbcType="INTEGER" property="operator" />
+    <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    organization_id, organization_no, organization_name, short_name, parent_id, principal, 
+    creator, create_time, operator, operate_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_partner_organization
+    where organization_id = #{organizationId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_partner_organization
+    where organization_id = #{organizationId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hui.zhong.cf.service.partner.model.PartnerOrganization">
+    insert into t_partner_organization (organization_id, organization_no, organization_name, 
+      short_name, parent_id, principal, 
+      creator, create_time, operator, 
+      operate_time)
+    values (#{organizationId,jdbcType=INTEGER}, #{organizationNo,jdbcType=VARCHAR}, #{organizationName,jdbcType=VARCHAR}, 
+      #{shortName,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, #{principal,jdbcType=VARCHAR}, 
+      #{creator,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{operator,jdbcType=INTEGER}, 
+      #{operateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hui.zhong.cf.service.partner.model.PartnerOrganization">
+    insert into t_partner_organization
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="organizationId != null">
+        organization_id,
+      </if>
+      <if test="organizationNo != null">
+        organization_no,
+      </if>
+      <if test="organizationName != null">
+        organization_name,
+      </if>
+      <if test="shortName != null">
+        short_name,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="principal != null">
+        principal,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="operator != null">
+        operator,
+      </if>
+      <if test="operateTime != null">
+        operate_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="organizationId != null">
+        #{organizationId,jdbcType=INTEGER},
+      </if>
+      <if test="organizationNo != null">
+        #{organizationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationName != null">
+        #{organizationName,jdbcType=VARCHAR},
+      </if>
+      <if test="shortName != null">
+        #{shortName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="principal != null">
+        #{principal,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null">
+        #{operator,jdbcType=INTEGER},
+      </if>
+      <if test="operateTime != null">
+        #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hui.zhong.cf.service.partner.model.PartnerOrganization">
+    update t_partner_organization
+    <set>
+      <if test="organizationNo != null">
+        organization_no = #{organizationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationName != null">
+        organization_name = #{organizationName,jdbcType=VARCHAR},
+      </if>
+      <if test="shortName != null">
+        short_name = #{shortName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="principal != null">
+        principal = #{principal,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null">
+        operator = #{operator,jdbcType=INTEGER},
+      </if>
+      <if test="operateTime != null">
+        operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where organization_id = #{organizationId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hui.zhong.cf.service.partner.model.PartnerOrganization">
+    update t_partner_organization
+    set organization_no = #{organizationNo,jdbcType=VARCHAR},
+      organization_name = #{organizationName,jdbcType=VARCHAR},
+      short_name = #{shortName,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=INTEGER},
+      principal = #{principal,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      operator = #{operator,jdbcType=INTEGER},
+      operate_time = #{operateTime,jdbcType=TIMESTAMP}
+    where organization_id = #{organizationId,jdbcType=INTEGER}
+  </update>
+  
+
+</mapper>

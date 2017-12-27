@@ -1,0 +1,531 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hui.zhong.cf.job.dao.InvestMapper">
+  <resultMap id="BaseResultMap" type="com.hui.zhong.cf.job.model.Invest">
+    <id column="invest_id" jdbcType="INTEGER" property="investId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="user_role" jdbcType="VARCHAR" property="userRole" />
+    <result column="info_id" jdbcType="INTEGER" property="infoId" />
+    <result column="product_type" jdbcType="VARCHAR" property="productType" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="product_term" jdbcType="INTEGER" property="productTerm" />
+    <result column="annual_rate" jdbcType="DECIMAL" property="annualRate" />
+    <result column="contract_no" jdbcType="VARCHAR" property="contractNo" />
+    <result column="invest_amount" jdbcType="DECIMAL" property="investAmount" />
+    <result column="invest_income" jdbcType="DECIMAL" property="investIncome" />
+    <result column="invest_repay_amount" jdbcType="DECIMAL" property="investRepayAmount" />
+    <result column="buy_date" jdbcType="TIMESTAMP" property="buyDate" />
+    <result column="pay_date" jdbcType="DATE" property="payDate" />
+    <result column="due_date" jdbcType="DATE" property="dueDate" />
+    <result column="redemption_date" jdbcType="TIMESTAMP" property="redemptionDate" />
+    <result column="invest_status" jdbcType="VARCHAR" property="investStatus" />
+    <result column="redemption_type" jdbcType="VARCHAR" property="redemptionType" />
+    <result column="pay_back_type" jdbcType="VARCHAR" property="payBackType" />
+    <result column="discount_molecular" jdbcType="INTEGER" property="discountMolecular" />
+    <result column="discount_denominator" jdbcType="INTEGER" property="discountDenominator" />
+    <result column="discount_amount" jdbcType="DECIMAL" property="discountAmount" />
+    <result column="superior_recommend_code_user_id" jdbcType="INTEGER" property="superiorRecommendCodeUserId" />
+    <result column="on_superior_recommend_code_user_id" jdbcType="INTEGER" property="onSuperiorRecommendCodeUserId" />
+    <result column="team_recommend_code_user_id" jdbcType="INTEGER" property="teamRecommendCodeUserId" />
+    <result column="liquidation_month" jdbcType="VARCHAR" property="liquidationMonth" />
+    <result column="seal_status" jdbcType="CHAR" property="sealStatus" />
+    <result column="system_code" jdbcType="VARCHAR" property="systemCode" />
+    <result column="creator" jdbcType="INTEGER" property="creator" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="operator" jdbcType="INTEGER" property="operator" />
+    <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    invest_id, user_id, user_role, info_id, product_type, product_name, product_term, 
+    annual_rate, contract_no, invest_amount, invest_income, invest_repay_amount, buy_date, 
+    pay_date, due_date, redemption_date, invest_status, redemption_type, pay_back_type, 
+    discount_molecular, discount_denominator, discount_amount, superior_recommend_code_user_id, 
+    on_superior_recommend_code_user_id, team_recommend_code_user_id, liquidation_month, 
+    seal_status, system_code, creator, create_time, operator, operate_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_invest
+    where invest_id = #{investId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_invest
+    where invest_id = #{investId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hui.zhong.cf.job.model.Invest">
+    insert into t_invest (invest_id, user_id, user_role, 
+      info_id, product_type, product_name, 
+      product_term, annual_rate, contract_no, 
+      invest_amount, invest_income, invest_repay_amount, 
+      buy_date, pay_date, due_date, 
+      redemption_date, invest_status, redemption_type, 
+      pay_back_type, discount_molecular, discount_denominator, 
+      discount_amount, superior_recommend_code_user_id, 
+      on_superior_recommend_code_user_id, team_recommend_code_user_id, 
+      liquidation_month, seal_status, system_code, 
+      creator, create_time, operator, 
+      operate_time)
+    values (#{investId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{userRole,jdbcType=VARCHAR}, 
+      #{infoId,jdbcType=INTEGER}, #{productType,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR}, 
+      #{productTerm,jdbcType=INTEGER}, #{annualRate,jdbcType=DECIMAL}, #{contractNo,jdbcType=VARCHAR}, 
+      #{investAmount,jdbcType=DECIMAL}, #{investIncome,jdbcType=DECIMAL}, #{investRepayAmount,jdbcType=DECIMAL}, 
+      #{buyDate,jdbcType=TIMESTAMP}, #{payDate,jdbcType=DATE}, #{dueDate,jdbcType=DATE}, 
+      #{redemptionDate,jdbcType=TIMESTAMP}, #{investStatus,jdbcType=VARCHAR}, #{redemptionType,jdbcType=VARCHAR}, 
+      #{payBackType,jdbcType=VARCHAR}, #{discountMolecular,jdbcType=INTEGER}, #{discountDenominator,jdbcType=INTEGER}, 
+      #{discountAmount,jdbcType=DECIMAL}, #{superiorRecommendCodeUserId,jdbcType=INTEGER}, 
+      #{onSuperiorRecommendCodeUserId,jdbcType=INTEGER}, #{teamRecommendCodeUserId,jdbcType=INTEGER}, 
+      #{liquidationMonth,jdbcType=VARCHAR}, #{sealStatus,jdbcType=CHAR}, #{systemCode,jdbcType=VARCHAR}, 
+      #{creator,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{operator,jdbcType=INTEGER}, 
+      #{operateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hui.zhong.cf.job.model.Invest">
+    insert into t_invest
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="investId != null">
+        invest_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="userRole != null">
+        user_role,
+      </if>
+      <if test="infoId != null">
+        info_id,
+      </if>
+      <if test="productType != null">
+        product_type,
+      </if>
+      <if test="productName != null">
+        product_name,
+      </if>
+      <if test="productTerm != null">
+        product_term,
+      </if>
+      <if test="annualRate != null">
+        annual_rate,
+      </if>
+      <if test="contractNo != null">
+        contract_no,
+      </if>
+      <if test="investAmount != null">
+        invest_amount,
+      </if>
+      <if test="investIncome != null">
+        invest_income,
+      </if>
+      <if test="investRepayAmount != null">
+        invest_repay_amount,
+      </if>
+      <if test="buyDate != null">
+        buy_date,
+      </if>
+      <if test="payDate != null">
+        pay_date,
+      </if>
+      <if test="dueDate != null">
+        due_date,
+      </if>
+      <if test="redemptionDate != null">
+        redemption_date,
+      </if>
+      <if test="investStatus != null">
+        invest_status,
+      </if>
+      <if test="redemptionType != null">
+        redemption_type,
+      </if>
+      <if test="payBackType != null">
+        pay_back_type,
+      </if>
+      <if test="discountMolecular != null">
+        discount_molecular,
+      </if>
+      <if test="discountDenominator != null">
+        discount_denominator,
+      </if>
+      <if test="discountAmount != null">
+        discount_amount,
+      </if>
+      <if test="superiorRecommendCodeUserId != null">
+        superior_recommend_code_user_id,
+      </if>
+      <if test="onSuperiorRecommendCodeUserId != null">
+        on_superior_recommend_code_user_id,
+      </if>
+      <if test="teamRecommendCodeUserId != null">
+        team_recommend_code_user_id,
+      </if>
+      <if test="liquidationMonth != null">
+        liquidation_month,
+      </if>
+      <if test="sealStatus != null">
+        seal_status,
+      </if>
+      <if test="systemCode != null">
+        system_code,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="operator != null">
+        operator,
+      </if>
+      <if test="operateTime != null">
+        operate_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="investId != null">
+        #{investId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userRole != null">
+        #{userRole,jdbcType=VARCHAR},
+      </if>
+      <if test="infoId != null">
+        #{infoId,jdbcType=INTEGER},
+      </if>
+      <if test="productType != null">
+        #{productType,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productTerm != null">
+        #{productTerm,jdbcType=INTEGER},
+      </if>
+      <if test="annualRate != null">
+        #{annualRate,jdbcType=DECIMAL},
+      </if>
+      <if test="contractNo != null">
+        #{contractNo,jdbcType=VARCHAR},
+      </if>
+      <if test="investAmount != null">
+        #{investAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="investIncome != null">
+        #{investIncome,jdbcType=DECIMAL},
+      </if>
+      <if test="investRepayAmount != null">
+        #{investRepayAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="buyDate != null">
+        #{buyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payDate != null">
+        #{payDate,jdbcType=DATE},
+      </if>
+      <if test="dueDate != null">
+        #{dueDate,jdbcType=DATE},
+      </if>
+      <if test="redemptionDate != null">
+        #{redemptionDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="investStatus != null">
+        #{investStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="redemptionType != null">
+        #{redemptionType,jdbcType=VARCHAR},
+      </if>
+      <if test="payBackType != null">
+        #{payBackType,jdbcType=VARCHAR},
+      </if>
+      <if test="discountMolecular != null">
+        #{discountMolecular,jdbcType=INTEGER},
+      </if>
+      <if test="discountDenominator != null">
+        #{discountDenominator,jdbcType=INTEGER},
+      </if>
+      <if test="discountAmount != null">
+        #{discountAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="superiorRecommendCodeUserId != null">
+        #{superiorRecommendCodeUserId,jdbcType=INTEGER},
+      </if>
+      <if test="onSuperiorRecommendCodeUserId != null">
+        #{onSuperiorRecommendCodeUserId,jdbcType=INTEGER},
+      </if>
+      <if test="teamRecommendCodeUserId != null">
+        #{teamRecommendCodeUserId,jdbcType=INTEGER},
+      </if>
+      <if test="liquidationMonth != null">
+        #{liquidationMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="sealStatus != null">
+        #{sealStatus,jdbcType=CHAR},
+      </if>
+      <if test="systemCode != null">
+        #{systemCode,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null">
+        #{operator,jdbcType=INTEGER},
+      </if>
+      <if test="operateTime != null">
+        #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hui.zhong.cf.job.model.Invest">
+    update t_invest
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userRole != null">
+        user_role = #{userRole,jdbcType=VARCHAR},
+      </if>
+      <if test="infoId != null">
+        info_id = #{infoId,jdbcType=INTEGER},
+      </if>
+      <if test="productType != null">
+        product_type = #{productType,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null">
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productTerm != null">
+        product_term = #{productTerm,jdbcType=INTEGER},
+      </if>
+      <if test="annualRate != null">
+        annual_rate = #{annualRate,jdbcType=DECIMAL},
+      </if>
+      <if test="contractNo != null">
+        contract_no = #{contractNo,jdbcType=VARCHAR},
+      </if>
+      <if test="investAmount != null">
+        invest_amount = #{investAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="investIncome != null">
+        invest_income = #{investIncome,jdbcType=DECIMAL},
+      </if>
+      <if test="investRepayAmount != null">
+        invest_repay_amount = #{investRepayAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="buyDate != null">
+        buy_date = #{buyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payDate != null">
+        pay_date = #{payDate,jdbcType=DATE},
+      </if>
+      <if test="dueDate != null">
+        due_date = #{dueDate,jdbcType=DATE},
+      </if>
+      <if test="redemptionDate != null">
+        redemption_date = #{redemptionDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="investStatus != null">
+        invest_status = #{investStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="redemptionType != null">
+        redemption_type = #{redemptionType,jdbcType=VARCHAR},
+      </if>
+      <if test="payBackType != null">
+        pay_back_type = #{payBackType,jdbcType=VARCHAR},
+      </if>
+      <if test="discountMolecular != null">
+        discount_molecular = #{discountMolecular,jdbcType=INTEGER},
+      </if>
+      <if test="discountDenominator != null">
+        discount_denominator = #{discountDenominator,jdbcType=INTEGER},
+      </if>
+      <if test="discountAmount != null">
+        discount_amount = #{discountAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="superiorRecommendCodeUserId != null">
+        superior_recommend_code_user_id = #{superiorRecommendCodeUserId,jdbcType=INTEGER},
+      </if>
+      <if test="onSuperiorRecommendCodeUserId != null">
+        on_superior_recommend_code_user_id = #{onSuperiorRecommendCodeUserId,jdbcType=INTEGER},
+      </if>
+      <if test="teamRecommendCodeUserId != null">
+        team_recommend_code_user_id = #{teamRecommendCodeUserId,jdbcType=INTEGER},
+      </if>
+      <if test="liquidationMonth != null">
+        liquidation_month = #{liquidationMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="sealStatus != null">
+        seal_status = #{sealStatus,jdbcType=CHAR},
+      </if>
+      <if test="systemCode != null">
+        system_code = #{systemCode,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null">
+        operator = #{operator,jdbcType=INTEGER},
+      </if>
+      <if test="operateTime != null">
+        operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where invest_id = #{investId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hui.zhong.cf.job.model.Invest">
+    update t_invest
+    set user_id = #{userId,jdbcType=INTEGER},
+      user_role = #{userRole,jdbcType=VARCHAR},
+      info_id = #{infoId,jdbcType=INTEGER},
+      product_type = #{productType,jdbcType=VARCHAR},
+      product_name = #{productName,jdbcType=VARCHAR},
+      product_term = #{productTerm,jdbcType=INTEGER},
+      annual_rate = #{annualRate,jdbcType=DECIMAL},
+      contract_no = #{contractNo,jdbcType=VARCHAR},
+      invest_amount = #{investAmount,jdbcType=DECIMAL},
+      invest_income = #{investIncome,jdbcType=DECIMAL},
+      invest_repay_amount = #{investRepayAmount,jdbcType=DECIMAL},
+      buy_date = #{buyDate,jdbcType=TIMESTAMP},
+      pay_date = #{payDate,jdbcType=DATE},
+      due_date = #{dueDate,jdbcType=DATE},
+      redemption_date = #{redemptionDate,jdbcType=TIMESTAMP},
+      invest_status = #{investStatus,jdbcType=VARCHAR},
+      redemption_type = #{redemptionType,jdbcType=VARCHAR},
+      pay_back_type = #{payBackType,jdbcType=VARCHAR},
+      discount_molecular = #{discountMolecular,jdbcType=INTEGER},
+      discount_denominator = #{discountDenominator,jdbcType=INTEGER},
+      discount_amount = #{discountAmount,jdbcType=DECIMAL},
+      superior_recommend_code_user_id = #{superiorRecommendCodeUserId,jdbcType=INTEGER},
+      on_superior_recommend_code_user_id = #{onSuperiorRecommendCodeUserId,jdbcType=INTEGER},
+      team_recommend_code_user_id = #{teamRecommendCodeUserId,jdbcType=INTEGER},
+      liquidation_month = #{liquidationMonth,jdbcType=VARCHAR},
+      seal_status = #{sealStatus,jdbcType=CHAR},
+      system_code = #{systemCode,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      operator = #{operator,jdbcType=INTEGER},
+      operate_time = #{operateTime,jdbcType=TIMESTAMP}
+    where invest_id = #{investId,jdbcType=INTEGER}
+  </update>
+
+
+  <!-- 隔天跑批   查询要跑批的订单集合 -->
+  <select id="selectEveryDayInvest" resultType="hashmap" parameterType="hashmap">
+select ti.*,
+		tlu.superior_recommend_code_user_id superiorRecommendCodeUserId,
+		tlu.on_superior_recommend_code_user_id onSuperiorRecommendCodeUserId,
+		tlu.team_recommend_code_user_id teamRecommendCodeUserId,
+		case
+			WHEN ti.user_role='10'
+			THEN IFNULL((select count(1) from t_login_user tlu where tlu.superior_recommend_code_user_id=ti.user_id and tlu.user_role=#{userRole}),0)
+			WHEN ti.user_role='20'
+			THEN IFNULL((select count(1) from t_login_user tlu where tlu.superior_recommend_code_user_id=ti.superior_recommend_code_user_id and tlu.user_role=#{userRole}),0)
+		end as countPartner,
+		tib.invest_bonus_id
+from t_invest ti left join t_login_user tlu on ti.user_id=tlu.user_id
+left join t_invest_bonus tib on tib.invest_id=ti.invest_id
+where tib.invest_bonus_id is null and
+    <![CDATA[
+ti.buy_date>=#{startDate,jdbcType=TIMESTAMP} and ti.buy_date<=#{endDate,jdbcType=TIMESTAMP}
+    ]]>
+  </select>
+
+  <!-- 每月封存   批量修改订单-->
+  <update id="updateEveryMonthSealedInvest" parameterType="hashmap">
+    UPDATE t_invest,t_login_user
+    SET t_invest.superior_recommend_code_user_id=t_login_user.superior_recommend_code_user_id,
+    t_invest.on_superior_recommend_code_user_id=t_login_user.on_superior_recommend_code_user_id,
+    t_invest.team_recommend_code_user_id=t_login_user.team_recommend_code_user_id,
+    t_invest.liquidation_month=#{liquidationMonth,jdbcType=VARCHAR},
+    t_invest.seal_status=#{sealStatus_1,jdbcType=CHAR},
+    t_invest.operate_time =#{operateTime,jdbcType=TIMESTAMP}
+    where
+    t_invest.user_id=t_login_user.user_id  and t_invest.seal_status!=#{sealStatus_1,jdbcType=CHAR} and
+        <![CDATA[
+        t_invest.buy_date >= #{startDate} and t_invest.buy_date <= #{endDate}
+         ]]>
+  </update>
+  <!--每月跑批，查询单个用户上一个月的“”  -->
+  <select id="selectEveryMonthLiquidationOfUser" parameterType="hashmap" resultType="hashmap">
+select
+       a.invest_total_amount_original,
+       a.discount_total_amount_original,
+       a.lend_bonus_original,
+       a.diff_bonus_original,
+       a.service_bonus_original,
+       ROUND(a.invest_total_amount_original,2) invest_total_amount,
+       ROUND(a.discount_total_amount_original,2) discount_total_amount,
+       ROUND(a.lend_bonus_original,2) lend_bonus,
+       ROUND(a.diff_bonus_original,2) diff_bonus,
+       ROUND(a.service_bonus_original,2) service_bonus,
+       ROUND((a.lend_bonus_original+a.diff_bonus_original+a.service_bonus_original),2) total_reward,
+       (select info_id from t_user_info where user_id=#{userId,jdbcType=INTEGER}) info_id
+from (
+      select
+              (
+              select ifnull(sum(invest_amount),0)/10000 from t_invest
+              where
+                  <![CDATA[
+                  buy_date>=#{startDate,jdbcType=TIMESTAMP} and buy_date<=#{endDate,jdbcType=TIMESTAMP}
+                  ]]>
+                      and (user_id=#{userId,jdbcType=INTEGER} or superior_recommend_code_user_id=#{userId,jdbcType=INTEGER} or (on_superior_recommend_code_user_id=#{userId,jdbcType=INTEGER} and user_role='20') or team_recommend_code_user_id=#{userId,jdbcType=INTEGER} )
+              ) invest_total_amount_original,
+              (
+              select IFNULL(sum(discount_amount),0)/10000  from t_invest
+              where
+                  <![CDATA[
+                  buy_date>=#{startDate,jdbcType=TIMESTAMP} and buy_date<=#{endDate,jdbcType=TIMESTAMP}
+                  ]]>
+                      and (user_id=#{userId,jdbcType=INTEGER} or superior_recommend_code_user_id=#{userId,jdbcType=INTEGER} or (on_superior_recommend_code_user_id=#{userId,jdbcType=INTEGER} and user_role='20') or team_recommend_code_user_id=#{userId,jdbcType=INTEGER} )
+              ) discount_total_amount_original,
+              (
+              select ifnull(sum(discount_amount),0)*#{bonusOneCoefficient1,jdbcType=DECIMAL} from t_invest
+              where
+                  <![CDATA[
+                  buy_date>=#{startDate,jdbcType=TIMESTAMP} and buy_date<=#{endDate,jdbcType=TIMESTAMP}
+                  ]]>
+                      and (user_id=#{userId,jdbcType=INTEGER} or superior_recommend_code_user_id=#{userId,jdbcType=INTEGER} or (on_superior_recommend_code_user_id=#{userId,jdbcType=INTEGER} and user_role='20'))
+              ) lend_bonus_original,
+              (
+              select
+              case
+                  when (select count(1) from t_login_user where superior_recommend_code_user_id=#{userId,jdbcType=INTEGER} and user_role='10') &gt;=1
+                  THEN (select ifnull(sum(discount_amount),0)*#{bonusOneCoefficient2,jdbcType=DECIMAL} from t_invest
+                              where
+                                      <![CDATA[
+                                      buy_date>=#{startDate,jdbcType=TIMESTAMP} and buy_date<=#{endDate,jdbcType=TIMESTAMP}
+                                      ]]>
+                                          and (user_id=#{userId,jdbcType=INTEGER} or (superior_recommend_code_user_id=#{userId,jdbcType=INTEGER} and user_role='20'))
+                              )
+                  ELSE 0.00
+              end as diff_bonus_original
+              from dual
+              ) diff_bonus_original,
+              (
+              select
+                  case
+                    when (select user_type from t_login_user where user_id=#{userId,jdbcType=INTEGER})='20'
+                    THEN (select ifnull(sum(discount_amount),0)*#{bonusOneCoefficient3,jdbcType=DECIMAL} service_bonus from t_invest
+                          where
+                              <![CDATA[
+                          buy_date>=#{startDate,jdbcType=TIMESTAMP} and buy_date<=#{endDate,jdbcType=TIMESTAMP}
+                            ]]>
+                              and team_recommend_code_user_id=#{userId,jdbcType=INTEGER}
+                          )
+                  ELSE 0.00
+                  end as service_bonus_original_o
+              from dual
+              ) service_bonus_original
+      from dual
+) a
+  </select>
+
+
+
+
+</mapper>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.huizhongcf.partner.dao.AttachmentMapper" >
+  <resultMap id="BaseResultMap" type="com.hui.zhong.cf.job.model.Attachment" >
+    <id column="attachment_id" property="attachmentId" jdbcType="INTEGER" />
+    <result column="file_name" property="fileName" jdbcType="VARCHAR" />
+    <result column="file_path" property="filePath" jdbcType="VARCHAR" />
+    <result column="file_type" property="fileType" jdbcType="VARCHAR" />
+    <result column="object_type" property="objectType" jdbcType="VARCHAR" />
+    <result column="object_id" property="objectId" jdbcType="INTEGER" />
+    <result column="creator" property="creator" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <!-- 根据多条件查询,返回Map -->
+  <select id="findAttachments" resultType="hashmap" parameterType="hashmap">
+    SELECT
+    	object_type,
+    	object_id,
+    	attachment_id,
+    	file_type,
+		file_name,
+		file_path
+	FROM
+		t_attachment
+	WHERE
+		object_type = #{objectType,jdbcType=VARCHAR}
+	AND object_id = #{objectId,jdbcType=INTEGER}
+  </select>
+  
+  <sql id="Base_Column_List" >
+    attachment_id, file_name, file_path, file_type, object_type, object_id, creator, 
+    create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_attachment
+    where attachment_id = #{attachmentId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_attachment
+    where attachment_id = #{attachmentId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hui.zhong.cf.job.model.Attachment" >
+    insert into t_attachment (attachment_id, file_name, file_path, 
+      file_type, object_type, object_id, 
+      creator, create_time)
+    values (#{attachmentId,jdbcType=INTEGER}, #{fileName,jdbcType=VARCHAR}, #{filePath,jdbcType=VARCHAR}, 
+      #{fileType,jdbcType=VARCHAR}, #{objectType,jdbcType=VARCHAR}, #{objectId,jdbcType=INTEGER}, 
+      #{creator,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hui.zhong.cf.job.model.Attachment" useGeneratedKeys="true" keyProperty="attachmentId">
+    insert into t_attachment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="attachmentId != null" >
+        attachment_id,
+      </if>
+      <if test="fileName != null" >
+        file_name,
+      </if>
+      <if test="filePath != null" >
+        file_path,
+      </if>
+      <if test="fileType != null" >
+        file_type,
+      </if>
+      <if test="objectType != null" >
+        object_type,
+      </if>
+      <if test="objectId != null" >
+        object_id,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="attachmentId != null" >
+        #{attachmentId,jdbcType=INTEGER},
+      </if>
+      <if test="fileName != null" >
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="filePath != null" >
+        #{filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="fileType != null" >
+        #{fileType,jdbcType=VARCHAR},
+      </if>
+      <if test="objectType != null" >
+        #{objectType,jdbcType=VARCHAR},
+      </if>
+      <if test="objectId != null" >
+        #{objectId,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hui.zhong.cf.job.model.Attachment" >
+    update t_attachment
+    <set >
+      <if test="fileName != null" >
+        file_name = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="filePath != null" >
+        file_path = #{filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="fileType != null" >
+        file_type = #{fileType,jdbcType=VARCHAR},
+      </if>
+      <if test="objectType != null" >
+        object_type = #{objectType,jdbcType=VARCHAR},
+      </if>
+      <if test="objectId != null" >
+        object_id = #{objectId,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where attachment_id = #{attachmentId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.hui.zhong.cf.job.model.Attachment" >
+    update t_attachment
+    set file_name = #{fileName,jdbcType=VARCHAR},
+      file_path = #{filePath,jdbcType=VARCHAR},
+      file_type = #{fileType,jdbcType=VARCHAR},
+      object_type = #{objectType,jdbcType=VARCHAR},
+      object_id = #{objectId,jdbcType=INTEGER},
+      creator = #{creator,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where attachment_id = #{attachmentId,jdbcType=INTEGER}
+  </update>
+</mapper>

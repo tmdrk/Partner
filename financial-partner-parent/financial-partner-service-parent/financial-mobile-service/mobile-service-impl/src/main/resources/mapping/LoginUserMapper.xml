@@ -1,0 +1,645 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hui.zhong.cf.mobile.dao.LoginUserMapper" >
+  <resultMap id="BaseResultMap" type="com.hui.zhong.cf.mobile.model.LoginUser" >
+    <id column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="user_role" property="userRole" jdbcType="VARCHAR" />
+    <result column="user_type" property="userType" jdbcType="VARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="login_pwd" property="loginPwd" jdbcType="VARCHAR" />
+    <result column="partner_recommend_code" property="partnerRecommendCode" jdbcType="VARCHAR" />
+    <result column="customer_recommend_code" property="customerRecommendCode" jdbcType="VARCHAR" />
+    <result column="organization_channel_id" property="organizationChannelId" jdbcType="INTEGER" />
+    <result column="organization_area_id" property="organizationAreaId" jdbcType="INTEGER" />
+    <result column="user_status" property="userStatus" jdbcType="CHAR" />
+    <result column="partner_time" property="partnerTime" jdbcType="TIMESTAMP" />
+    <result column="input_invitation_code" property="inputInvitationCode" jdbcType="VARCHAR" />
+    <result column="parent_user_id" property="parentUserId" jdbcType="INTEGER" />
+    <result column="is_platform_invite" property="isPlatformInvite" jdbcType="CHAR" />
+    <result column="invite_share_type" property="inviteShareType" jdbcType="CHAR" />
+    <result column="superior_recommend_code_user_id" property="superiorRecommendCodeUserId" jdbcType="INTEGER" />
+    <result column="on_superior_recommend_code_user_id" property="onSuperiorRecommendCodeUserId" jdbcType="INTEGER" />
+    <result column="team_recommend_code_user_id" property="teamRecommendCodeUserId" jdbcType="INTEGER" />
+    <result column="regist_time" property="registTime" jdbcType="TIMESTAMP" />
+    <result column="regist_source" property="registSource" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="operator" property="operator" jdbcType="INTEGER" />
+    <result column="operate_time" property="operateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    user_id, user_role, user_type, username, login_pwd, partner_recommend_code, customer_recommend_code, 
+    organization_channel_id, organization_area_id, user_status, partner_time, input_invitation_code, 
+    parent_user_id, is_platform_invite, invite_share_type, superior_recommend_code_user_id, 
+    on_superior_recommend_code_user_id, team_recommend_code_user_id, regist_time, regist_source, 
+    creator, create_time, operator, operate_time
+  </sql>
+   
+  <select id="selectByLoginUser" resultMap="BaseResultMap" parameterType="com.hui.zhong.cf.mobile.model.LoginUser" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_login_user
+    <trim prefix="where"  prefixOverrides="and" > 
+    	<if test="username != null" >
+         and username = #{username,jdbcType=VARCHAR}
+        </if>
+        <if test="loginPwd != null" >
+         and login_pwd = #{loginPwd,jdbcType=VARCHAR}
+        </if>
+        <if test="userStatus != null" >
+         and user_status = #{userStatus,jdbcType=VARCHAR}
+        </if>
+    </trim>
+  </select>
+  <!-- 查询用户实名信息 -->
+  <select id="getUserInfoById" resultType="java.util.Map" parameterType="java.lang.Integer" >
+    select * from t_login_user tlu   LEFT JOIN t_user_info tui on tlu.user_id = tui.user_id  where tlu.user_id=#{userId,jdbcType=INTEGER}
+  </select>
+  <update id="updataPassWord" parameterType="com.hui.zhong.cf.mobile.model.LoginUser">
+  	update t_login_user set login_pwd = #{loginPwd,jdbcType=VARCHAR}  where username = #{username,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 查询合伙人自己发展的客户 -->
+  <select id="getMyCustomerWithInvestInfo" parameterType="java.util.Map" resultType="java.util.Map">
+  	select u.user_id userId,
+  		   uinfo.real_name realName,
+  		   u.username mobile,
+  		   u.partner_time invitationTime,
+		   count(invest.invest_id) totalOrderNum,
+		   sum(invest.invest_amount) totalInvestAmount
+  	  from t_login_user u
+  	  left join t_user_info uinfo on u.user_id = uinfo.user_id
+	  left join t_invest invest on u.user_id = invest.user_id
+  	 where u.user_role = '20'
+  	   and u.user_status = '1'
+  	<if test="partnerUserId != null">
+  	   and u.superior_recommend_code_user_id = #{partnerUserId,jdbcType=INTEGER}
+  	</if>
+  	<if test="partnerUserIdList != null">
+  	   and u.superior_recommend_code_user_id in 
+  	   	<foreach collection="partnerUserIdList" separator="," open="(" close=")" item="partnerUserId">
+			#{partnerUserId,jdbcType=INTEGER}
+		</foreach>
+  	</if>
+  	<if test="username != null">
+  	   and u.username like concat('%', #{username,jdbcType=VARCHAR}, '%')
+  	</if>
+  	<if test="realName != null">
+  	   and uinfo.real_name like concat('%', #{realName,jdbcType=VARCHAR}, '%')
+  	</if>
+	 group by u.user_id
+  	 order by sum(invest.invest_amount) desc
+  	 limit #{startIndex,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+  </select>
+  
+  <!-- 根据查询条件查询合伙人自己发展的客户数量 -->
+  <select id="getMyCustomerWithInvestInfoCount" parameterType="java.util.Map" resultType="java.lang.Long">
+  	select count(u.user_id)
+  	  from t_login_user u
+  	  left join t_user_info uinfo on u.user_id = uinfo.user_id
+  	 where u.user_role = '20'
+  	   and u.user_status = '1'
+  	<if test="partnerUserId != null">
+  	   and u.superior_recommend_code_user_id = #{partnerUserId,jdbcType=INTEGER}
+  	</if>
+  	<if test="partnerUserIdList != null">
+  	   and u.superior_recommend_code_user_id in 
+  	   	<foreach collection="partnerUserIdList" separator="," open="(" close=")" item="partnerUserId">
+			#{partnerUserId,jdbcType=INTEGER}
+		</foreach>
+  	</if>
+  	<if test="username != null">
+  	   and u.username like concat('%', #{username,jdbcType=VARCHAR}, '%')
+  	</if>
+  	<if test="realName != null">
+  	   and uinfo.real_name like concat('%', #{realName,jdbcType=VARCHAR}, '%')
+  	</if>
+  </select>
+  
+  <!-- 查询合伙人直接发展的下级合伙人 -->
+  <select id="getDirectSubordinatePartnerWithInvestInfo" parameterType="java.util.Map" resultType="java.util.Map">
+  	select u.user_id userId,
+  		   uinfo.real_name realName,
+  		   u.username mobile,
+  		   u.partner_time invitationTime,
+		   count(invest.invest_id) totalOrderNum,
+		   sum(invest.invest_amount) totalInvestAmount
+  	  from t_login_user u
+  	  left join t_user_info uinfo on u.user_id = uinfo.user_id
+	  left join t_invest invest on u.user_id = invest.user_id
+  	 where u.user_role = '10'
+  	   and u.user_status = '1'
+  	   and u.parent_user_id = #{partnerUserId,jdbcType=INTEGER}
+  	<if test="username != null">
+  	   and u.username like concat('%', #{username,jdbcType=VARCHAR}, '%')
+  	</if>
+  	<if test="realName != null">
+  	   and uinfo.real_name like concat('%', #{realName,jdbcType=VARCHAR}, '%')
+  	</if>
+	 group by u.user_id
+  	 order by sum(invest.invest_amount) desc 
+  	 limit #{startIndex,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+  </select>
+  
+  <!-- 根据查询条件查询下级合伙人数量 -->
+  <select id="getDirectSubordinatePartnerWithInvestInfoCount" parameterType="java.util.Map" resultType="java.lang.Long">
+  	select count(u.user_id)
+  	  from t_login_user u
+  	  left join t_user_info uinfo on u.user_id = uinfo.user_id
+  	 where u.user_role = '10'
+  	   and u.user_status = '1'
+  	   and u.parent_user_id = #{partnerUserId,jdbcType=INTEGER}
+  	<if test="username != null">
+  	   and u.username like concat('%', #{username,jdbcType=VARCHAR}, '%')
+  	</if>
+  	<if test="realName != null">
+  	   and uinfo.real_name like concat('%', #{realName,jdbcType=VARCHAR}, '%')
+  	</if>
+  </select>
+
+  <!-- 查询其他下级合伙人 -->
+  <select id="getOtherSubordinatePartnerWithInvestInfo" parameterType="java.util.Map" resultType="java.util.Map">
+  	select u.user_id userId,
+  		   uinfo.real_name realName,
+  		   u.username mobile,
+  		   u.partner_time invitationTime,
+		   count(invest.invest_id) totalOrderNum,
+		   sum(invest.invest_amount) totalInvestAmount
+  	  from t_login_user u
+  	  left join t_user_info uinfo on u.user_id = uinfo.user_id
+	  left join t_invest invest on u.user_id = invest.user_id
+  	 where u.user_role = '10'
+  	   and u.user_status = '1'
+  	   and u.parent_user_id != #{partnerUserId,jdbcType=INTEGER}
+       and u.team_recommend_code_user_id = #{partnerUserId,jdbcType=INTEGER}
+  	<if test="username != null">
+  	   and u.username like concat('%', #{username,jdbcType=VARCHAR}, '%')
+  	</if>
+  	<if test="realName != null">
+  	   and uinfo.real_name like concat('%', #{realName,jdbcType=VARCHAR}, '%')
+  	</if>
+	 group by u.user_id
+  	 order by sum(invest.invest_amount) desc
+  	 limit #{startIndex,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+  </select>
+  
+  <select id="getOtherSubordinatePartnerWithInvestInfoCount" parameterType="java.util.Map" resultType="java.lang.Long">
+  	select count(u.user_id)
+  	  from t_login_user u
+  	  left join t_user_info uinfo on u.user_id = uinfo.user_id
+  	 where u.user_role = '10'
+  	   and u.user_status = '1'
+  	   and u.parent_user_id != #{partnerUserId,jdbcType=INTEGER}
+       and u.team_recommend_code_user_id = #{partnerUserId,jdbcType=INTEGER}
+  	<if test="username != null">
+  	   and u.username like concat('%', #{username,jdbcType=VARCHAR}, '%')
+  	</if>
+  	<if test="realName != null">
+  	   and uinfo.real_name like concat('%', #{realName,jdbcType=VARCHAR}, '%')
+  	</if>
+  </select>
+  
+  <!-- 根据合伙人user_id列表查询该合伙人的直接客户的user_id列表 -->
+  <select id="getDirectCustomerUserIds" parameterType="java.util.List" resultType="java.lang.Integer">
+  	select u.user_id 
+  	  from t_login_user u
+  	 where u.user_role = '20'
+  	   and u.user_status = '1'
+  	   and u.superior_recommend_code_user_id in 
+  	   	<foreach collection="list" separator="," open="(" close=")" item="partnerUserId">
+			#{partnerUserId,jdbcType=INTEGER}
+		</foreach>
+  </select>
+  
+  <!-- 根据合伙人user_id列表查询该合伙人的直接客户的总数量 -->
+  <select id="getDirectCustomerCount" parameterType="java.util.List" resultType="java.lang.Long">
+  	select count(u.user_id) 
+  	  from t_login_user u
+  	 where u.user_role = '20'
+  	   and u.user_status = '1'
+  	   and u.superior_recommend_code_user_id in 
+  	   <foreach collection="list" separator="," open="(" close=")" item="partnerUserId">
+			#{partnerUserId,jdbcType=INTEGER}
+		</foreach>
+  </select>
+  
+  <select id="queryloanAmount" parameterType="java.util.Map" resultType="java.util.Map">
+  	select IFNULL(sum(t.invest_amount),0.00) loanAmount 
+  	from (select * from t_login_user 
+  	<where>
+  	<if test="userType == '10'.toString()">
+  		user_id = #{userId} or superior_recommend_code_user_id = #{userId} or (on_superior_recommend_code_user_id = #{userId} and user_role = '20')
+  	</if>
+  	<if test="userType == '20'.toString()">
+  		user_id = #{userId} or team_recommend_code_user_id = #{userId}
+  	</if>
+  	</where>
+  	)tlu 
+  	LEFT JOIN (select * from t_invest 
+  	<where>
+  	<if test="loanDateStart != null and loanDateEnd != null"> 
+  		buy_date &gt;= #{loanDateStart} and buy_date &lt; #{loanDateEnd} 
+  	</if>
+  	</where>
+  	) t on t.user_id = tlu.user_id
+  </select>
+  
+  <select id="queryInviter" parameterType="java.util.Map" resultType="java.util.Map">
+	select count(*) inviteNumber from t_login_user u 
+	<where>
+		<if test="queryUserRole == '1'.toString()"> 
+			and user_role = '10'
+			<if test="userType == '10'.toString()">
+			  and superior_recommend_code_user_id = #{userId} 
+			</if>
+			<if test="userType == '20'.toString()">
+			  and team_recommend_code_user_id = #{userId}
+			</if>
+		</if>
+		<if test="queryUserRole == '2'.toString()">
+			and user_role = '20'
+			<if test="userType == '10'.toString()">
+		  		and (superior_recommend_code_user_id = #{userId} or on_superior_recommend_code_user_id = #{userId}) 
+		  	</if>
+			<if test="userType == '20'.toString()">
+		  		and team_recommend_code_user_id = #{userId}
+		  	</if>
+		</if>
+		<if test="loanDateStart != null and loanDateEnd != null"> 
+		  and partner_time &gt;= #{loanDateStart} and partner_time &lt; #{loanDateEnd} 
+		</if>
+	</where>
+  </select>
+  
+  <select id="queryTotalLoanOrder" parameterType="java.util.Map" resultType="java.util.Map">
+  	select count(*) totalLoanOrder from 
+  	(select * from t_login_user 
+  	where user_id = #{userId}
+  	<if test="userType == '10'.toString()">
+  		or superior_recommend_code_user_id = #{userId} or (on_superior_recommend_code_user_id = #{userId} and user_role = '20')
+  	</if>
+	<if test="userType == '20'.toString()">
+  		or team_recommend_code_user_id = #{userId}
+  	</if>
+  	)tlu 
+  	JOIN t_invest t on t.user_id = tlu.user_id
+  </select>
+  
+  <select id="queryLoanOrderCount" parameterType="java.util.Map" resultType="java.util.Map">
+  select count(DISTINCT t.user_id) loanOrderCount from t_invest t 
+  where EXISTS (
+  select u.user_id from t_login_user u 
+  where u.user_id = t.user_id
+  <if test="queryUserRole == '1'.toString()">
+  	  and u.user_role = '10'
+	  <if test="userType == '10'.toString()">
+	  	and u.superior_recommend_code_user_id = #{userId}
+	  </if>
+	  <if test="userType == '20'.toString()">
+	  	and u.team_recommend_code_user_id = #{userId}
+	  </if>
+  </if>
+  <if test="queryUserRole == '2'.toString()">
+ 	  and u.user_role = '20'
+	  <if test="userType == '10'.toString()">
+	  	and (u.superior_recommend_code_user_id = #{userId} or u.on_superior_recommend_code_user_id = #{userId})
+	  </if>
+	  <if test="userType == '20'.toString()">
+	  	and u.team_recommend_code_user_id = #{userId}
+	  </if>
+  </if>
+  )
+  </select>
+  
+  <select id="countByCondition" parameterType="java.util.Map" resultType="java.lang.Integer">
+  	SELECT COUNT(*) FROM t_login_user u 
+  	<where>
+  	<if test="userId != null">
+  		u.superior_recommend_code_user_id = #{userId}
+  	</if>
+  	<if test="subUserRole != null">
+ 		AND u.user_role = #{subUserRole}
+  	</if>
+  	</where>
+  </select>
+  
+  <!-- 根据合伙人user_id查询该合伙人的直接下级合伙人的user_id列表 -->
+  <select id="getDirectSubordinatePartnerUserIds" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+  	select u.user_id 
+  	  from t_login_user u
+  	 where u.user_role = '10' 
+  	   and u.user_status = '1' 
+  	   and u.parent_user_id = #{partnerUserId,jdbcType=INTEGER}
+  </select>
+  
+  <!-- 根据合伙人user_id查询该合伙人的其他下级合伙人的user_id列表 -->
+  <select id="getOtherSubordinatePartnerUserIds" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+  	select u.user_id 
+  	  from t_login_user u 
+  	 where u.user_role = '10'
+  	   and u.user_status = '1'
+  	   and u.parent_user_id != #{partnerUserId,jdbcType=INTEGER}
+       and u.team_recommend_code_user_id = #{partnerUserId,jdbcType=INTEGER}
+  </select>
+  
+   <!-- 
+  <insert id="insertSelective" parameterType="com.hui.zhong.cf.mobile.test.LoginUser" >
+    insert into t_login_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userRole != null" >
+        user_role,
+      </if>
+      <if test="userType != null" >
+        user_type,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="loginPwd != null" >
+        login_pwd,
+      </if>
+      <if test="partnerRecommendCode != null" >
+        partner_recommend_code,
+      </if>
+      <if test="customerRecommendCode != null" >
+        customer_recommend_code,
+      </if>
+      <if test="organizationChannelId != null" >
+        organization_channel_id,
+      </if>
+      <if test="organizationAreaId != null" >
+        organization_area_id,
+      </if>
+      <if test="userStatus != null" >
+        user_status,
+      </if>
+      <if test="partnerTime != null" >
+        partner_time,
+      </if>
+      <if test="inputInvitationCode != null" >
+        input_invitation_code,
+      </if>
+      <if test="parentUserId != null" >
+        parent_user_id,
+      </if>
+      <if test="isPlatformInvite != null" >
+        is_platform_invite,
+      </if>
+      <if test="inviteShareType != null" >
+        invite_share_type,
+      </if>
+      <if test="superiorRecommendCodeUserId != null" >
+        superior_recommend_code_user_id,
+      </if>
+      <if test="onSuperiorRecommendCodeUserId != null" >
+        on_superior_recommend_code_user_id,
+      </if>
+      <if test="teamRecommendCodeUserId != null" >
+        team_recommend_code_user_id,
+      </if>
+      <if test="registTime != null" >
+        regist_time,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="operator != null" >
+        operator,
+      </if>
+      <if test="operateTime != null" >
+        operate_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userRole != null" >
+        #{userRole,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPwd != null" >
+        #{loginPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerRecommendCode != null" >
+        #{partnerRecommendCode,jdbcType=VARCHAR},
+      </if>
+      <if test="customerRecommendCode != null" >
+        #{customerRecommendCode,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationChannelId != null" >
+        #{organizationChannelId,jdbcType=INTEGER},
+      </if>
+      <if test="organizationAreaId != null" >
+        #{organizationAreaId,jdbcType=INTEGER},
+      </if>
+      <if test="userStatus != null" >
+        #{userStatus,jdbcType=CHAR},
+      </if>
+      <if test="partnerTime != null" >
+        #{partnerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="inputInvitationCode != null" >
+        #{inputInvitationCode,jdbcType=VARCHAR},
+      </if>
+      <if test="parentUserId != null" >
+        #{parentUserId,jdbcType=INTEGER},
+      </if>
+      <if test="isPlatformInvite != null" >
+        #{isPlatformInvite,jdbcType=CHAR},
+      </if>
+      <if test="inviteShareType != null" >
+        #{inviteShareType,jdbcType=CHAR},
+      </if>
+      <if test="superiorRecommendCodeUserId != null" >
+        #{superiorRecommendCodeUserId,jdbcType=INTEGER},
+      </if>
+      <if test="onSuperiorRecommendCodeUserId != null" >
+        #{onSuperiorRecommendCodeUserId,jdbcType=INTEGER},
+      </if>
+      <if test="teamRecommendCodeUserId != null" >
+        #{teamRecommendCodeUserId,jdbcType=INTEGER},
+      </if>
+      <if test="registTime != null" >
+        #{registTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null" >
+        #{operator,jdbcType=INTEGER},
+      </if>
+      <if test="operateTime != null" >
+        #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+   
+   
+   
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_login_user
+    <set >
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userRole != null" >
+        user_role = #{record.userRole,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userType != null" >
+        user_type = #{record.userType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.username != null" >
+        username = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginPwd != null" >
+        login_pwd = #{record.loginPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partnerRecommendCode != null" >
+        partner_recommend_code = #{record.partnerRecommendCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerRecommendCode != null" >
+        customer_recommend_code = #{record.customerRecommendCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.organizationChannelId != null" >
+        organization_channel_id = #{record.organizationChannelId,jdbcType=INTEGER},
+      </if>
+      <if test="record.organizationAreaId != null" >
+        organization_area_id = #{record.organizationAreaId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userStatus != null" >
+        user_status = #{record.userStatus,jdbcType=CHAR},
+      </if>
+      <if test="record.partnerTime != null" >
+        partner_time = #{record.partnerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.inputInvitationCode != null" >
+        input_invitation_code = #{record.inputInvitationCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentUserId != null" >
+        parent_user_id = #{record.parentUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.isPlatformInvite != null" >
+        is_platform_invite = #{record.isPlatformInvite,jdbcType=CHAR},
+      </if>
+      <if test="record.inviteShareType != null" >
+        invite_share_type = #{record.inviteShareType,jdbcType=CHAR},
+      </if>
+      <if test="record.superiorRecommendCodeUserId != null" >
+        superior_recommend_code_user_id = #{record.superiorRecommendCodeUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.onSuperiorRecommendCodeUserId != null" >
+        on_superior_recommend_code_user_id = #{record.onSuperiorRecommendCodeUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.teamRecommendCodeUserId != null" >
+        team_recommend_code_user_id = #{record.teamRecommendCodeUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.registTime != null" >
+        regist_time = #{record.registTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.creator != null" >
+        creator = #{record.creator,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.operator != null" >
+        operator = #{record.operator,jdbcType=INTEGER},
+      </if>
+      <if test="record.operateTime != null" >
+        operate_time = #{record.operateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+   
+  <update id="updateByPrimaryKeySelective" parameterType="com.hui.zhong.cf.mobile.model.LoginUser" >
+    update t_login_user
+    <set >
+      <if test="userRole != null" >
+        user_role = #{userRole,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        user_type = #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPwd != null" >
+        login_pwd = #{loginPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerRecommendCode != null" >
+        partner_recommend_code = #{partnerRecommendCode,jdbcType=VARCHAR},
+      </if>
+      <if test="customerRecommendCode != null" >
+        customer_recommend_code = #{customerRecommendCode,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationChannelId != null" >
+        organization_channel_id = #{organizationChannelId,jdbcType=INTEGER},
+      </if>
+      <if test="organizationAreaId != null" >
+        organization_area_id = #{organizationAreaId,jdbcType=INTEGER},
+      </if>
+      <if test="userStatus != null" >
+        user_status = #{userStatus,jdbcType=CHAR},
+      </if>
+      <if test="partnerTime != null" >
+        partner_time = #{partnerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="inputInvitationCode != null" >
+        input_invitation_code = #{inputInvitationCode,jdbcType=VARCHAR},
+      </if>
+      <if test="parentUserId != null" >
+        parent_user_id = #{parentUserId,jdbcType=INTEGER},
+      </if>
+      <if test="isPlatformInvite != null" >
+        is_platform_invite = #{isPlatformInvite,jdbcType=CHAR},
+      </if>
+      <if test="inviteShareType != null" >
+        invite_share_type = #{inviteShareType,jdbcType=CHAR},
+      </if>
+      <if test="superiorRecommendCodeUserId != null" >
+        superior_recommend_code_user_id = #{superiorRecommendCodeUserId,jdbcType=INTEGER},
+      </if>
+      <if test="onSuperiorRecommendCodeUserId != null" >
+        on_superior_recommend_code_user_id = #{onSuperiorRecommendCodeUserId,jdbcType=INTEGER},
+      </if>
+      <if test="teamRecommendCodeUserId != null" >
+        team_recommend_code_user_id = #{teamRecommendCodeUserId,jdbcType=INTEGER},
+      </if>
+      <if test="registTime != null" >
+        regist_time = #{registTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null" >
+        operator = #{operator,jdbcType=INTEGER},
+      </if>
+      <if test="operateTime != null" >
+        operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+   -->
+</mapper>

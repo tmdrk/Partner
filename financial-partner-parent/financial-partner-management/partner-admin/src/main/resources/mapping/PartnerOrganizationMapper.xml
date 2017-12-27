@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huizhongcf.partner.dao.PartnerOrganizationMapper">
+  <resultMap id="BaseResultMap" type="com.huizhongcf.partner.model.PartnerOrganization">
+    <id column="organization_id" jdbcType="INTEGER" property="organizationId" />
+    <result column="organization_no" jdbcType="VARCHAR" property="organizationNo" />
+    <result column="organization_name" jdbcType="VARCHAR" property="organizationName" />
+    <result column="short_name" jdbcType="VARCHAR" property="shortName" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="principal" jdbcType="VARCHAR" property="principal" />
+    <result column="creator" jdbcType="INTEGER" property="creator" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="operator" jdbcType="INTEGER" property="operator" />
+    <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    organization_id, organization_no, organization_name, short_name, parent_id, principal, 
+    creator, create_time, operator, operate_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_partner_organization
+    where organization_id = #{organizationId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_partner_organization
+    where organization_id = #{organizationId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.huizhongcf.partner.model.PartnerOrganization">
+    insert into t_partner_organization (organization_id, organization_no, organization_name, 
+      short_name, parent_id, principal, 
+      creator, create_time, operator, 
+      operate_time)
+    values (#{organizationId,jdbcType=INTEGER}, #{organizationNo,jdbcType=VARCHAR}, #{organizationName,jdbcType=VARCHAR}, 
+      #{shortName,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, #{principal,jdbcType=VARCHAR}, 
+      #{creator,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{operator,jdbcType=INTEGER}, 
+      #{operateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.huizhongcf.partner.model.PartnerOrganization">
+    insert into t_partner_organization
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="organizationId != null">
+        organization_id,
+      </if>
+      <if test="organizationNo != null">
+        organization_no,
+      </if>
+      <if test="organizationName != null">
+        organization_name,
+      </if>
+      <if test="shortName != null">
+        short_name,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="principal != null">
+        principal,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="operator != null">
+        operator,
+      </if>
+      <if test="operateTime != null">
+        operate_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="organizationId != null">
+        #{organizationId,jdbcType=INTEGER},
+      </if>
+      <if test="organizationNo != null">
+        #{organizationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationName != null">
+        #{organizationName,jdbcType=VARCHAR},
+      </if>
+      <if test="shortName != null">
+        #{shortName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="principal != null">
+        #{principal,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null">
+        #{operator,jdbcType=INTEGER},
+      </if>
+      <if test="operateTime != null">
+        #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.huizhongcf.partner.model.PartnerOrganization">
+    update t_partner_organization
+    <set>
+      <if test="organizationNo != null">
+        organization_no = #{organizationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationName != null">
+        organization_name = #{organizationName,jdbcType=VARCHAR},
+      </if>
+      <if test="shortName != null">
+        short_name = #{shortName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="principal != null">
+        principal = #{principal,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null">
+        operator = #{operator,jdbcType=INTEGER},
+      </if>
+      <if test="operateTime != null">
+        operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where organization_id = #{organizationId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.huizhongcf.partner.model.PartnerOrganization">
+    update t_partner_organization
+    set organization_no = #{organizationNo,jdbcType=VARCHAR},
+      organization_name = #{organizationName,jdbcType=VARCHAR},
+      short_name = #{shortName,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=INTEGER},
+      principal = #{principal,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      operator = #{operator,jdbcType=INTEGER},
+      operate_time = #{operateTime,jdbcType=TIMESTAMP}
+    where organization_id = #{organizationId,jdbcType=INTEGER}
+  </update>
+  
+    <!-- 查询部门信息用于后台新增用户页面显示下拉列表 -->
+  <select id="findOrganizationList" resultType="hashmap">
+		SELECT
+			organization_id,
+			organization_no,
+			organization_name,
+			parent_id
+		FROM t_partner_organization
+		order by create_time
+  </select>
+  
+  <!-- 查询当前选中组织架构下一级的组织信息 -->
+  <select id="findOrganChildInfoByParentId" resultType="hashmap" parameterType="hashmap">
+		select 
+			t.organization_id, t.organization_no, t.organization_name,t.short_name,parent_id, t.principal,t.previousOrganizationName
+		from (
+			select 
+				organization_id, organization_no, organization_name,short_name,parent_id, principal,null as previousOrganizationName
+			from t_partner_organization where organization_id = #{organizationId,jdbcType=INTEGER} and parent_id =(
+				select
+					case when parent_id = 0 THEN parent_id else null end as parent_id
+				from
+					t_partner_organization
+				where  organization_id = #{organizationId,jdbcType=INTEGER}) 
+			UNION ALL
+			select 
+				organization_id, organization_no, organization_name,short_name,parent_id,principal,
+				(select organization_name from t_partner_organization where organization_id = #{organizationId,jdbcType=INTEGER}) as previousOrganizationName
+			from t_partner_organization where parent_id = #{organizationId,jdbcType=INTEGER}
+		) t
+		limit #{startIndex},#{pageSize}
+	</select>
+	
+	<!-- 查询当前选中组织架构下一级的组织信息数量 -->
+	<select id="findOrganChildInfoByParentIdCount" resultType="long" parameterType="hashmap">
+		select count(1) from (
+			select 1 from t_partner_organization where parent_id = #{organizationId,jdbcType=INTEGER}
+			UNION ALL
+			select 1 from t_partner_organization where organization_id = #{organizationId,jdbcType=INTEGER} and parent_id =(
+				select
+					case when parent_id = 0 THEN parent_id else null end as parent_id
+				from
+					t_partner_organization
+				where  organization_id = #{organizationId,jdbcType=INTEGER}) 
+		) t
+	</select>
+	
+	<!-- 修改时查询组织架构信息通过主键ID -->
+	<select id="findUpdateOrganizationInfoByorganizationId" parameterType="java.lang.Integer" resultType="hashmap">
+		select 
+    		organization_id, organization_no, organization_name,short_name,parent_id, principal,
+    		(select organization_name from t_partner_organization t where t.organization_id = o.parent_id) as previousOrganizationName
+    	from t_partner_organization o
+    	where o.organization_id = #{organizationId,jdbcType=INTEGER}
+	</select>
+	
+	<!-- 查询组织名称(级联一级一下的)用于下拉展示 -->
+	<select id="findSecondPartnerOrganizationInfo" resultType="hashmap">
+  		SELECT
+			organization_id,organization_name
+		FROM
+			t_partner_organization
+		WHERE
+			parent_id IN (SELECT organization_id FROM t_partner_organization WHERE parent_id = 0)
+  	</select>
+	<!-- 查询组织名称(级联二级以后)用于下拉展示 -->
+  	<select id="findCascadingPartnerOrganizationInfo" resultType="hashmap">
+  		SELECT
+			organization_id,organization_name
+		FROM
+			t_partner_organization
+		WHERE
+			organization_id IN (SELECT organization_id FROM t_partner_organization WHERE parent_id = #{organizationId,jdbcType=INTEGER})
+  	</select>
+  	
+</mapper>

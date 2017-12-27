@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hui.zhong.cf.service.Impl.partner.dao.InvestBonusMapper">
+  <resultMap id="BaseResultMap" type="com.hui.zhong.cf.service.partner.model.InvestBonus">
+    <id column="invest_bonus_id" jdbcType="INTEGER" property="investBonusId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="user_role" jdbcType="VARCHAR" property="userRole" />
+    <result column="info_id" jdbcType="INTEGER" property="infoId" />
+    <result column="invest_id" jdbcType="INTEGER" property="investId" />
+    <result column="reward_num" jdbcType="VARCHAR" property="rewardNum" />
+    <result column="user_lend_bonus" jdbcType="DECIMAL" property="userLendBonus" />
+    <result column="user_diff_bonus" jdbcType="DECIMAL" property="userDiffBonus" />
+    <result column="superior_lend_bonus" jdbcType="DECIMAL" property="superiorLendBonus" />
+    <result column="superior_diff_bonus" jdbcType="DECIMAL" property="superiorDiffBonus" />
+    <result column="superior_recommend_code_user_id" jdbcType="INTEGER" property="superiorRecommendCodeUserId" />
+    <result column="on_superior_lend_bonus" jdbcType="DECIMAL" property="onSuperiorLendBonus" />
+    <result column="on_superior_recommend_code_user_id" jdbcType="INTEGER" property="onSuperiorRecommendCodeUserId" />
+    <result column="service_bonus" jdbcType="DECIMAL" property="serviceBonus" />
+    <result column="team_recommend_code_user_id" jdbcType="INTEGER" property="teamRecommendCodeUserId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="operator" jdbcType="INTEGER" property="operator" />
+    <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    invest_bonus_id, user_id, user_role, info_id, invest_id, reward_num, user_lend_bonus, 
+    user_diff_bonus, superior_lend_bonus, superior_diff_bonus, superior_recommend_code_user_id, 
+    on_superior_lend_bonus, on_superior_recommend_code_user_id, service_bonus, team_recommend_code_user_id, 
+    create_time, operator, operate_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_invest_bonus
+    where invest_bonus_id = #{investBonusId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_invest_bonus
+    where invest_bonus_id = #{investBonusId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hui.zhong.cf.service.partner.model.InvestBonus">
+    insert into t_invest_bonus (invest_bonus_id, user_id, user_role, 
+      info_id, invest_id, reward_num, 
+      user_lend_bonus, user_diff_bonus, superior_lend_bonus, 
+      superior_diff_bonus, superior_recommend_code_user_id, 
+      on_superior_lend_bonus, on_superior_recommend_code_user_id, 
+      service_bonus, team_recommend_code_user_id, 
+      create_time, operator, operate_time
+      )
+    values (#{investBonusId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{userRole,jdbcType=VARCHAR}, 
+      #{infoId,jdbcType=INTEGER}, #{investId,jdbcType=INTEGER}, #{rewardNum,jdbcType=VARCHAR}, 
+      #{userLendBonus,jdbcType=DECIMAL}, #{userDiffBonus,jdbcType=DECIMAL}, #{superiorLendBonus,jdbcType=DECIMAL}, 
+      #{superiorDiffBonus,jdbcType=DECIMAL}, #{superiorRecommendCodeUserId,jdbcType=INTEGER}, 
+      #{onSuperiorLendBonus,jdbcType=DECIMAL}, #{onSuperiorRecommendCodeUserId,jdbcType=INTEGER}, 
+      #{serviceBonus,jdbcType=DECIMAL}, #{teamRecommendCodeUserId,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{operator,jdbcType=INTEGER}, #{operateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hui.zhong.cf.service.partner.model.InvestBonus">
+    insert into t_invest_bonus
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="investBonusId != null">
+        invest_bonus_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="userRole != null">
+        user_role,
+      </if>
+      <if test="infoId != null">
+        info_id,
+      </if>
+      <if test="investId != null">
+        invest_id,
+      </if>
+      <if test="rewardNum != null">
+        reward_num,
+      </if>
+      <if test="userLendBonus != null">
+        user_lend_bonus,
+      </if>
+      <if test="userDiffBonus != null">
+        user_diff_bonus,
+      </if>
+      <if test="superiorLendBonus != null">
+        superior_lend_bonus,
+      </if>
+      <if test="superiorDiffBonus != null">
+        superior_diff_bonus,
+      </if>
+      <if test="superiorRecommendCodeUserId != null">
+        superior_recommend_code_user_id,
+      </if>
+      <if test="onSuperiorLendBonus != null">
+        on_superior_lend_bonus,
+      </if>
+      <if test="onSuperiorRecommendCodeUserId != null">
+        on_superior_recommend_code_user_id,
+      </if>
+      <if test="serviceBonus != null">
+        service_bonus,
+      </if>
+      <if test="teamRecommendCodeUserId != null">
+        team_recommend_code_user_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="operator != null">
+        operator,
+      </if>
+      <if test="operateTime != null">
+        operate_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="investBonusId != null">
+        #{investBonusId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userRole != null">
+        #{userRole,jdbcType=VARCHAR},
+      </if>
+      <if test="infoId != null">
+        #{infoId,jdbcType=INTEGER},
+      </if>
+      <if test="investId != null">
+        #{investId,jdbcType=INTEGER},
+      </if>
+      <if test="rewardNum != null">
+        #{rewardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="userLendBonus != null">
+        #{userLendBonus,jdbcType=DECIMAL},
+      </if>
+      <if test="userDiffBonus != null">
+        #{userDiffBonus,jdbcType=DECIMAL},
+      </if>
+      <if test="superiorLendBonus != null">
+        #{superiorLendBonus,jdbcType=DECIMAL},
+      </if>
+      <if test="superiorDiffBonus != null">
+        #{superiorDiffBonus,jdbcType=DECIMAL},
+      </if>
+      <if test="superiorRecommendCodeUserId != null">
+        #{superiorRecommendCodeUserId,jdbcType=INTEGER},
+      </if>
+      <if test="onSuperiorLendBonus != null">
+        #{onSuperiorLendBonus,jdbcType=DECIMAL},
+      </if>
+      <if test="onSuperiorRecommendCodeUserId != null">
+        #{onSuperiorRecommendCodeUserId,jdbcType=INTEGER},
+      </if>
+      <if test="serviceBonus != null">
+        #{serviceBonus,jdbcType=DECIMAL},
+      </if>
+      <if test="teamRecommendCodeUserId != null">
+        #{teamRecommendCodeUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null">
+        #{operator,jdbcType=INTEGER},
+      </if>
+      <if test="operateTime != null">
+        #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hui.zhong.cf.service.partner.model.InvestBonus">
+    update t_invest_bonus
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userRole != null">
+        user_role = #{userRole,jdbcType=VARCHAR},
+      </if>
+      <if test="infoId != null">
+        info_id = #{infoId,jdbcType=INTEGER},
+      </if>
+      <if test="investId != null">
+        invest_id = #{investId,jdbcType=INTEGER},
+      </if>
+      <if test="rewardNum != null">
+        reward_num = #{rewardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="userLendBonus != null">
+        user_lend_bonus = #{userLendBonus,jdbcType=DECIMAL},
+      </if>
+      <if test="userDiffBonus != null">
+        user_diff_bonus = #{userDiffBonus,jdbcType=DECIMAL},
+      </if>
+      <if test="superiorLendBonus != null">
+        superior_lend_bonus = #{superiorLendBonus,jdbcType=DECIMAL},
+      </if>
+      <if test="superiorDiffBonus != null">
+        superior_diff_bonus = #{superiorDiffBonus,jdbcType=DECIMAL},
+      </if>
+      <if test="superiorRecommendCodeUserId != null">
+        superior_recommend_code_user_id = #{superiorRecommendCodeUserId,jdbcType=INTEGER},
+      </if>
+      <if test="onSuperiorLendBonus != null">
+        on_superior_lend_bonus = #{onSuperiorLendBonus,jdbcType=DECIMAL},
+      </if>
+      <if test="onSuperiorRecommendCodeUserId != null">
+        on_superior_recommend_code_user_id = #{onSuperiorRecommendCodeUserId,jdbcType=INTEGER},
+      </if>
+      <if test="serviceBonus != null">
+        service_bonus = #{serviceBonus,jdbcType=DECIMAL},
+      </if>
+      <if test="teamRecommendCodeUserId != null">
+        team_recommend_code_user_id = #{teamRecommendCodeUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null">
+        operator = #{operator,jdbcType=INTEGER},
+      </if>
+      <if test="operateTime != null">
+        operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where invest_bonus_id = #{investBonusId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hui.zhong.cf.service.partner.model.InvestBonus">
+    update t_invest_bonus
+    set user_id = #{userId,jdbcType=INTEGER},
+      user_role = #{userRole,jdbcType=VARCHAR},
+      info_id = #{infoId,jdbcType=INTEGER},
+      invest_id = #{investId,jdbcType=INTEGER},
+      reward_num = #{rewardNum,jdbcType=VARCHAR},
+      user_lend_bonus = #{userLendBonus,jdbcType=DECIMAL},
+      user_diff_bonus = #{userDiffBonus,jdbcType=DECIMAL},
+      superior_lend_bonus = #{superiorLendBonus,jdbcType=DECIMAL},
+      superior_diff_bonus = #{superiorDiffBonus,jdbcType=DECIMAL},
+      superior_recommend_code_user_id = #{superiorRecommendCodeUserId,jdbcType=INTEGER},
+      on_superior_lend_bonus = #{onSuperiorLendBonus,jdbcType=DECIMAL},
+      on_superior_recommend_code_user_id = #{onSuperiorRecommendCodeUserId,jdbcType=INTEGER},
+      service_bonus = #{serviceBonus,jdbcType=DECIMAL},
+      team_recommend_code_user_id = #{teamRecommendCodeUserId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      operator = #{operator,jdbcType=INTEGER},
+      operate_time = #{operateTime,jdbcType=TIMESTAMP}
+    where invest_bonus_id = #{investBonusId,jdbcType=INTEGER}
+  </update>
+  
+
+</mapper>

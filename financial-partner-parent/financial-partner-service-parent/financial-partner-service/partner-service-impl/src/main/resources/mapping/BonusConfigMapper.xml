@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hui.zhong.cf.service.Impl.partner.dao.BonusConfigMapper">
+  <resultMap id="BaseResultMap" type="com.hui.zhong.cf.service.partner.model.BonusConfig">
+    <id column="bonus_id" jdbcType="INTEGER" property="bonusId" />
+    <result column="bonus_type" jdbcType="VARCHAR" property="bonusType" />
+    <result column="bonus_one_coefficient" jdbcType="DECIMAL" property="bonusOneCoefficient" />
+    <result column="creator" jdbcType="INTEGER" property="creator" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="operator" jdbcType="INTEGER" property="operator" />
+    <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    bonus_id, bonus_type, bonus_one_coefficient, creator, create_time, operator, operate_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_bonus_config
+    where bonus_id = #{bonusId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_bonus_config
+    where bonus_id = #{bonusId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hui.zhong.cf.service.partner.model.BonusConfig">
+    insert into t_bonus_config (bonus_id, bonus_type, bonus_one_coefficient, 
+      creator, create_time, operator, 
+      operate_time)
+    values (#{bonusId,jdbcType=INTEGER}, #{bonusType,jdbcType=VARCHAR}, #{bonusOneCoefficient,jdbcType=DECIMAL}, 
+      #{creator,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{operator,jdbcType=INTEGER}, 
+      #{operateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hui.zhong.cf.service.partner.model.BonusConfig">
+    insert into t_bonus_config
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bonusId != null">
+        bonus_id,
+      </if>
+      <if test="bonusType != null">
+        bonus_type,
+      </if>
+      <if test="bonusOneCoefficient != null">
+        bonus_one_coefficient,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="operator != null">
+        operator,
+      </if>
+      <if test="operateTime != null">
+        operate_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bonusId != null">
+        #{bonusId,jdbcType=INTEGER},
+      </if>
+      <if test="bonusType != null">
+        #{bonusType,jdbcType=VARCHAR},
+      </if>
+      <if test="bonusOneCoefficient != null">
+        #{bonusOneCoefficient,jdbcType=DECIMAL},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null">
+        #{operator,jdbcType=INTEGER},
+      </if>
+      <if test="operateTime != null">
+        #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hui.zhong.cf.service.partner.model.BonusConfig">
+    update t_bonus_config
+    <set>
+      <if test="bonusType != null">
+        bonus_type = #{bonusType,jdbcType=VARCHAR},
+      </if>
+      <if test="bonusOneCoefficient != null">
+        bonus_one_coefficient = #{bonusOneCoefficient,jdbcType=DECIMAL},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null">
+        operator = #{operator,jdbcType=INTEGER},
+      </if>
+      <if test="operateTime != null">
+        operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where bonus_id = #{bonusId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hui.zhong.cf.service.partner.model.BonusConfig">
+    update t_bonus_config
+    set bonus_type = #{bonusType,jdbcType=VARCHAR},
+      bonus_one_coefficient = #{bonusOneCoefficient,jdbcType=DECIMAL},
+      creator = #{creator,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      operator = #{operator,jdbcType=INTEGER},
+      operate_time = #{operateTime,jdbcType=TIMESTAMP}
+    where bonus_id = #{bonusId,jdbcType=INTEGER}
+  </update>
+</mapper>

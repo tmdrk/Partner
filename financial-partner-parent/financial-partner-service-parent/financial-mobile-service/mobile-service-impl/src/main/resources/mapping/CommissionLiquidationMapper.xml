@@ -1,0 +1,549 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hui.zhong.cf.mobile.dao.CommissionLiquidationMapper">
+  <resultMap id="BaseResultMap" type="com.hui.zhong.cf.mobile.model.CommissionLiquidation">
+    <id column="commission_liquidation_id" jdbcType="INTEGER" property="commissionLiquidationId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="user_type" jdbcType="VARCHAR" property="userType" />
+    <result column="info_id" jdbcType="INTEGER" property="infoId" />
+    <result column="liquidation_num" jdbcType="VARCHAR" property="liquidationNum" />
+    <result column="liquidation_month" jdbcType="VARCHAR" property="liquidationMonth" />
+    <result column="invest_total_amount" jdbcType="DECIMAL" property="investTotalAmount" />
+    <result column="discount_total_amount" jdbcType="DECIMAL" property="discountTotalAmount" />
+    <result column="lend_bonus" jdbcType="DECIMAL" property="lendBonus" />
+    <result column="diff_bonus" jdbcType="DECIMAL" property="diffBonus" />
+    <result column="service_bonus" jdbcType="DECIMAL" property="serviceBonus" />
+    <result column="total_reward" jdbcType="DECIMAL" property="totalReward" />
+    <result column="liquidation_status" jdbcType="VARCHAR" property="liquidationStatus" />
+    <result column="liquidation_time" jdbcType="TIMESTAMP" property="liquidationTime" />
+    <result column="creator" jdbcType="INTEGER" property="creator" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="operator" jdbcType="INTEGER" property="operator" />
+    <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    commission_liquidation_id, user_id, user_type, info_id, liquidation_num, liquidation_month, 
+    invest_total_amount, discount_total_amount, lend_bonus, diff_bonus, service_bonus, 
+    total_reward, liquidation_status, liquidation_time, creator, create_time, operator, 
+    operate_time
+  </sql>
+  
+  <select id="queryCommissionLiquidationList" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	SELECT 
+  	<include refid="Base_Column_List" /> 
+  	FROM t_commission_liquidation
+  	<where>
+  		<if test="userId != null">
+  			user_id = #{userId}
+  		</if>
+  		<if test="liquidationStatus != null">
+  			and liquidation_status = #{liquidationStatus}
+  		</if>
+  		<if test="liquidationMonth != null">
+  			and liquidation_month = #{liquidationMonth}
+  		</if>
+  	</where>
+  	order by liquidation_month DESC
+  </select>
+  
+  <select id="queryMonthAmount" parameterType="java.util.Map" resultType="java.util.Map">
+  	select IFNULL(sum(t.invest_amount),0.00) monthLoanAmount,IFNULL(sum(t.discount_amount),0.00) monthDiscountAmount 
+  	from (select * from t_login_user u where u.user_id = #{userId} or (u.superior_recommend_code_user_id = #{userId} and u.user_role = '20'))tlu 
+  	LEFT JOIN (select * from t_invest where buy_date &gt;= #{loanDateStart} and buy_date &lt; #{loanDateEnd}) t on t.user_id = tlu.user_id
+  </select>
+  
+  <select id="querySubMonthAmount" parameterType="java.util.Map" resultType="java.util.Map">
+  	select IFNULL(sum(t.invest_amount),0.00) mySubordinateMonthLoanAmount,IFNULL(sum(t.discount_amount),0.00) mySubordinateMonthDiscountAmount 
+  	from (select * from t_login_user u where (u.superior_recommend_code_user_id = #{userId} and u.user_role = 10) or (u.on_superior_recommend_code_user_id = #{userId} and u.user_role = 20))tlu 
+  	LEFT JOIN (select * from t_invest where buy_date &gt;= #{loanDateStart} and buy_date &lt; #{loanDateEnd}) t on t.user_id = tlu.user_id
+  </select>
+  
+  <select id="queryBonusConfigList" parameterType="java.util.Map" resultType="java.util.Map">
+  	SELECT  bonus_id bonusId, 
+			bonus_type bonusType, 
+			bonus_one_coefficient bonusOneCoefficient, 
+			creator, 
+			create_time createTime, 
+			operator, 
+			operate_time operateTime
+	FROM t_bonus_config
+  	<where>
+  		<if test="bonusType != null">
+  			bonus_type = #{bonusType}
+  		</if>
+  	</where>
+  </select>
+  
+  <sql id="base_buy_date">
+  	<if test="loanDateStart != null">
+  		and ti.buy_date &gt;= #{loanDateStart}
+  	</if>
+  	<if test="loanDateEnd != null">
+  		and ti.buy_date &lt; #{loanDateEnd}
+  	</if>
+  </sql>
+  
+  <select id="queryExpectLoanBonusAmount" parameterType="java.util.Map" resultType="java.util.Map">
+  	SELECT IFNULL(SUM(expectLoanBonus),0.00) expectLoanBonus FROM (
+	  	SELECT tib.user_lend_bonus expectLoanBonus FROM t_invest_bonus tib 
+	  	LEFT JOIN  t_invest ti on ti.invest_id = tib.invest_id
+	  	WHERE tib.user_id = #{userId}
+	  	<include refid="base_buy_date" /> 
+	  UNION ALL
+		SELECT tib.superior_lend_bonus expectLoanBonus FROM t_invest_bonus tib 
+		LEFT JOIN  t_invest ti on ti.invest_id = tib.invest_id
+		WHERE tib.superior_recommend_code_user_id = #{userId}
+		<include refid="base_buy_date" />
+	  UNION ALL
+		SELECT tib.on_superior_lend_bonus expectLoanBonus FROM t_invest_bonus tib 
+		LEFT JOIN  t_invest ti on ti.invest_id = tib.invest_id
+		WHERE tib.on_superior_recommend_code_user_id = #{userId}
+		<include refid="base_buy_date" />
+	)a
+  </select>
+  
+  <select id="queryExpectDiffBonusAmount" parameterType="java.util.Map" resultType="java.util.Map">
+  	SELECT IFNULL(SUM(expectDiffBonus),0.00) expectDiffBonus FROM (
+	  	SELECT tib.user_diff_bonus expectDiffBonus FROM t_invest_bonus tib 
+	  	LEFT JOIN  t_invest ti on ti.invest_id = tib.invest_id
+	  	WHERE tib.user_id = #{userId}
+	  	<include refid="base_buy_date" />
+		UNION ALL
+		SELECT tib.superior_diff_bonus expectDiffBonus FROM t_invest_bonus tib 
+		LEFT JOIN  t_invest ti on ti.invest_id = tib.invest_id
+		WHERE tib.superior_recommend_code_user_id = #{userId}
+		<include refid="base_buy_date" />
+	)a
+  </select>
+  
+  <select id="queryExpectServiceBonusAmount" parameterType="java.util.Map" resultType="java.util.Map">
+  	SELECT IFNULL(SUM(expectServiceBonus),0.00) expectServiceBonus FROM (
+  		SELECT tib.service_bonus expectServiceBonus FROM t_invest_bonus tib 
+  		LEFT JOIN  t_invest ti on ti.invest_id = tib.invest_id
+  		WHERE tib.team_recommend_code_user_id = #{userId}
+  		<include refid="base_buy_date" />
+  	)a
+  </select>
+  
+  <select id="queryPreExpectBonusAmount" parameterType="java.util.Map" resultType="java.util.Map">
+  	SELECT lend_bonus expectLoanBonus,diff_bonus expectDiffBonus,service_bonus expectServiceBonus FROM t_commission_liquidation
+  	<where>
+  		<if test="userId != null">
+  			user_id = #{userId}
+  		</if>
+  		<if test="liquidationMonth != null">
+  			and liquidation_month = #{liquidationMonth}
+  		</if>
+  	</where>
+  </select>
+  
+  <select id="queryOtherSubMonthAmount" parameterType="java.util.Map" resultType="java.util.Map">
+  	select IFNULL(sum(t.invest_amount),0.00) otherSubordinateMonthLoanAmount,IFNULL(sum(t.discount_amount),0.00) otherSubordinateMonthDiscountAmount 
+  	from (
+	  	select user_id from (select * from t_login_user where team_recommend_code_user_id = #{userId}) tlu 
+	  	where NOT EXISTS 
+	  	(select u.user_id from t_login_user u where (u.user_id = #{userId} or (u.superior_recommend_code_user_id = #{userId}) or (u.on_superior_recommend_code_user_id = #{userId} and u.user_role = '20')) and u.user_id = tlu.user_id)
+  	)tlu 
+  	LEFT JOIN (select * from t_invest where buy_date &gt;= #{loanDateStart} and buy_date &lt; #{loanDateEnd}) t on t.user_id = tlu.user_id
+  </select>
+  
+  <sql id="base_where_liquidation">
+  	<where>
+  		<if test="userId != null">
+  			tc.user_id = #{userId}
+  		</if>
+  		<if test="liquidationStatus != null">
+  			and tc.liquidation_status = #{liquidationStatus}
+  		</if>
+  		<if test="settlementYear != null">
+  			and tc.liquidation_month like concat(#{settlementYear}, '%')
+  		</if>
+  	</where>
+  </sql>
+  <!-- 查询佣金结算列表 -->
+  <select id="queryCommissionLiquidationYearList" parameterType="hashmap" resultType="hashmap">
+  	select tc.invest_total_amount loanAmount,tc.discount_total_amount discountAmount,tc.total_reward bonusAmount,tc.lend_bonus loanBonus,tc.diff_bonus diffBonus,tc.service_bonus serviceBonus,tc.liquidation_month settlementMonth
+  	from t_commission_liquidation tc
+  	<include refid="base_where_liquidation" />
+  	ORDER BY tc.liquidation_month DESC
+  </select>
+  <!-- 分页查询佣金结算列表 -->
+  <select id="getCommissionLiquidationList" parameterType="hashmap" resultType="hashmap">
+  	select tc.invest_total_amount loanAmount,tc.discount_total_amount discountAmount,tc.total_reward bonusAmount,tc.lend_bonus loanBonus,tc.diff_bonus diffBonus,tc.service_bonus serviceBonus,tc.liquidation_month settlementMonth
+  	from t_commission_liquidation tc
+  	<include refid="base_where_liquidation" />
+  	ORDER BY tc.liquidation_month DESC
+	limit #{startIndex},#{pageSize}
+  </select>
+  <!-- 查询佣金结算总数 -->
+  <select id="getCommissionLiquidationCount" parameterType="hashmap" resultType="long">
+	select count(*)
+  	from t_commission_liquidation tc
+  	<include refid="base_where_liquidation" />
+  </select>
+  
+  <!-- 分页查询出借奖金明细列表 -->
+  <select id="getLoanBunusDetailList" parameterType="hashmap" resultType="hashmap">
+  	select t.invest_id orderId,DATE_FORMAT(t.buy_date, '%Y-%c-%d %h:%i:%s' ) loanTime,t.invest_amount loanAmount,t.product_term loanPeriod,CONCAT(t.discount_molecular,'/',t.discount_denominator) discountCoefficient,t.discount_amount discountAmount,
+  	<if test="type !=null and type == 1"><!-- 我的 -->
+  	<if test="isCurrentMonth != null and isCurrentMonth == 1">
+  	IFNULL(CASE tib.user_role WHEN '10' THEN tib.user_lend_bonus ELSE tib.superior_lend_bonus END,0.00) loanBonus,
+  	</if>
+  	</if>
+  	<if test="type !=null and type == 2"><!-- 我的下级 -->
+  	<if test="isCurrentMonth != null and isCurrentMonth == 1">
+  	IFNULL(CASE tib.user_role WHEN '10' THEN tib.superior_lend_bonus ELSE tib.on_superior_lend_bonus END,0.00) loanBonus,
+  	</if>
+  	</if>
+  	tui.real_name loanerName,d.dict_name loanerRole 
+  	,CONCAT((SELECT bonus_one_coefficient FROM t_bonus_config WHERE bonus_type = '10'),'%') loanBonusCoefficient
+	from (select * from t_invest where buy_date &gt;= #{loanDateStart} and buy_date &lt; #{loanDateEnd}) t 
+	LEFT JOIN t_login_user u on t.user_id = u.user_id
+	LEFT JOIN t_user_info tui ON tui.user_id = u.user_id
+	LEFT JOIN system_dict d on u.user_type = d.dict_code and d.dict_type = 'USER_ROLE'
+	<if test="isCurrentMonth != null and isCurrentMonth == 1">
+	LEFT JOIN t_invest_bonus tib on t.invest_id = tib.invest_id
+	</if>
+	<if test="type !=null and type == 1"><!-- 我的 -->
+		where EXISTS (select u.user_id from t_login_user u where (u.user_id = #{userId} or (u.superior_recommend_code_user_id = #{userId} and u.user_role = '20')) and u.user_id = t.user_id)
+	</if>
+	<if test="type !=null and type == 2"><!-- 我的下级 -->
+		where EXISTS (select u.user_id from t_login_user u where ((u.superior_recommend_code_user_id = #{userId} and u.user_role = '10') or (u.on_superior_recommend_code_user_id = #{userId} and u.user_role = '20')) and u.user_id = t.user_id)
+	</if>
+	ORDER BY t.buy_date DESC
+	limit #{startIndex},#{pageSize}
+  </select>
+  
+  <!-- 查询出借奖金明细总数 -->
+  <select id="getLoanBunusDetailCount" parameterType="hashmap" resultType="long">
+	select count(*)
+	from (select * from t_invest where buy_date &gt;= #{loanDateStart} and buy_date &lt; #{loanDateEnd}) t 
+	LEFT JOIN t_login_user u on t.user_id = u.user_id
+	LEFT JOIN t_user_info tui ON tui.user_id = u.user_id
+	LEFT JOIN system_dict d on u.user_type = d.dict_code and d.dict_type = 'USER_ROLE'
+	<if test="isCurrentMonth != null and isCurrentMonth == 1">
+	LEFT JOIN t_invest_bonus tib on t.invest_id = tib.invest_id
+	</if>
+	<if test="type !=null and type == 1"><!-- 我的 -->
+		where EXISTS (select u.user_id from t_login_user u where (u.user_id = #{userId} or (u.superior_recommend_code_user_id = #{userId} and u.user_role = '20')) and u.user_id = t.user_id)
+	</if>
+	<if test="type !=null and type == 2"><!-- 我的下级 -->
+		where EXISTS (select u.user_id from t_login_user u where ((u.superior_recommend_code_user_id = #{userId} and u.user_role = '10') or (u.on_superior_recommend_code_user_id = #{userId} and u.user_role = '20')) and u.user_id = t.user_id)
+	</if>
+  </select>
+  
+  <!-- 分页查询差额奖金明细列表 -->
+  <select id="getDiffBunusDetailList" parameterType="hashmap" resultType="hashmap">
+  	select t.invest_id orderId,DATE_FORMAT(t.buy_date, '%Y-%c-%d %h:%i:%s' ) loanTime,t.invest_amount loanAmount,t.product_term loanPeriod,CONCAT(t.discount_molecular,'/',t.discount_denominator) discountCoefficient,t.discount_amount discountAmount,
+  	<if test="isCurrentMonth != null and isCurrentMonth == 1">
+  	IFNULL(CASE tib.user_role WHEN '10' THEN tib.user_diff_bonus ELSE tib.superior_diff_bonus END,0.00) diffBonus,
+  	</if>
+  	tui.real_name loanerName,d.dict_name loanerRole
+  	,CONCAT((SELECT bonus_one_coefficient FROM t_bonus_config WHERE bonus_type = '20'),'%') diffBonusCoefficient 
+	from (select * from t_invest where buy_date &gt;= #{loanDateStart} and buy_date &lt; #{loanDateEnd}) t  
+	LEFT JOIN t_login_user u on t.user_id = u.user_id
+	LEFT JOIN t_user_info tui ON tui.user_id = u.user_id
+	LEFT JOIN system_dict d on u.user_type = d.dict_code and d.dict_type = 'USER_ROLE'
+	<if test="isCurrentMonth != null and isCurrentMonth == 1">
+	LEFT JOIN t_invest_bonus tib on t.invest_id = tib.invest_id
+	</if>
+	where EXISTS (select u.user_id from t_login_user u where (u.user_id = #{userId} or (u.superior_recommend_code_user_id = #{userId} and u.user_role = '20')) and u.user_id = t.user_id)
+	ORDER BY t.buy_date DESC
+	limit #{startIndex},#{pageSize}
+  </select>
+  
+  <!-- 查询差额奖金明细总数 -->
+  <select id="getDiffBunusDetailCount" parameterType="hashmap" resultType="long">
+  	select count(*)
+	from (select * from t_invest where buy_date &gt;= #{loanDateStart} and buy_date &lt; #{loanDateEnd}) t 
+	LEFT JOIN t_login_user u on t.user_id = u.user_id
+	LEFT JOIN t_user_info tui ON tui.user_id = u.user_id
+	LEFT JOIN system_dict d on u.user_type = d.dict_code and d.dict_type = 'USER_ROLE'
+	<if test="isCurrentMonth != null and isCurrentMonth == 1">
+	LEFT JOIN t_invest_bonus tib on t.invest_id = tib.invest_id
+	</if>
+	where EXISTS (select u.user_id from t_login_user u where (u.user_id = #{userId} or (u.superior_recommend_code_user_id = #{userId} and u.user_role = '20')) and u.user_id = t.user_id)
+  </select>
+  
+  <!-- 分页查询服务奖金明细列表 -->
+  <select id="getServiceBunusDetailList" parameterType="hashmap" resultType="hashmap">
+  	select t.invest_id orderId,DATE_FORMAT(t.buy_date, '%Y-%c-%d %h:%i:%s' ) loanTime,t.invest_amount loanAmount,t.product_term loanPeriod,CONCAT(t.discount_molecular,'/',t.discount_denominator) discountCoefficient,t.discount_amount discountAmount,
+  	<if test="isCurrentMonth != null and isCurrentMonth == 1">
+  	IFNULL(tib.service_bonus,0.00) serviceBonus,
+  	</if>
+  	tui.real_name loanerName,d.dict_name loanerRole
+  	,CONCAT((SELECT bonus_one_coefficient FROM t_bonus_config WHERE bonus_type = '30'),'%') serviceBonusCoefficient  
+	from (select * from t_invest where buy_date &gt;= #{loanDateStart} and buy_date &lt; #{loanDateEnd}) t 
+	<if test="type !=null and (type == 1 or type == 2)"><!-- 我的 -->
+	LEFT JOIN t_login_user u on t.user_id = u.user_id
+	</if>
+	<if test="type !=null and type == 3"><!-- 其他下级 -->
+	JOIN (select * from t_login_user where team_recommend_code_user_id = #{userId}) u on t.user_id = u.user_id
+	</if>
+	LEFT JOIN t_user_info tui ON tui.user_id = u.user_id
+	LEFT JOIN system_dict d on u.user_type = d.dict_code and d.dict_type = 'USER_ROLE'
+	<if test="isCurrentMonth != null and isCurrentMonth == 1">
+	LEFT JOIN t_invest_bonus tib on t.invest_id = tib.invest_id
+	</if>
+	<if test="type !=null and type == 1"><!-- 我的 -->
+		where EXISTS (select u.user_id from t_login_user u where (u.user_id = #{userId} or (u.superior_recommend_code_user_id = #{userId} and u.user_role = '20')) and u.user_id = t.user_id)
+	</if>
+	<if test="type !=null and type == 2"><!-- 我的下级 -->
+		where EXISTS (select u.user_id from t_login_user u where ((u.superior_recommend_code_user_id = #{userId} and u.user_role = '10') or (u.on_superior_recommend_code_user_id = #{userId} and u.user_role = '20')) and u.user_id = t.user_id)
+	</if>
+	<if test="type !=null and type == 3"><!-- 其他下级 -->
+		where NOT EXISTS (select u.user_id from t_login_user u where (u.user_id = #{userId} or (u.superior_recommend_code_user_id = #{userId}) or (u.on_superior_recommend_code_user_id = #{userId} and u.user_role = '20')) and u.user_id = t.user_id)
+	</if>
+	ORDER BY t.buy_date DESC
+	limit #{startIndex},#{pageSize}
+  </select>
+  
+  <!-- 查询出服务金明细总数 -->
+  <select id="getServiceBunusDetailCount" parameterType="hashmap" resultType="long">
+  	select count(*)
+	from (select * from t_invest where buy_date &gt;= #{loanDateStart} and buy_date &lt; #{loanDateEnd}) t  
+	<if test="type !=null and (type == 1 or type == 2)"><!-- 我的 -->
+	LEFT JOIN t_login_user u on t.user_id = u.user_id
+	</if>
+	<if test="type !=null and type == 3"><!-- 其他下级 -->
+	JOIN (select * from t_login_user where team_recommend_code_user_id = #{userId}) u on t.user_id = u.user_id
+	</if>
+	LEFT JOIN t_user_info tui ON tui.user_id = u.user_id
+	LEFT JOIN system_dict d on u.user_type = d.dict_code and d.dict_type = 'USER_ROLE'
+	<if test="isCurrentMonth != null and isCurrentMonth == 1">
+	LEFT JOIN t_invest_bonus tib on t.invest_id = tib.invest_id
+	</if>
+	<if test="type !=null and type == 1"><!-- 我的 -->
+		where EXISTS (select u.user_id from t_login_user u where (u.user_id = #{userId} or (u.superior_recommend_code_user_id = #{userId} and u.user_role = '20')) and u.user_id = t.user_id)
+	</if>
+	<if test="type !=null and type == 2"><!-- 我的下级 -->
+		where EXISTS (select u.user_id from t_login_user u where ((u.superior_recommend_code_user_id = #{userId} and u.user_role = '10') or (u.on_superior_recommend_code_user_id = #{userId} and u.user_role = '20')) and u.user_id = t.user_id)
+	</if>
+	<if test="type !=null and type == 3"><!-- 其他下级 -->
+		where NOT EXISTS (select u.user_id from t_login_user u where (u.user_id = #{userId} or (u.superior_recommend_code_user_id = #{userId}) or (u.on_superior_recommend_code_user_id = #{userId} and u.user_role = '20')) and u.user_id = t.user_id)
+	</if>
+  </select>
+  
+  <select id="commissionLiquidationStat" parameterType="int" resultType="java.util.Map">
+  	SELECT liquidation_status liquidationStatus,SUM(total_reward) totalReward FROM t_commission_liquidation GROUP BY liquidation_status
+  </select>
+  <!-- <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_commission_liquidation
+    where commission_liquidation_id = #{commissionLiquidationId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_commission_liquidation
+    where commission_liquidation_id = #{commissionLiquidationId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hui.zhong.cf.mobile.model.CommissionLiquidation">
+    insert into t_commission_liquidation (commission_liquidation_id, user_id, 
+      user_type, info_id, liquidation_num, 
+      liquidation_month, invest_total_amount, discount_total_amount, 
+      lend_bonus, diff_bonus, service_bonus, 
+      total_reward, liquidation_status, liquidation_time, 
+      creator, create_time, operator, 
+      operate_time)
+    values (#{commissionLiquidationId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
+      #{userType,jdbcType=VARCHAR}, #{infoId,jdbcType=INTEGER}, #{liquidationNum,jdbcType=VARCHAR}, 
+      #{liquidationMonth,jdbcType=VARCHAR}, #{investTotalAmount,jdbcType=DECIMAL}, #{discountTotalAmount,jdbcType=DECIMAL}, 
+      #{lendBonus,jdbcType=DECIMAL}, #{diffBonus,jdbcType=DECIMAL}, #{serviceBonus,jdbcType=DECIMAL}, 
+      #{totalReward,jdbcType=DECIMAL}, #{liquidationStatus,jdbcType=VARCHAR}, #{liquidationTime,jdbcType=TIMESTAMP}, 
+      #{creator,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{operator,jdbcType=INTEGER}, 
+      #{operateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hui.zhong.cf.mobile.model.CommissionLiquidation">
+    insert into t_commission_liquidation
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="commissionLiquidationId != null">
+        commission_liquidation_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="userType != null">
+        user_type,
+      </if>
+      <if test="infoId != null">
+        info_id,
+      </if>
+      <if test="liquidationNum != null">
+        liquidation_num,
+      </if>
+      <if test="liquidationMonth != null">
+        liquidation_month,
+      </if>
+      <if test="investTotalAmount != null">
+        invest_total_amount,
+      </if>
+      <if test="discountTotalAmount != null">
+        discount_total_amount,
+      </if>
+      <if test="lendBonus != null">
+        lend_bonus,
+      </if>
+      <if test="diffBonus != null">
+        diff_bonus,
+      </if>
+      <if test="serviceBonus != null">
+        service_bonus,
+      </if>
+      <if test="totalReward != null">
+        total_reward,
+      </if>
+      <if test="liquidationStatus != null">
+        liquidation_status,
+      </if>
+      <if test="liquidationTime != null">
+        liquidation_time,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="operator != null">
+        operator,
+      </if>
+      <if test="operateTime != null">
+        operate_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="commissionLiquidationId != null">
+        #{commissionLiquidationId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userType != null">
+        #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="infoId != null">
+        #{infoId,jdbcType=INTEGER},
+      </if>
+      <if test="liquidationNum != null">
+        #{liquidationNum,jdbcType=VARCHAR},
+      </if>
+      <if test="liquidationMonth != null">
+        #{liquidationMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="investTotalAmount != null">
+        #{investTotalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="discountTotalAmount != null">
+        #{discountTotalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="lendBonus != null">
+        #{lendBonus,jdbcType=DECIMAL},
+      </if>
+      <if test="diffBonus != null">
+        #{diffBonus,jdbcType=DECIMAL},
+      </if>
+      <if test="serviceBonus != null">
+        #{serviceBonus,jdbcType=DECIMAL},
+      </if>
+      <if test="totalReward != null">
+        #{totalReward,jdbcType=DECIMAL},
+      </if>
+      <if test="liquidationStatus != null">
+        #{liquidationStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="liquidationTime != null">
+        #{liquidationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null">
+        #{operator,jdbcType=INTEGER},
+      </if>
+      <if test="operateTime != null">
+        #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hui.zhong.cf.mobile.model.CommissionLiquidation">
+    update t_commission_liquidation
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userType != null">
+        user_type = #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="infoId != null">
+        info_id = #{infoId,jdbcType=INTEGER},
+      </if>
+      <if test="liquidationNum != null">
+        liquidation_num = #{liquidationNum,jdbcType=VARCHAR},
+      </if>
+      <if test="liquidationMonth != null">
+        liquidation_month = #{liquidationMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="investTotalAmount != null">
+        invest_total_amount = #{investTotalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="discountTotalAmount != null">
+        discount_total_amount = #{discountTotalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="lendBonus != null">
+        lend_bonus = #{lendBonus,jdbcType=DECIMAL},
+      </if>
+      <if test="diffBonus != null">
+        diff_bonus = #{diffBonus,jdbcType=DECIMAL},
+      </if>
+      <if test="serviceBonus != null">
+        service_bonus = #{serviceBonus,jdbcType=DECIMAL},
+      </if>
+      <if test="totalReward != null">
+        total_reward = #{totalReward,jdbcType=DECIMAL},
+      </if>
+      <if test="liquidationStatus != null">
+        liquidation_status = #{liquidationStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="liquidationTime != null">
+        liquidation_time = #{liquidationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null">
+        operator = #{operator,jdbcType=INTEGER},
+      </if>
+      <if test="operateTime != null">
+        operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where commission_liquidation_id = #{commissionLiquidationId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hui.zhong.cf.mobile.model.CommissionLiquidation">
+    update t_commission_liquidation
+    set user_id = #{userId,jdbcType=INTEGER},
+      user_type = #{userType,jdbcType=VARCHAR},
+      info_id = #{infoId,jdbcType=INTEGER},
+      liquidation_num = #{liquidationNum,jdbcType=VARCHAR},
+      liquidation_month = #{liquidationMonth,jdbcType=VARCHAR},
+      invest_total_amount = #{investTotalAmount,jdbcType=DECIMAL},
+      discount_total_amount = #{discountTotalAmount,jdbcType=DECIMAL},
+      lend_bonus = #{lendBonus,jdbcType=DECIMAL},
+      diff_bonus = #{diffBonus,jdbcType=DECIMAL},
+      service_bonus = #{serviceBonus,jdbcType=DECIMAL},
+      total_reward = #{totalReward,jdbcType=DECIMAL},
+      liquidation_status = #{liquidationStatus,jdbcType=VARCHAR},
+      liquidation_time = #{liquidationTime,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      operator = #{operator,jdbcType=INTEGER},
+      operate_time = #{operateTime,jdbcType=TIMESTAMP}
+    where commission_liquidation_id = #{commissionLiquidationId,jdbcType=INTEGER}
+  </update> -->
+</mapper>

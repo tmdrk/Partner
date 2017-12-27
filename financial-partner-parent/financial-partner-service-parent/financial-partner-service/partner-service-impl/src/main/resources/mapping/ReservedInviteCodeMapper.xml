@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hui.zhong.cf.service.Impl.partner.dao.ReservedInviteCodeMapper">
+  <resultMap id="BaseResultMap" type="com.hui.zhong.cf.service.partner.model.ReservedInviteCode">
+    <id column="reserved_id" jdbcType="INTEGER" property="reservedId" />
+    <result column="invite_code_type" jdbcType="VARCHAR" property="inviteCodeType" />
+    <result column="invite_code" jdbcType="VARCHAR" property="inviteCode" />
+    <result column="use_status" jdbcType="CHAR" property="useStatus" />
+    <result column="creator" jdbcType="INTEGER" property="creator" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="operator" jdbcType="INTEGER" property="operator" />
+    <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    reserved_id, invite_code_type, invite_code, use_status, creator, create_time, operator, 
+    operate_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_reserved_invite_code
+    where reserved_id = #{reservedId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_reserved_invite_code
+    where reserved_id = #{reservedId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hui.zhong.cf.service.partner.model.ReservedInviteCode">
+    insert into t_reserved_invite_code (reserved_id, invite_code_type, invite_code, 
+      use_status, creator, create_time, 
+      operator, operate_time)
+    values (#{reservedId,jdbcType=INTEGER}, #{inviteCodeType,jdbcType=VARCHAR}, #{inviteCode,jdbcType=VARCHAR}, 
+      #{useStatus,jdbcType=CHAR}, #{creator,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{operator,jdbcType=INTEGER}, #{operateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hui.zhong.cf.service.partner.model.ReservedInviteCode">
+    insert into t_reserved_invite_code
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="reservedId != null">
+        reserved_id,
+      </if>
+      <if test="inviteCodeType != null">
+        invite_code_type,
+      </if>
+      <if test="inviteCode != null">
+        invite_code,
+      </if>
+      <if test="useStatus != null">
+        use_status,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="operator != null">
+        operator,
+      </if>
+      <if test="operateTime != null">
+        operate_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="reservedId != null">
+        #{reservedId,jdbcType=INTEGER},
+      </if>
+      <if test="inviteCodeType != null">
+        #{inviteCodeType,jdbcType=VARCHAR},
+      </if>
+      <if test="inviteCode != null">
+        #{inviteCode,jdbcType=VARCHAR},
+      </if>
+      <if test="useStatus != null">
+        #{useStatus,jdbcType=CHAR},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null">
+        #{operator,jdbcType=INTEGER},
+      </if>
+      <if test="operateTime != null">
+        #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hui.zhong.cf.service.partner.model.ReservedInviteCode">
+    update t_reserved_invite_code
+    <set>
+      <if test="inviteCodeType != null">
+        invite_code_type = #{inviteCodeType,jdbcType=VARCHAR},
+      </if>
+      <if test="inviteCode != null">
+        invite_code = #{inviteCode,jdbcType=VARCHAR},
+      </if>
+      <if test="useStatus != null">
+        use_status = #{useStatus,jdbcType=CHAR},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null">
+        operator = #{operator,jdbcType=INTEGER},
+      </if>
+      <if test="operateTime != null">
+        operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where reserved_id = #{reservedId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hui.zhong.cf.service.partner.model.ReservedInviteCode">
+    update t_reserved_invite_code
+    set invite_code_type = #{inviteCodeType,jdbcType=VARCHAR},
+      invite_code = #{inviteCode,jdbcType=VARCHAR},
+      use_status = #{useStatus,jdbcType=CHAR},
+      creator = #{creator,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      operator = #{operator,jdbcType=INTEGER},
+      operate_time = #{operateTime,jdbcType=TIMESTAMP}
+    where reserved_id = #{reservedId,jdbcType=INTEGER}
+  </update>
+
+
+	<select id="getReservedInviteCode" parameterType="com.hui.zhong.cf.service.partner.model.ReservedInviteCode"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from t_reserved_invite_code
+		<where>
+			<if test="inviteCode != null">
+				invite_code = #{inviteCode}
+			</if>
+			<if test="inviteCodeType != null">
+				and invite_code_type = #{inviteCodeType}
+			</if>
+			<if test="useStatus != null">
+				and use_status = #{useStatus}
+			</if>
+		</where>
+	</select>
+</mapper>

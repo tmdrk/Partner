@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/security 
+		http://www.springframework.org/schema/security/spring-security-3.2.xsd
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/data/jpa 
+		http://www.springframework.org/schema/data/jpa/spring-jpa-1.3.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+           	
+	<!-- 采用注释的方式配置bean -->  
+    <context:annotation-config />  
+    <!-- 配置要扫描的包 -->  
+    <context:component-scan base-package="com.hui.zhong.cf.mobile.service.impl" />
+
+
+	<!-- 加载 jdbc.properties 配置文件 -->
+	<context:property-placeholder location="classpath:jdbc.properties" />
+	
+
+	<!-- 配置dbcp数据源 -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="minIdle" value="${jdbc.minIdle}" />        <!-- 队列中的最小等待数 -->
+		<property name="maxIdle" value="${jdbc.maxIdle}" />        <!-- 队列中的最大等待数 -->
+		<property name="maxWait" value="${jdbc.maxWait}" />        <!-- 最长等待时间，单位毫秒 -->
+		<property name="maxActive" value="${jdbc.maxActive}" />    <!-- 最大活跃数 -->
+		<property name="initialSize" value="${jdbc.initialSize}" /><!-- 初始大小 -->
+		<property name="timeBetweenEvictionRunsMillis" value="${jdbc.timeBetweenEvictionRunsMillis}" />
+        <property name="testWhileIdle" value="${jdbc.testWhileIdle}" />
+        <property name="validationQuery" value="${jdbc.validationQuery}" />
+	</bean>
+	
+	<!--  事务管理配置 -->
+  	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    	<property name="dataSource" ref="dataSource"></property>
+  	</bean>
+  	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+    	<tx:attributes >
+      		<tx:method name="save*" propagation="REQUIRED" rollback-for="Exception" />
+			<tx:method name="do*" propagation="REQUIRED" rollback-for="Exception" />
+			<tx:method name="insert*" propagation="REQUIRED" rollback-for="Exception" />
+			<tx:method name="add*" propagation="REQUIRED" rollback-for="Exception" />
+			<tx:method name="update*" propagation="REQUIRED" rollback-for="Exception" />
+			<tx:method name="edit*" propagation="REQUIRED" rollback-for="Exception" />
+			<tx:method name="remove*" propagation="REQUIRED" rollback-for="Exception" />
+			<tx:method name="delete*" propagation="REQUIRED" rollback-for="Exception" />
+			<tx:method name="get*" read-only="true" />
+			<tx:method name="select*" read-only="true" />
+			<tx:method name="find*" read-only="true" />
+    	</tx:attributes>
+  	</tx:advice>
+  	<aop:config >
+    	<aop:pointcut expression="execution(* com.hui.zhong.cf.mobile.service.impl.*.*(..))" id="service"/>
+    	<aop:advisor advice-ref="txAdvice" pointcut-ref="service"/>
+  	</aop:config>
+ 
+	<!-- Session工厂 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!-- 自动扫描entity目录, 配置包的基路径即可，多个包用;分割 -->
+		<property name="typeAliasesPackage" value="com.hui.zhong.cf.mobile.model"/>
+  		<property name="mapperLocations">
+  			<list>
+				<value>classpath*:mapping/*Mapper.xml</value>
+			</list>
+  		</property>
+	</bean>
+	
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+		<property name="basePackage" value="com.hui.zhong.cf.mobile.dao"></property>
+	</bean>
+	
+</beans>  

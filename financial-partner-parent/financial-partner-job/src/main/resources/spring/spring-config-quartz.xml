@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<!-- 隔天跑批-->
+	<bean id="everyDayLiquidationJobController" class="com.hui.zhong.cf.job.api.controller.EveryDayLiquidationJobController"></bean>
+	<!-- 每月封存-->
+	<bean id="everyMonthSealJobController" class="com.hui.zhong.cf.job.api.controller.EveryMonthSealJobController"></bean>
+	<!-- 每月跑批-->
+	<bean id="everyMonthLiquidationJobController" class="com.hui.zhong.cf.job.api.controller.EveryMonthLiquidationJobController"></bean>
+
+	<!--隔天跑批
+	描述：每天凌晨01:30:00对历史订单进行结算。
+		投资人下单投资，每天凌晨计算历史订单，对合伙人、团队管理者产生的奖金
+	场景：
+		情况1：到凌晨01:30:00时，若当前时间是[2号，31号]，那么结算“buyDate（订单购买时间）”处于当月的所有未结算的订单
+		情况2：到凌晨01:30:00时，若当前时间是1号，那么结算“buyDate（订单购买时间）”上一个月所有未结算的订单
+	业务逻辑操作：
+		循环遍历每一个符合条件的订单，根据订单，订单关联的用户，计算“出借奖金”、“差额奖金”、“服务费”
+	具体操作：
+		对t_invest表中的符合条件的数据计算，并存储到t_invest_bonus表中，
+	注意事项：
+	-->
+	<bean id="everyDayLiquidationJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="everyDayLiquidationJobController" />
+		</property>
+		<property name="targetMethod">
+			<value>everyDayLiquidationInvest</value>
+		</property>
+	</bean>
+	<bean id="everyDayLiquidationJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="everyDayLiquidationJobDetail" />
+		</property>
+		<property name="cronExpression">
+			<value>0 30 1 * * ?</value><!-- 每天凌晨01:30:00执行 ，生产环境使用-->
+			<!--<value>0 0/1 * * * ?</value>--><!-- 每1分钟执行一次，本地测试 -->
+		</property>
+	</bean>
+
+	<!--每月封存
+	描述：每月1号凌晨02:30:00对上一个月历史订单进行封存。
+		1、更新订单中的“superior_recommend_code_user_id（业绩归属上级合伙人userid）”“on_superior_recommend_code_user_id（业绩归属上上级合伙人userid）”
+		“team_recommend_code_user_id（业绩归属团队管理者userid）”字段
+		2、修改t_invest（投资表）中字段seal_status（封存状态:  0:未封存,   1:已封存）的值为1，表示订单已经封存
+	场景：
+		封存的订单不允许更改，要对历史订单进行结算，
+	具体操作：
+		1、更新订单中的“superior_recommend_code_user_id（业绩归属上级合伙人userid）”“on_superior_recommend_code_user_id（业绩归属上上级合伙人userid）”
+		“team_recommend_code_user_id（业绩归属团队管理者userid）”字段
+		2、修改t_invest（投资表）中字段seal_status（封存状态:  0:未封存,   1:已封存）的值为1，表示订单已经封存
+	注意事项：
+	-->
+	<bean id="everyMonthSealJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="everyMonthSealJobController" />
+		</property>
+		<property name="targetMethod">
+			<value>everyMonthSealInvest</value>
+		</property>
+	</bean>
+	<bean id="everyMonthSealJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="everyMonthSealJobDetail" />
+		</property>
+		<property name="cronExpression">
+			<value>0 30 2 1 * ?</value><!-- 每月1号凌晨02:30:00执行 ，生产环境使用-->
+			<!--<value>0 0/1 * * * ?</value>--><!-- 每1分钟执行一次，本地测试 -->
+		</property>
+	</bean>
+
+
+	<!--每月跑批
+	描述：每月1号凌晨03:00:00对上一个月历史订单进行跑批结算。
+		1、获取要计算“佣金”的用户，就是获取身份为合伙人的用户
+		2、循环遍历合伙人集合，对每一个合伙人用户，查询他的“投资总额”“折扣总额”“出借费”“差额费”“服务费”，
+			并封装保存到t_commission_liquidation表中
+	场景：
+		对每一个合伙人结算上一个月的“出借费”“差额费”“服务费”
+	具体操作：
+		1、查询t_login_user表，获取身份为合伙人的用户
+		   查询t_invest表，对每一个合伙人用户，查询他的“投资总额”“折扣总额”“出借费”“差额费”“服务费”
+		2、对查询结果封存，保存到t_commission_liquidation表中，
+	注意事项：
+	-->
+	<bean id="everyMonthLiquidationJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="everyMonthLiquidationJobController" />
+		</property>
+		<property name="targetMethod">
+			<value>everyMonthLiquidationInvest</value>
+		</property>
+	</bean>
+	<bean id="everyMonthLiquidationJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="everyMonthLiquidationJobDetail" />
+		</property>
+		<property name="cronExpression">
+			<value>0 0 3 1 * ?</value><!-- 每月1号凌晨03:00:00执行 ，生产环境使用-->
+			<!--<value>0 0/1 * * * ?</value>--><!-- 每1分钟执行一次，本地测试 -->
+		</property>
+	</bean>
+
+
+
+
+
+
+	<bean id="schedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="everyDayLiquidationJobTrigger"/>
+				<ref bean="everyMonthSealJobTrigger"/>
+				<ref bean="everyMonthLiquidationJobTrigger"/>
+			</list>
+		</property>
+	</bean>
+</beans>

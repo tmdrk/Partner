@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans        
+    http://www.springframework.org/schema/beans/spring-beans.xsd        
+    http://code.alibabatech.com/schema/dubbo        
+    http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<dubbo:application name="job-service-impl-provider" />
+	
+	<!-- 开发环境需要打开-->
+	<dubbo:registry address="${dubbo.zookeeper}"/>
+	<dubbo:protocol name="dubbo" port="20990" accesslog="true" />
+	<dubbo:provider timeout="60000" delay="-1" />
+
+	<!-- demo -->
+	<bean id="jobServiceImpl" class="com.hui.zhong.cf.job.service.impl.JobServiceImpl" />
+	<dubbo:service interface="com.hui.zhong.cf.job.service.JobService" ref="jobServiceImpl" />
+
+	<!-- 每天跑批，每月跑批，结算订单,服务 -->
+	<bean id="everyDayMonthLiquidationService" class="com.hui.zhong.cf.job.service.impl.EveryDayMonthLiquidationServiceImpl" />
+	<dubbo:service ref="everyDayMonthLiquidationService" interface="com.hui.zhong.cf.job.service.EveryDayMonthLiquidationService"/>
+
+</beans>

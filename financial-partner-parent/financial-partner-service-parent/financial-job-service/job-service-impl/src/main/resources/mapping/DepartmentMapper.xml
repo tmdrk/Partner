@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hui.zhong.cf.job.dao.DepartmentMapper" >
+  <resultMap id="BaseResultMap" type="com.hui.zhong.cf.job.model.Department" >
+    <id column="dept_id" property="deptId" jdbcType="INTEGER" />
+    <result column="dept_name" property="deptName" jdbcType="VARCHAR" />
+    <result column="dept_no" property="deptNo" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    dept_id, dept_name, dept_no, remark, parent_id, order_id, create_time, creator
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ssm_department
+    where dept_id = #{deptId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ssm_department
+    where dept_id = #{deptId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hui.zhong.cf.job.model.Department" >
+    insert into ssm_department (dept_id, dept_name, dept_no, 
+      remark, parent_id, order_id, 
+      create_time, creator)
+    values (#{deptId,jdbcType=INTEGER}, #{deptName,jdbcType=VARCHAR}, #{deptNo,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{creator,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hui.zhong.cf.job.model.Department" >
+    insert into ssm_department
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="deptId != null" >
+        dept_id,
+      </if>
+      <if test="deptName != null" >
+        dept_name,
+      </if>
+      <if test="deptNo != null" >
+        dept_no,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="deptId != null" >
+        #{deptId,jdbcType=INTEGER},
+      </if>
+      <if test="deptName != null" >
+        #{deptName,jdbcType=VARCHAR},
+      </if>
+      <if test="deptNo != null" >
+        #{deptNo,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hui.zhong.cf.job.model.Department" >
+    update ssm_department
+    <set >
+      <if test="deptName != null" >
+        dept_name = #{deptName,jdbcType=VARCHAR},
+      </if>
+      <if test="deptNo != null" >
+        dept_no = #{deptNo,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=INTEGER},
+      </if>
+    </set>
+    where dept_id = #{deptId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hui.zhong.cf.job.model.Department" >
+    update ssm_department
+    set dept_name = #{deptName,jdbcType=VARCHAR},
+      dept_no = #{deptNo,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=INTEGER},
+      order_id = #{orderId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=INTEGER}
+    where dept_id = #{deptId,jdbcType=INTEGER}
+  </update>
+  
+  <!-- 查询部门信息用于后台新增用户页面显示下拉列表 -->
+  <select id="findDepartmentList" resultType="hashmap">
+		SELECT
+			d.dept_id,
+			d.dept_no,
+			d.dept_name,
+			d.remark,
+			d.parent_id
+		FROM ssm_department d
+		order by d.order_id asc,d.dept_id asc
+  </select>
+  
+  <!-- 查找员工列表    一级部门 财富管理部  -->
+  <select id="findFirstDeptInfo" resultType="hashmap">
+  	SELECT d.dept_id,d.dept_name FROM ssm_department d WHERE d.parent_id = 0
+  </select>
+  
+  <!-- 查找所在团队 三级级联的第二级(营业部)或第三级(团队) -->
+  <select id="findSubWorkDeptInfoByDeptId" resultType="hashmap" parameterType="com.hui.zhong.cf.job.model.Department">
+	  	SELECT d.dept_id,d.dept_name FROM ssm_department d 
+		  	<where>
+			  	<if test="deptId != null">
+			  	d.dept_id = #{deptId}
+			  	</if>
+			  	<if test="parentId != null">
+			  	and d.parent_id = #{parentId}
+			  	</if>
+		  	</where>
+	    order by d.order_id asc
+  </select>
+  
+  <!-- 获得层级部门信息名称 -->
+  <select id="getLevelDeptInfo" parameterType="int" resultType="string">
+  	SELECT f_ret_dept_name(#{deptId}) dept_info from dual
+  </select>
+  
+  <!-- 查询部门信息用于给员工设置工作组 -->
+  <select id="findDepartmentGroupList" resultType="hashmap" parameterType="int">
+  	SELECT
+		d.dept_id,
+		case 
+			when d.dept_id in (SELECT wg.dept_id from ssm_work_group wg where wg.employee_id = #{employeeId}) then 'true' 
+			ELSE  'false' 
+		end checked,
+		d.dept_no,
+		d.dept_name,
+		d.remark,
+		d.parent_id
+	FROM ssm_department d
+	order by d.order_id asc,d.dept_id asc
+  </select>
+  
+  <!-- 查询业绩管理部门信息查询二三级级 -->
+	<select id="findDepartmentTwoAndThree" resultType="hashmap" parameterType="String">
+		select * from ssm_department sd where sd.dept_level in (1,2)
+	</select>
+	
+	<!-- 根据名称和父id查询当前部门是否存在 -->
+	<select id="findTeamDetail" resultMap="BaseResultMap" parameterType="hashmap">
+		select dept_id,dept_no,dept_name, parent_id from ssm_department 
+		where dept_name = #{dept_name} 
+		and parent_id = #{parent_id}
+	</select>
+	
+	<!-- 根据父ID查询部门编号 -->
+	<select id="selectCountDeptnoByParentId" resultType="hashmap" parameterType="com.hui.zhong.cf.job.model.Department">
+		select count(dept_no) count,dept_no,parent_id,dept_id
+		from ssm_department where parent_id = #{parentId}
+	</select>
+	
+	<select id="getParentIdByChildrenId" resultType="com.hui.zhong.cf.job.model.Department" parameterType="hashmap">
+		SELECT
+			dept_id deptId
+		FROM
+			ssm_department
+		WHERE
+			find_in_set(dept_id, f_getParentids(#{deptId}));
+	</select>
+</mapper>

@@ -1,0 +1,574 @@
+
+
+.ui-logo-box{
+    position: absolute;
+    height: 270px;
+    width: 100%;
+}
+.ui-logo-box img{
+    position: absolute;
+    left: 50%;
+    top:50%;
+    margin-left: -123px;
+    margin-top: -50px;
+}
+
+.ui-form{
+    position: relative;
+    padding: 0 40px;
+    top: 270px;
+    font-size: 38px;
+    padding-top: 30px;
+}
+.ui-form input{
+    width: 100%;
+    border: none;
+    box-shadow: none;
+    font-size: 28px;
+    background: none;
+}
+.ui-form-item{
+    display: box;
+    display: -webkit-box;
+}
+.ui-form-item input{
+    height: 90px;
+    display: box;
+    display: -webkit-box;
+    box-flex: 1.0;
+    -webkit-box-flex: 1.0;
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+
+.ui-form button{
+    font-family: PingFang-SC-Medium serif;
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+.ui-form-item{
+    position: relative;
+    height: 100px;
+    line-height: 100px;
+    margin-top: 13px;
+    border-bottom: 1px solid #dddddd;
+}
+.ui-form-item2{
+    text-align: center;
+    margin-top: 100px;
+    margin-bottom: 24px;
+}
+.password i{
+    display: box;
+    display: -webkit-box;
+    width: 32px;
+    height: 20px;
+    margin-top: 35px;
+    /*background: black;*/
+    /*background: url("../images/show.png") bottom center no-repeat;*/
+    background-image: url("../images/hide.png");
+    background-position: bottom center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+.ui-form-item3{
+    text-align: center;
+}
+.ui-form-item3 a{
+    color: #aaaaaa;
+    font-size: 26px;
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+.ui-form-item3 span{
+    color: #dddddd;
+    margin:0 38px;
+}
+.ui-form-item2 button{
+    display: inline-block;
+    width: 610px;
+    height: 90px;
+    border-radius: 100px;
+    margin: 0 auto;
+    border: none;
+    box-shadow: none;
+    color: #fff;
+    font-size: 32px;
+    /*background: linear-gradient(left,#dfbc71,#c59b51);*/
+    background: -webkit-linear-gradient(right,#c59b51, #dfbc71); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(right,#c59b51, #dfbc71); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(right,#c59b51, #dfbc71); /* Firefox 3.6 - 15 */
+    background: linear-gradient(right,#c59b51, #dfbc71); /* 标准的语法 */
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+
+/*注册*/
+
+.regist-form{
+    top:0;
+}
+.regist-form form input{
+    font-size: 28px;
+}
+.agree{
+    color: #cccccc;
+    font-size: 26px;
+}
+.agree a{
+    color: #68c1fe;
+}
+.code .get-code{
+    display: box;
+    display: -webkit-box;
+    display: block;
+    color: #C59B51;
+    font-size: 24px;
+    text-align: right;
+    border: none;
+    outline: none;
+    background: transparent;
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+.code .btn-disable{
+    color: #cccccc;
+}
+.code .btn-again{
+    color: #999;
+}
+
+/*忘记密码*/
+.validate .validate-code{
+    display: box;
+    display: -webkit-box;
+    display: block;
+    width: 150px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    border: none;
+    outline: none;
+    margin-top: 12px;
+    font-size: 30px;
+    color: #3c3c3c;
+    background: #E5E5E5;
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+
+/*修改密码成功*/
+.modify-suc{
+    height: 100%;
+    background: url("../images/modifySuc.png") top center no-repeat;
+    font-size: 32px;
+    text-align: center;
+    line-height: 45px;
+    padding-top: 627px;
+}
+.confirm-btn{
+    display: inline-block;
+    width: 610px;
+    height: 90px;
+    line-height: 90px;
+    color: #cba562;
+    background: url("../images/sucBtn.png") top center no-repeat;
+    background-size: contain;
+    margin-top: 42px;
+    cursor: default;
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+.confirm-btn:hover,.confirm-btn:active{
+    color: #cba562;
+}
+/*设置*/
+.set{
+    height: 110px;
+    line-height: 110px;
+    padding:0 30px;
+    font-size: 30px;
+    font-weight: bold;
+    border-bottom:1px solid #ececec;
+}
+.set a{
+    display: block;
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+.set i{
+    display: inline-block;
+    width: 15px;
+    height: 26px;
+    background: url("../images/arrowR.png") top center no-repeat;
+    background-size: contain;
+    margin-top: 40px;
+}
+/*我的*/
+.imgBg{
+    background-image: url(../images/imgBg.png);
+    background-repeat: repeat-x;
+}
+.setBtn{
+    width: 42px;
+    height: 42px;
+    background: url("../images/setting.png") top center no-repeat;
+    background-size: contain;
+    position: absolute;
+    right: 30px;
+    top:25px;
+}
+.ui-img-box{
+    position: relative;
+    height: 370px;
+}
+.img-box{
+    position: absolute;
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+    top: 40%;
+    left: 50%;
+    margin-top: -85px;
+    margin-left: -85px;
+    box-shadow: 0 2px 31px 38px rgba(255,255,255,0.47);
+}
+.img-box img{
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+}
+.account{
+    text-align: center;
+    font-size: 30px;
+    padding-top: 270px;
+}
+.real-name-box{
+    padding: 0 30px;
+    font-size: 30px;
+}
+.real-name-box .ui-form-item{
+    font-weight: bold;
+}
+.real-name-box .ui-form-item em{
+    display: inline-block;
+    width: 41px;
+    height: 41px;
+    /*background: url("../images/realName.png") center center no-repeat;*/
+    vertical-align: sub;
+    margin-right: 20px;
+}
+.real-name-box .realname em{
+    background: url("../images/realName.png") center center no-repeat;
+}
+.real-name-box .contactUs em{
+    background: url("../images/contactUs.png") center center no-repeat;
+}
+.real-name-box .version em{
+    background: url("../images/version.png") center center no-repeat;
+}
+.real-name-box .ui-form-item span{
+    position: absolute;
+    font-size: 24px;
+    font-weight: normal;
+    color: #999999;
+    margin-right: 30px;
+    top: 0px;
+    right: 0px;
+}
+.real-name-box .ui-form-item i{
+    position: absolute;
+    width: 15px;
+    height: 26px;
+    background: url(../images/arrowR.png) top center no-repeat;
+    background-size: contain;
+    right: 0px;
+    top: 36px;
+}
+
+.sign-out-btn{
+    width: 610px;
+    height: 90px;
+    margin: 0 auto;
+    background-image: linear-gradient(90deg, #DFBC71, #C59B51);
+    border-radius: 100px;
+    text-align: center;
+    line-height: 90px;
+    color: #ffffff;
+    margin-top: 195px;
+}
+a.sign-out-btn:hover { color: #fff; }
+/*邀请好友*/
+.invite-box{
+    height: 938px;
+    padding-bottom: 70px;
+    background: url("../images/partner.png") top center no-repeat;
+    overflow: hidden;
+}
+.become-partner{
+    width: 660px;
+    height: 718px;
+    border-radius: 16px;
+    margin: 0 auto;
+    margin-top: 220px;
+    box-shadow: 0px 5px 35px #ccc;
+}
+.partner-code{
+    height: 240px;
+    background: url("../images/partnerCode.png") bottom center no-repeat;
+    background-size:100% 100%;
+    margin:0 auto;
+    color: #ffeec7;
+    font-size: 28px;
+    text-align: center;
+}
+.partner-code p:first-of-type{
+    padding-top: 60px;
+    line-height: 40px;
+    text-shadow: 1px 1px 4px #E17857;
+}
+.partner-code .code-number{
+    font-size: 64px;
+    color: #ffffff;
+    text-shadow: 0 2px 8px rgba(225,120,87,0.50);
+}
+.step{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 570px;
+    padding: 60px 45px 80px 45px;
+    overflow: hidden;
+}
+.step-box li {
+    /*float: left;*/
+    list-style: none;
+    text-align: center;
+    position: relative;
+}
+.step-box li p{
+    font-size: 26px;
+    line-height: 26px;
+    color: #72706E;
+}
+.step-box li p span{
+    display: inline-block;
+    width: 26px;
+    height: 26px;
+    font-size: 18px;
+    text-align: center;
+    line-height: 26px;
+    color: #ffffff;
+    background: #e4e4e4;
+    border-radius: 50%;
+    margin-right: 5px;
+    vertical-align: top;
+}
+.step li div{
+    width: 106px;
+    height: 106px;
+    border-radius: 50%;
+    background: blueviolet;
+    margin:0 auto;
+    margin-bottom: 24px;
+}
+.step .share div{
+    background-image: url("../images/share1.png");
+    background-position: center center;
+    background-color: #fdf6e0;
+}
+.step li i{
+    position: absolute;
+    display: block;
+    width: 29px;
+    height: 2px;
+    background: #dddddd;
+    right: -45px;
+    bottom: 11px;
+}
+.step .infomation div{
+    background-image: url("../images/information1.png");
+    background-position: center center;
+    background-color: #fff3ea;
+}
+.step .success  div{
+    background-image: url("../images/success1.png");
+    background-position: center center;
+    background-color: #fff1f6;
+}
+.invite-btn{
+    display: block;
+    margin: 0 auto;
+    width: 550px;
+    height: 96px;
+    line-height: 96px;
+    font-size: 32px;
+    text-align: center;
+    color: #ffffff;
+    background-image: linear-gradient(90deg, #F9D99A 0%, #F28C6C 100%);
+    box-shadow: 0 8px 20px 0 rgba(225,120,87,0.30);
+    border-radius: 50px;
+}
+.invite-btn:hover{
+    color: #ffffff;
+}
+.invite-box .cue{
+    font-size: 22px;
+    line-height: 30px;
+    color: #72706e;
+    text-align: center;
+    margin-top: 26px;
+}
+/*邀请朋友成为客户*/
+.custom{
+    background: url("../images/custom.png") top center no-repeat;
+}
+.custom-code{
+    background: url("../images/customCode.png") bottom center no-repeat;
+}
+.custom-code p:first-of-type{
+    color: #cbdbff;
+    text-shadow: 1px 1px 4px #4978E5;
+}
+.custom-code .code-number{
+    text-shadow: 0 2px 8px rgba(73,120,229,0.50);
+}
+.step .share2 div{
+    background-image: url("../images/share2.png");
+    background-position: center center;
+    background-color: #e7fcf5;
+}
+.step .infomation2 div{
+    background-image: url("../images/information2.png");
+    background-position: center center;
+    background-color: #ebf8ff;
+}
+.step .success2  div{
+    background-image: url("../images/success2.png");
+    background-position: center center;
+    background-color: #fdf0ff;
+}
+.custom-btn{
+    background-image: linear-gradient(90deg, #7DA7EB 0%, #6081CE 100%);
+    box-shadow: 0 8px 20px 0 rgba(73,120,229,0.30);
+    border-radius: 50px;
+}
+
+/*成为合伙人becomePartner.html*/
+.invite-partner{
+    background: url("../images/partnerBg.png") top center no-repeat;
+    overflow: hidden;
+}
+.ui-register-form{
+    width: 670px;
+    height: 945px;
+    font-size: 28px;
+    margin: 0 auto;
+    margin-top: 220px;
+    margin-bottom: 35px;
+    box-shadow: -1px 4px 20px #ccc;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #ffffff;
+}
+.ui-register-form h4{
+    font-size: 34px;
+    color: #C59B51;
+    text-align: center;
+    line-height: 48px;
+    margin-top: 32px;
+}
+.ui-register-form ul{
+    width: 610px;
+    margin: 0 auto;
+    margin-top: 30px;
+}
+.ui-register-form li{
+    position: relative;
+    width: 608px;
+    border:1px solid #C59B51;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    line-height: 88px;
+    display: box;
+    display: -webkit-box;
+}
+.ui-register-form li input{
+    font-size: 28px;
+    color: #444444;
+    line-height: 40px;
+    padding: 25px 23px;
+    border:none;
+    outline: none;
+    -webkit-appearance: none;
+    background-color: transparent;
+    display: box;
+    display: -webkit-box;
+    box-flex: 1.0;
+    -webkit-box-flex: 1.0;
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+.ui-register-form li .validate-code{
+    display: box;
+    display: -webkit-box;
+    display: block;
+    width: 150px;
+    height: 60px;
+    background: #ecf8fe;
+    line-height: 60px;
+    text-align: center;
+    margin-top: 14px;
+    margin-right: 25px;
+    cursor: pointer;
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+.ui-register-form li .get-code{
+    display: box;
+    display: -webkit-box;
+    display: block;
+    width: 156px;
+    line-height: 90px;
+    text-align: right;
+    color: #C59B51;
+    font-size: 24px;
+    margin-right: 30px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+.ui-register-form li .btn-disable{
+    color: #cccccc;
+}
+.ui-register-form .iCode{
+    display: block;
+    text-align: center;
+    border: 1px solid #444444;
+}
+.ui-register-form .regist-btn{
+    display: block;
+    width: 610px;
+    height: 90px;
+    line-height: 90px;
+    font-size: 32px;
+    color: #ffffff;
+    text-align: center;
+    background-image: linear-gradient(90deg, #DFBC71 0%, #C59B51 100%);
+    border-radius: 100px;
+    margin:0 auto;
+    margin-top: 100px;
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+.ui-register-form .agree{
+    text-align: center;
+    line-height: 37px;
+    margin-top: 23px;
+}
+.ui-register-form .agree span{
+    color: #4b9afe;
+}
+.invite-custom{
+    background: url("../images/customBg.png") top center no-repeat;
+    overflow: hidden;
+}
+.ui-register-form .password i{
+    margin-right: 30px;
+}
+.code-color{
+    color: #1f6293;
+}

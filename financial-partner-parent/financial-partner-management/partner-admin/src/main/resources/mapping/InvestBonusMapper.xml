@@ -1,0 +1,755 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huizhongcf.partner.dao.InvestBonusMapper">
+  <resultMap id="BaseResultMap" type="com.huizhongcf.partner.model.InvestBonus">
+    <id column="invest_bonus_id" jdbcType="INTEGER" property="investBonusId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="user_role" jdbcType="VARCHAR" property="userRole" />
+    <result column="info_id" jdbcType="INTEGER" property="infoId" />
+    <result column="invest_id" jdbcType="INTEGER" property="investId" />
+    <result column="reward_num" jdbcType="VARCHAR" property="rewardNum" />
+    <result column="user_lend_bonus" jdbcType="DECIMAL" property="userLendBonus" />
+    <result column="user_diff_bonus" jdbcType="DECIMAL" property="userDiffBonus" />
+    <result column="superior_lend_bonus" jdbcType="DECIMAL" property="superiorLendBonus" />
+    <result column="superior_diff_bonus" jdbcType="DECIMAL" property="superiorDiffBonus" />
+    <result column="superior_recommend_code_user_id" jdbcType="INTEGER" property="superiorRecommendCodeUserId" />
+    <result column="on_superior_lend_bonus" jdbcType="DECIMAL" property="onSuperiorLendBonus" />
+    <result column="on_superior_recommend_code_user_id" jdbcType="INTEGER" property="onSuperiorRecommendCodeUserId" />
+    <result column="service_bonus" jdbcType="DECIMAL" property="serviceBonus" />
+    <result column="team_recommend_code_user_id" jdbcType="INTEGER" property="teamRecommendCodeUserId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="operator" jdbcType="INTEGER" property="operator" />
+    <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    invest_bonus_id, user_id, user_role, info_id, invest_id, reward_num, user_lend_bonus, 
+    user_diff_bonus, superior_lend_bonus, superior_diff_bonus, superior_recommend_code_user_id, 
+    on_superior_lend_bonus, on_superior_recommend_code_user_id, service_bonus, team_recommend_code_user_id, 
+    create_time, operator, operate_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_invest_bonus
+    where invest_bonus_id = #{investBonusId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_invest_bonus
+    where invest_bonus_id = #{investBonusId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.huizhongcf.partner.model.InvestBonus">
+    insert into t_invest_bonus (invest_bonus_id, user_id, user_role, 
+      info_id, invest_id, reward_num, 
+      user_lend_bonus, user_diff_bonus, superior_lend_bonus, 
+      superior_diff_bonus, superior_recommend_code_user_id, 
+      on_superior_lend_bonus, on_superior_recommend_code_user_id, 
+      service_bonus, team_recommend_code_user_id, 
+      create_time, operator, operate_time
+      )
+    values (#{investBonusId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{userRole,jdbcType=VARCHAR}, 
+      #{infoId,jdbcType=INTEGER}, #{investId,jdbcType=INTEGER}, #{rewardNum,jdbcType=VARCHAR}, 
+      #{userLendBonus,jdbcType=DECIMAL}, #{userDiffBonus,jdbcType=DECIMAL}, #{superiorLendBonus,jdbcType=DECIMAL}, 
+      #{superiorDiffBonus,jdbcType=DECIMAL}, #{superiorRecommendCodeUserId,jdbcType=INTEGER}, 
+      #{onSuperiorLendBonus,jdbcType=DECIMAL}, #{onSuperiorRecommendCodeUserId,jdbcType=INTEGER}, 
+      #{serviceBonus,jdbcType=DECIMAL}, #{teamRecommendCodeUserId,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{operator,jdbcType=INTEGER}, #{operateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.huizhongcf.partner.model.InvestBonus">
+    insert into t_invest_bonus
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="investBonusId != null">
+        invest_bonus_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="userRole != null">
+        user_role,
+      </if>
+      <if test="infoId != null">
+        info_id,
+      </if>
+      <if test="investId != null">
+        invest_id,
+      </if>
+      <if test="rewardNum != null">
+        reward_num,
+      </if>
+      <if test="userLendBonus != null">
+        user_lend_bonus,
+      </if>
+      <if test="userDiffBonus != null">
+        user_diff_bonus,
+      </if>
+      <if test="superiorLendBonus != null">
+        superior_lend_bonus,
+      </if>
+      <if test="superiorDiffBonus != null">
+        superior_diff_bonus,
+      </if>
+      <if test="superiorRecommendCodeUserId != null">
+        superior_recommend_code_user_id,
+      </if>
+      <if test="onSuperiorLendBonus != null">
+        on_superior_lend_bonus,
+      </if>
+      <if test="onSuperiorRecommendCodeUserId != null">
+        on_superior_recommend_code_user_id,
+      </if>
+      <if test="serviceBonus != null">
+        service_bonus,
+      </if>
+      <if test="teamRecommendCodeUserId != null">
+        team_recommend_code_user_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="operator != null">
+        operator,
+      </if>
+      <if test="operateTime != null">
+        operate_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="investBonusId != null">
+        #{investBonusId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userRole != null">
+        #{userRole,jdbcType=VARCHAR},
+      </if>
+      <if test="infoId != null">
+        #{infoId,jdbcType=INTEGER},
+      </if>
+      <if test="investId != null">
+        #{investId,jdbcType=INTEGER},
+      </if>
+      <if test="rewardNum != null">
+        #{rewardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="userLendBonus != null">
+        #{userLendBonus,jdbcType=DECIMAL},
+      </if>
+      <if test="userDiffBonus != null">
+        #{userDiffBonus,jdbcType=DECIMAL},
+      </if>
+      <if test="superiorLendBonus != null">
+        #{superiorLendBonus,jdbcType=DECIMAL},
+      </if>
+      <if test="superiorDiffBonus != null">
+        #{superiorDiffBonus,jdbcType=DECIMAL},
+      </if>
+      <if test="superiorRecommendCodeUserId != null">
+        #{superiorRecommendCodeUserId,jdbcType=INTEGER},
+      </if>
+      <if test="onSuperiorLendBonus != null">
+        #{onSuperiorLendBonus,jdbcType=DECIMAL},
+      </if>
+      <if test="onSuperiorRecommendCodeUserId != null">
+        #{onSuperiorRecommendCodeUserId,jdbcType=INTEGER},
+      </if>
+      <if test="serviceBonus != null">
+        #{serviceBonus,jdbcType=DECIMAL},
+      </if>
+      <if test="teamRecommendCodeUserId != null">
+        #{teamRecommendCodeUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null">
+        #{operator,jdbcType=INTEGER},
+      </if>
+      <if test="operateTime != null">
+        #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.huizhongcf.partner.model.InvestBonus">
+    update t_invest_bonus
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userRole != null">
+        user_role = #{userRole,jdbcType=VARCHAR},
+      </if>
+      <if test="infoId != null">
+        info_id = #{infoId,jdbcType=INTEGER},
+      </if>
+      <if test="investId != null">
+        invest_id = #{investId,jdbcType=INTEGER},
+      </if>
+      <if test="rewardNum != null">
+        reward_num = #{rewardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="userLendBonus != null">
+        user_lend_bonus = #{userLendBonus,jdbcType=DECIMAL},
+      </if>
+      <if test="userDiffBonus != null">
+        user_diff_bonus = #{userDiffBonus,jdbcType=DECIMAL},
+      </if>
+      <if test="superiorLendBonus != null">
+        superior_lend_bonus = #{superiorLendBonus,jdbcType=DECIMAL},
+      </if>
+      <if test="superiorDiffBonus != null">
+        superior_diff_bonus = #{superiorDiffBonus,jdbcType=DECIMAL},
+      </if>
+      <if test="superiorRecommendCodeUserId != null">
+        superior_recommend_code_user_id = #{superiorRecommendCodeUserId,jdbcType=INTEGER},
+      </if>
+      <if test="onSuperiorLendBonus != null">
+        on_superior_lend_bonus = #{onSuperiorLendBonus,jdbcType=DECIMAL},
+      </if>
+      <if test="onSuperiorRecommendCodeUserId != null">
+        on_superior_recommend_code_user_id = #{onSuperiorRecommendCodeUserId,jdbcType=INTEGER},
+      </if>
+      <if test="serviceBonus != null">
+        service_bonus = #{serviceBonus,jdbcType=DECIMAL},
+      </if>
+      <if test="teamRecommendCodeUserId != null">
+        team_recommend_code_user_id = #{teamRecommendCodeUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null">
+        operator = #{operator,jdbcType=INTEGER},
+      </if>
+      <if test="operateTime != null">
+        operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where invest_bonus_id = #{investBonusId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.huizhongcf.partner.model.InvestBonus">
+    update t_invest_bonus
+    set user_id = #{userId,jdbcType=INTEGER},
+      user_role = #{userRole,jdbcType=VARCHAR},
+      info_id = #{infoId,jdbcType=INTEGER},
+      invest_id = #{investId,jdbcType=INTEGER},
+      reward_num = #{rewardNum,jdbcType=VARCHAR},
+      user_lend_bonus = #{userLendBonus,jdbcType=DECIMAL},
+      user_diff_bonus = #{userDiffBonus,jdbcType=DECIMAL},
+      superior_lend_bonus = #{superiorLendBonus,jdbcType=DECIMAL},
+      superior_diff_bonus = #{superiorDiffBonus,jdbcType=DECIMAL},
+      superior_recommend_code_user_id = #{superiorRecommendCodeUserId,jdbcType=INTEGER},
+      on_superior_lend_bonus = #{onSuperiorLendBonus,jdbcType=DECIMAL},
+      on_superior_recommend_code_user_id = #{onSuperiorRecommendCodeUserId,jdbcType=INTEGER},
+      service_bonus = #{serviceBonus,jdbcType=DECIMAL},
+      team_recommend_code_user_id = #{teamRecommendCodeUserId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      operator = #{operator,jdbcType=INTEGER},
+      operate_time = #{operateTime,jdbcType=TIMESTAMP}
+    where invest_bonus_id = #{investBonusId,jdbcType=INTEGER}
+  </update>
+  
+  <!-- 奖励单列表查询条件 -->
+  <sql id="Base_Where_Cloose_Bonus">
+	<if test="reward_num != null">
+	  	AND tib.reward_num  like '${reward_num}%'
+	</if>
+	<if test="contract_no != null">
+  		AND ti.contract_no  like '${contract_no}%'
+ 	</if>
+ 	<if test="product_name != null">
+  		AND ti.product_name  like '${product_name}%'
+ 	</if>
+ 	<if test="real_name != null">
+  		AND tui.real_name  like '${real_name}%'
+ 	</if>
+ 	<if test="username != null">
+  		AND tlu.username like '${username}%'
+ 	</if>
+ 	<if test="user_role != null">
+  		AND tlu.user_role = #{user_role}
+ 	</if>
+  	<if test="superior_real_name != null">
+  		AND stui.real_name  like '${superior_real_name}%'
+ 	</if>
+ 	<if test="superior_username != null">
+  		AND stlu.username like '${superior_username}%'
+ 	</if>
+ 	<if test="superior_user_type != null">
+  		AND stlu.user_type = #{superior_user_type}
+ 	</if>	
+   	<if test="on_superior_real_name != null">
+  		AND ostui.real_name  like '${on_superior_real_name}%'
+ 	</if>
+ 	<if test="on_superior_username != null">
+  		AND ostlu.username like '${on_superior_username}%'
+ 	</if>
+ 	<if test="on_superior_user_type != null">
+  		AND ostlu.user_type = #{on_superior_user_type}
+ 	</if>		
+   	<if test="team_real_name != null">
+  		AND ttui.real_name  like '${team_real_name}%'
+ 	</if>
+ 	<if test="team_username != null">
+  		AND ttlu.username like '${team_username}%'
+ 	</if>
+ 	<if test="invest_status != null">
+  		AND ti.invest_status = #{invest_status}
+ 	</if>	 	
+ 	<if test="min_create_time != null">
+ 	<![CDATA[
+ 		AND DATE_FORMAT(tib.create_time ,'%Y-%m-%d') >= #{min_create_time}
+ 		]]>
+ 	</if>
+ 	<if test="max_create_time != null">
+ 	<![CDATA[
+ 		AND DATE_FORMAT(tib.create_time ,'%Y-%m-%d') <= #{max_create_time}
+ 	]]>
+ 	</if>
+  </sql>
+  
+  <!-- 分页查询奖励单列表 -->
+  <select id="getInvestBonusList" parameterType="hashmap" resultType="hashmap">
+	SELECT
+	tib.invest_bonus_id,
+	tib.reward_num,
+	ti.contract_no,
+	(
+		SELECT
+			sd.dict_name
+		FROM
+			system_dict sd
+		WHERE
+			sd.dict_type = 'INVEST_STATUS'
+		AND sd.dict_code = ti.invest_status
+	) invest_status,
+	ti.product_name,
+	tib.user_id,
+	tui.real_name,
+	tlu.username,
+	(
+		SELECT
+			sd.dict_name
+		FROM
+			system_dict sd
+		WHERE
+			sd.dict_type = 'USER_ROLE'
+		AND sd.dict_code = tlu.user_role
+	) user_role,
+	(
+		SELECT
+			sd.dict_name
+		FROM
+			system_dict sd
+		WHERE
+			sd.dict_type = 'USER_TYPE'
+		AND sd.dict_code = tlu.user_type
+	) user_type,
+	ti.invest_amount,
+	ti.discount_molecular,
+	ti.discount_denominator,
+	CONCAT(
+		ti.discount_molecular,
+		'/',
+		ti.discount_denominator
+	) AS discount_rate,
+	ti.discount_amount,
+	tib.user_lend_bonus,
+	tib.user_diff_bonus,
+	(tib.user_lend_bonus+tib.user_diff_bonus) user_total_bonus,
+	stui.real_name AS superior_real_name,
+	stlu.username AS superior_username,
+	(
+		SELECT
+			sd.dict_name
+		FROM
+			system_dict sd
+		WHERE
+			sd.dict_type = 'USER_TYPE'
+		AND sd.dict_code = stlu.user_type
+	) superior_user_type,
+	tib.superior_lend_bonus,
+	tib.superior_diff_bonus,
+	(tib.superior_lend_bonus+tib.superior_diff_bonus) superior_total_bonus,
+	ostui.real_name AS on_superior_real_name,
+	ostlu.username AS on_superior_username,
+	(
+		SELECT
+			sd.dict_name
+		FROM
+			system_dict sd
+		WHERE
+			sd.dict_type = 'USER_TYPE'
+		AND sd.dict_code = ostlu.user_type
+	) on_superior_user_type,
+	tib.on_superior_lend_bonus,
+	(tib.on_superior_lend_bonus) on_superior_total_bonus,
+	ttui.real_name AS team_real_name,
+	ttlu.username AS team_username,
+	tib.service_bonus,
+	(tib.service_bonus) team_total_bonus,
+	tib.create_time
+	FROM
+		t_invest_bonus AS tib
+	LEFT JOIN t_invest AS ti ON tib.invest_id = ti.invest_id
+	LEFT JOIN t_login_user AS tlu ON tib.user_id = tlu.user_id
+	LEFT JOIN t_user_info AS tui ON tib.user_id = tui.user_id
+	LEFT JOIN t_login_user AS stlu ON tib.superior_recommend_code_user_id = stlu.user_id
+	LEFT JOIN t_user_info AS stui ON tib.superior_recommend_code_user_id = stui.user_id
+	LEFT JOIN t_login_user AS ostlu ON tib.on_superior_recommend_code_user_id = ostlu.user_id
+	LEFT JOIN t_user_info AS ostui ON tib.on_superior_recommend_code_user_id = ostui.user_id
+	LEFT JOIN t_login_user AS ttlu ON tib.team_recommend_code_user_id = ttlu.user_id
+	LEFT JOIN t_user_info AS ttui ON tib.team_recommend_code_user_id = ttui.user_id
+	WHERE 1 = 1 
+	<include refid="Base_Where_Cloose_Bonus"/>
+	ORDER BY tib.create_time DESC
+	limit #{startIndex},#{pageSize}
+  </select>
+  <!-- 查询奖励单总条数 -->
+  <select id="getInvestBonusCount" parameterType="hashmap" resultType="long">
+	SELECT
+		count(1)
+	FROM
+		t_invest_bonus AS tib
+	LEFT JOIN t_invest AS ti ON tib.invest_id = ti.invest_id
+	LEFT JOIN t_login_user AS tlu ON tib.user_id = tlu.user_id
+	LEFT JOIN t_user_info AS tui ON tib.user_id = tui.user_id
+	LEFT JOIN t_login_user AS stlu ON tib.superior_recommend_code_user_id = stlu.user_id
+	LEFT JOIN t_user_info AS stui ON tib.superior_recommend_code_user_id = stui.user_id
+	LEFT JOIN t_login_user AS ostlu ON tib.on_superior_recommend_code_user_id = ostlu.user_id
+	LEFT JOIN t_user_info AS ostui ON tib.on_superior_recommend_code_user_id = ostui.user_id
+	LEFT JOIN t_login_user AS ttlu ON tib.team_recommend_code_user_id = ttlu.user_id
+	LEFT JOIN t_user_info AS ttui ON tib.team_recommend_code_user_id = ttui.user_id
+	WHERE 1 = 1 
+	<include refid="Base_Where_Cloose_Bonus"/>
+  </select>
+  
+  <!-- 导出奖励单记录列表 -->
+  <select id="exportInvestBonusList" parameterType="hashmap" resultType="hashmap">
+	SELECT
+	tib.invest_bonus_id,
+	tib.reward_num,
+	ti.contract_no,
+	(
+		SELECT
+			sd.dict_name
+		FROM
+			system_dict sd
+		WHERE
+			sd.dict_type = 'INVEST_STATUS'
+		AND sd.dict_code = ti.invest_status
+	) invest_status,
+	ti.product_name,
+	tib.user_id,
+	tui.real_name,
+	tlu.username,
+	(
+		SELECT
+			sd.dict_name
+		FROM
+			system_dict sd
+		WHERE
+			sd.dict_type = 'USER_ROLE'
+		AND sd.dict_code = tlu.user_role
+	) user_role,
+	(
+		SELECT
+			sd.dict_name
+		FROM
+			system_dict sd
+		WHERE
+			sd.dict_type = 'USER_TYPE'
+		AND sd.dict_code = tlu.user_type
+	) user_type,
+	ti.invest_amount,
+	ti.discount_molecular,
+	ti.discount_denominator,
+	CONCAT(
+		ti.discount_molecular,
+		'/',
+		ti.discount_denominator
+	) AS discount_rate,
+	ti.discount_amount,
+	tib.user_lend_bonus,
+	tib.user_diff_bonus,
+	(tib.user_lend_bonus+tib.user_diff_bonus) user_total_bonus,
+	stui.real_name AS superior_real_name,
+	stlu.username AS superior_username,
+	(
+		SELECT
+			sd.dict_name
+		FROM
+			system_dict sd
+		WHERE
+			sd.dict_type = 'USER_TYPE'
+		AND sd.dict_code = stlu.user_type
+	) superior_user_type,
+	tib.superior_lend_bonus,
+	tib.superior_diff_bonus,
+	(tib.superior_lend_bonus+tib.superior_diff_bonus) superior_total_bonus,
+	ostui.real_name AS on_superior_real_name,
+	ostlu.username AS on_superior_username,
+	(
+		SELECT
+			sd.dict_name
+		FROM
+			system_dict sd
+		WHERE
+			sd.dict_type = 'USER_TYPE'
+		AND sd.dict_code = ostlu.user_type
+	) on_superior_user_type,
+	tib.on_superior_lend_bonus,
+	(tib.on_superior_lend_bonus) on_superior_total_bonus,
+	ttui.real_name AS team_real_name,
+	ttlu.username AS team_username,
+	tib.service_bonus,
+	(tib.service_bonus) team_total_bonus,
+	DATE_FORMAT(tib.create_time,'%Y-%m-%d %H:%i:%s') AS create_time
+	FROM
+		t_invest_bonus AS tib
+	LEFT JOIN t_invest AS ti ON tib.invest_id = ti.invest_id
+	LEFT JOIN t_login_user AS tlu ON tib.user_id = tlu.user_id
+	LEFT JOIN t_user_info AS tui ON tib.user_id = tui.user_id
+	LEFT JOIN t_login_user AS stlu ON tib.superior_recommend_code_user_id = stlu.user_id
+	LEFT JOIN t_user_info AS stui ON tib.superior_recommend_code_user_id = stui.user_id
+	LEFT JOIN t_login_user AS ostlu ON tib.on_superior_recommend_code_user_id = ostlu.user_id
+	LEFT JOIN t_user_info AS ostui ON tib.on_superior_recommend_code_user_id = ostui.user_id
+	LEFT JOIN t_login_user AS ttlu ON tib.team_recommend_code_user_id = ttlu.user_id
+	LEFT JOIN t_user_info AS ttui ON tib.team_recommend_code_user_id = ttui.user_id
+	WHERE 1 = 1 
+	<include refid="Base_Where_Cloose_Bonus"/>
+	ORDER BY tib.create_time DESC
+  </select>
+    <!-- 奖励结算详情 -->
+  <select id="getCommissionLiquidationDetailList" parameterType="hashmap" resultType="hashmap">
+	SELECT
+	ti.invest_id,
+	ti.contract_no,
+	(
+		SELECT
+			sd.dict_name
+		FROM
+			system_dict sd
+		WHERE
+			sd.dict_type = 'INVEST_STATUS'
+		AND sd.dict_code = ti.invest_status
+	) invest_status,
+	ti.product_name,
+	(
+		CASE ti.user_id
+		WHEN #{userId,jdbcType=INTEGER} THEN
+			tui.real_name
+		ELSE
+			''
+		END
+	) real_name,
+	(
+		CASE ti.user_id
+		WHEN #{userId,jdbcType=INTEGER} THEN
+			tlu.username
+		ELSE
+			''
+		END
+	) username,
+	(
+		CASE ti.user_id
+		WHEN #{userId,jdbcType=INTEGER} THEN
+			(
+				SELECT
+					sd.dict_name
+				FROM
+					system_dict sd
+				WHERE
+					sd.dict_type = 'USER_ROLE'
+				AND sd.dict_code = tlu.user_role
+			)
+		ELSE
+			''
+		END
+	) user_role,
+	ti.invest_amount,
+	ti.discount_molecular,
+	ti.discount_denominator,
+	CONCAT(
+		ti.discount_molecular,
+		'/',
+		ti.discount_denominator
+	) AS discount_rate,
+	ti.discount_amount,
+	(
+		CASE ti.superior_recommend_code_user_id
+		WHEN #{userId,jdbcType=INTEGER} THEN
+			stui.real_name
+		ELSE
+			''
+		END
+	) superior_real_name,
+	(
+		CASE ti.superior_recommend_code_user_id
+		WHEN #{userId,jdbcType=INTEGER} THEN
+			stlu.username
+		ELSE
+			''
+		END
+	) superior_username,
+	(
+		CASE ti.on_superior_recommend_code_user_id
+		WHEN #{userId,jdbcType=INTEGER} THEN
+			ostui.real_name
+		ELSE
+			''
+		END
+	) on_superior_real_name,
+	(
+		CASE ti.on_superior_recommend_code_user_id
+		WHEN #{userId,jdbcType=INTEGER} THEN
+			ostlu.username
+		ELSE
+			''
+		END
+	) on_superior_username,
+	(
+		CASE ti.team_recommend_code_user_id
+		WHEN #{userId,jdbcType=INTEGER} THEN
+			ttui.real_name
+		ELSE
+			''
+		END
+	) team_real_name,
+	(
+		CASE ti.team_recommend_code_user_id
+		WHEN #{userId,jdbcType=INTEGER} THEN
+			ttlu.username
+		ELSE
+			''
+		END
+	) team_username,
+	ti.create_time
+	FROM
+		t_invest AS ti
+	LEFT JOIN t_login_user AS tlu ON ti.user_id = tlu.user_id
+	LEFT JOIN t_user_info AS tui ON ti.user_id = tui.user_id
+	LEFT JOIN t_login_user AS stlu ON ti.superior_recommend_code_user_id = stlu.user_id
+	LEFT JOIN t_user_info AS stui ON ti.superior_recommend_code_user_id = stui.user_id
+	LEFT JOIN t_login_user AS ostlu ON ti.on_superior_recommend_code_user_id = ostlu.user_id
+	LEFT JOIN t_user_info AS ostui ON ti.on_superior_recommend_code_user_id = ostui.user_id
+	LEFT JOIN t_login_user AS ttlu ON ti.team_recommend_code_user_id = ttlu.user_id
+	LEFT JOIN t_user_info AS ttui ON ti.team_recommend_code_user_id = ttui.user_id
+	WHERE
+	(ti.user_id = #{userId,jdbcType=INTEGER}
+	OR ti.superior_recommend_code_user_id = #{userId,jdbcType=INTEGER}
+	OR ti.on_superior_recommend_code_user_id = #{userId,jdbcType=INTEGER}
+	OR ti.team_recommend_code_user_id = #{userId,jdbcType=INTEGER})
+	AND ti.liquidation_month = #{liquidationMonth,jdbcType=VARCHAR}
+	ORDER BY
+	ti.create_time DESC
+	limit #{startIndex},#{pageSize}
+  </select>
+  <!-- 奖励结算详情总条数 -->
+  <select id="getCommissionLiquidationDetailCount" parameterType="hashmap" resultType="long">
+	SELECT
+		count(1)
+	FROM
+		t_invest AS ti
+	LEFT JOIN t_login_user AS tlu ON ti.user_id = tlu.user_id
+	LEFT JOIN t_user_info AS tui ON ti.user_id = tui.user_id
+	LEFT JOIN t_login_user AS stlu ON ti.superior_recommend_code_user_id = stlu.user_id
+	LEFT JOIN t_user_info AS stui ON ti.superior_recommend_code_user_id = stui.user_id
+	LEFT JOIN t_login_user AS ostlu ON ti.on_superior_recommend_code_user_id = ostlu.user_id
+	LEFT JOIN t_user_info AS ostui ON ti.on_superior_recommend_code_user_id = ostui.user_id
+	LEFT JOIN t_login_user AS ttlu ON ti.team_recommend_code_user_id = ttlu.user_id
+	LEFT JOIN t_user_info AS ttui ON ti.team_recommend_code_user_id = ttui.user_id
+	WHERE
+		ti.user_id = #{userId,jdbcType=INTEGER}
+	OR ti.superior_recommend_code_user_id = #{userId,jdbcType=INTEGER}
+	OR ti.on_superior_recommend_code_user_id = #{userId,jdbcType=INTEGER}
+	OR ti.team_recommend_code_user_id = #{userId,jdbcType=INTEGER}
+  </select>
+      <!-- 导出奖励结算详情 -->
+  <select id="exportCommissionLiquidationDetailList" parameterType="hashmap" resultType="hashmap">
+	SELECT
+		ti.invest_id,
+		ti.contract_no,
+		(
+			SELECT
+				sd.dict_name
+			FROM
+				system_dict sd
+			WHERE
+				sd.dict_type = 'INVEST_STATUS'
+			AND sd.dict_code = ti.invest_status
+		) invest_status,
+		ti.product_name,
+		tui.real_name,
+		tlu.username,
+		(
+			SELECT
+				sd.dict_name
+			FROM
+				system_dict sd
+			WHERE
+				sd.dict_type = 'USER_ROLE'
+			AND sd.dict_code = tlu.user_role
+		) user_role,
+		(
+			SELECT
+				sd.dict_name
+			FROM
+				system_dict sd
+			WHERE
+				sd.dict_type = 'USER_TYPE'
+			AND sd.dict_code = tlu.user_type
+		) user_type,
+		ti.invest_amount,
+		ti.discount_molecular,
+		ti.discount_denominator,
+		CONCAT(
+			ti.discount_molecular,
+			'/',
+			ti.discount_denominator
+		) AS discount_rate,
+		ti.discount_amount,
+		stui.real_name AS superior_real_name,
+		stlu.username AS superior_username,
+		(
+			SELECT
+				sd.dict_name
+			FROM
+				system_dict sd
+			WHERE
+				sd.dict_type = 'USER_TYPE'
+			AND sd.dict_code = stlu.user_type
+		) superior_user_type,
+		ostui.real_name AS on_superior_real_name,
+		ostlu.username AS on_superior_username,
+		(
+			SELECT
+				sd.dict_name
+			FROM
+				system_dict sd
+			WHERE
+				sd.dict_type = 'USER_TYPE'
+			AND sd.dict_code = ostlu.user_type
+		) on_superior_user_type,
+		ttui.real_name AS team_real_name,
+		ttlu.username AS team_username,
+		DATE_FORMAT(ti.create_time,'%Y-%m-%d %H:%i:%s') AS create_time
+	FROM
+		t_invest AS ti
+	LEFT JOIN t_login_user AS tlu ON ti.user_id = tlu.user_id
+	LEFT JOIN t_user_info AS tui ON ti.user_id = tui.user_id
+	LEFT JOIN t_login_user AS stlu ON ti.superior_recommend_code_user_id = stlu.user_id
+	LEFT JOIN t_user_info AS stui ON ti.superior_recommend_code_user_id = stui.user_id
+	LEFT JOIN t_login_user AS ostlu ON ti.on_superior_recommend_code_user_id = ostlu.user_id
+	LEFT JOIN t_user_info AS ostui ON ti.on_superior_recommend_code_user_id = ostui.user_id
+	LEFT JOIN t_login_user AS ttlu ON ti.team_recommend_code_user_id = ttlu.user_id
+	LEFT JOIN t_user_info AS ttui ON ti.team_recommend_code_user_id = ttui.user_id
+	WHERE
+		ti.user_id = #{userId,jdbcType=INTEGER}
+	OR ti.superior_recommend_code_user_id = #{userId,jdbcType=INTEGER}
+	OR ti.on_superior_recommend_code_user_id = #{userId,jdbcType=INTEGER}
+	OR ti.team_recommend_code_user_id = #{userId,jdbcType=INTEGER}
+	ORDER BY
+	ti.create_time DESC
+  </select>
+</mapper>
